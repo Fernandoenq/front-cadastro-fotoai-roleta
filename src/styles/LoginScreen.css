@@ -1,0 +1,100 @@
+/* Layout principal */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #d3d3d3; /* Cor de fundo igual à imagem */
+    text-align: center;
+    position: relative;
+}
+
+/* Logo */
+.login-logo {
+    width: 30vw;
+    max-width: 20vh;
+    height: auto;
+    margin-bottom: 4vh;
+}
+
+/* Título */
+.login-title {
+    font-size: 3.5vh;
+    font-weight: bold;
+    margin-bottom: 4vh;
+    color: black;
+}
+
+/* Estilização dos campos de entrada */
+.input-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 50vw;
+    margin-bottom: 3vh;
+    text-align: left;
+}
+
+.input-container label {
+    font-size: 2vh;
+    margin-bottom: 1vh;
+    color: #666;
+}
+
+/* Campo de entrada */
+.input-container input {
+    width: 100%;
+    padding: 1.8vh;
+    border: none;
+    border-radius: 1vh;
+    background: #c4c4c4;
+    font-size: 2.2vh;
+    outline: none;
+}
+
+/* Botão Entrar */
+.login-button {
+    width: 50%;
+    max-width: 50%;
+    padding: 2vh; /* Ajusta automaticamente a altura */
+    min-height: 5vh; /* Garante um tamanho mínimo */
+    margin-top: 4vh;
+    background: black;
+    color: white;
+    font-size: 2.5vh;
+    font-weight: bold;
+    border: none;
+    border-radius: 1.5vh;
+    cursor: pointer;
+    display: flex; /* ✅ Garante centralização */
+    align-items: center; /* ✅ Centraliza verticalmente */
+    justify-content: center; /* ✅ Centraliza horizontalmente */
+    text-align: center;
+}
+
+
+.login-button:hover {
+    background: #333;
+}
+
+/* Texto pequeno no final */
+.footer-text {
+    position: absolute;
+    bottom: 4vh;
+    font-size: 2vh;
+    color: black;
+}
+
+.popup.top-right {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1000;
+    font-size: 16px;
+}

@@ -1,0 +1,118 @@
+/* Define um layout vertical centralizado */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #111;
+    color: white;
+    text-align: center;
+  }
+  
+  /* Título */
+  .page-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: red;
+  }
+  
+  /* Logo */
+  .logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  /* Área das imagens */
+  .image-box {
+    width: 90%;
+    height: 40%; /* ✅ Mantém um tamanho fixo */
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto; /* ✅ Habilita rolagem vertical */
+    scrollbar-width: thin;
+    scrollbar-color: #007bff transparent;
+  }
+  
+  /* Estilização opcional para scrollbar (para navegadores baseados no Chromium) */
+  .image-box::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .image-box::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 10px;
+  }
+  
+  /* Grid das imagens (3 colunas) */
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* ✅ Mantém 3 imagens lado a lado */
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  /* Contêiner de cada imagem */
+  .image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  /* Ajusta a imagem para ser responsiva */
+  .image {
+    width: 90%; /* ✅ Ajusta automaticamente conforme o espaço disponível */
+    max-width: 180px;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain; /* ✅ Garante que a imagem não seja cortada */
+    border-radius: 10px;
+    border: 3px solid transparent;
+    transition: border 0.2s ease-in-out;
+  }
+  
+  /* Quando a imagem estiver selecionada */
+  .image-container.selected .image {
+    border-color: #007bff;
+  }
+  
+  /* Texto abaixo da imagem */
+  .image-label {
+    margin-top: 5px;
+    font-size: 1rem;
+  }
+  
+  /* Botão Continuar */
+  .continue-button {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    transition: background 0.3s ease-in-out;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .continue-button:disabled {
+    background-color: #444;
+    cursor: not-allowed;
+  }
+  
+  .continue-button:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  

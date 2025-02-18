@@ -1,0 +1,42 @@
+/* styles/RedirectScreen.css */
+
+.redirect-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #d3d3d3; /* Fundo cinza claro */
+    text-align: center;
+}
+
+.redirect-title {
+    font-size: 3vh;
+    font-weight: bold;
+    margin-bottom: 4vh;
+    color: black;
+}
+
+.redirect-button {
+    width: 50%;
+    max-width: 50%;
+    padding: 2vh;
+    min-height: 5vh;
+    margin-top: 2vh;
+    background: black;
+    color: white;
+    font-size: 2.5vh;
+    font-weight: bold;
+    border: none;
+    border-radius: 1.5vh;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.redirect-button:hover {
+    background: #333;
+}
