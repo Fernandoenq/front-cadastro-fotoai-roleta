@@ -6,6 +6,7 @@ import RedirectScreen from '../pages/RedirectScreen';
 import NfcScreen from '../pages/NfcScreen';
 import CadastroRapido from '../pages/CadastroRapido';
 import CadastroCompleto from '../pages/CadastroCompleto';
+import FinalImageScreen from '../pages/FinalImageScreen';
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
         <Route path="/cadastrorapido" element={<CadastroRapido />} />
         <Route path="/camera" element={<CameraScreen />} />
         <Route path="/selectimages" element={<SelectImageScreen />} />
+        <Route path="/finalimage" element={<FinalImageScreen />} />
         
         
         

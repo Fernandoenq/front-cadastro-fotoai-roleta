@@ -2,31 +2,40 @@ import React, { useState } from "react";
 import "../styles/SelectImagesScreen.css";
 import { images, ImageItem } from "../data/imageData"; 
 import logo from "../assets/logo.png"; 
+import useFotoAiAPI from "../hooks/fotoAiAPI";
+import ProgressModal from "../modals/ProgressModal";
 
-const bucketName = "bucket-bradesco-lollapalloza"; // Substitua pelo nome do seu bucket
-const region = "sa-east-1"; // Substitua pela região do S3 (ex: sa-east-1 para Brasil)
+const bucketName = "bucket-bradesco-lollapalloza";
+const region = "sa-east-1";
 
 const SelectImageScreen: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const { sendS3Url } = useFotoAiAPI();
 
-  const handleContinueClick = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleContinueClick = async () => {
     if (selectedImage === null) return;
 
     const selected = images.find((image) => image.id === selectedImage);
     if (selected) {
-      const localStorageValue = localStorage.getItem("Foto") || "valor-padrao.jpg"; // Obtém o nome do arquivo do localStorage
-
-      const s3Url = `https://${bucketName}.s3.${region}.amazonaws.com/${localStorageValue}`; // Gera o link de download do S3
-
-
-      const updatedPrompt = selected.prompt.replace("<>", s3Url); // Substitui <> pelo valor do localStorage
-
+      const localStorageValue = localStorage.getItem("Foto") || "valor-padrao.jpg";
+      const s3Url = `https://${bucketName}.s3.${region}.amazonaws.com/${localStorageValue}`;
+      const updatedPrompt = selected.prompt.replace("<>", s3Url);
 
       alert(`Imagem ${selected.id} selecionada!\nPrompt: ${updatedPrompt}`);
       console.log(`Imagem ${selected.id} selecionada!\nPrompt: ${updatedPrompt}\nDownload: ${s3Url}`);
 
-      // Opcional: Abrir o link em uma nova aba
-      window.open(s3Url, "_blank");
+      // Abre o modal e inicia o envio
+      setIsModalOpen(true);
+      setProgress(0);
+      setImageUrls([]);
+      setErrorMessage(null);
+
+      await sendS3Url(updatedPrompt, setProgress, setImageUrls, setErrorMessage);
     }
   };
 
@@ -37,7 +46,7 @@ const SelectImageScreen: React.FC = () => {
 
       <div className="image-box">
         <div className="image-grid">
-          {images.map((image: ImageItem) => (
+          {images.map((image) => (
             <div
               key={image.id}
               className={`image-container ${selectedImage === image.id ? "selected" : ""}`}
@@ -53,6 +62,8 @@ const SelectImageScreen: React.FC = () => {
       <button className="continue-button" disabled={selectedImage === null} onClick={handleContinueClick}>
         Continuar
       </button>
+
+      <ProgressModal isOpen={isModalOpen} progress={progress} imageUrls={imageUrls} errorMessage={errorMessage} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };
