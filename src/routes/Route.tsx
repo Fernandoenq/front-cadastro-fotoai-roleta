@@ -7,6 +7,8 @@ import NfcScreen from '../pages/NfcScreen';
 import CadastroRapido from '../pages/CadastroRapido';
 import CadastroCompleto from '../pages/CadastroCompleto';
 import FinalImageScreen from '../pages/FinalImageScreen';
+import RoletaScreen from '../pages/Roleta';
+import PrizeScreen from '../pages/PrizeScreen';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +22,8 @@ const App: React.FC = () => {
         <Route path="/camera" element={<CameraScreen />} />
         <Route path="/selectimages" element={<SelectImageScreen />} />
         <Route path="/finalimage" element={<FinalImageScreen />} />
+        <Route path="/roleta" element={<RoletaScreen />} />
+        <Route path="/roleta/:prizeName" element={<PrizeScreen />} /> 
         
         
         

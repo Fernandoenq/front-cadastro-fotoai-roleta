@@ -1,0 +1,42 @@
+.prize-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #d3d3d3;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3vh;
+    margin-bottom: 2vh;
+}
+
+.prize-image {
+    width: 50vw; /* ✅ Ocupa 50% da largura da tela */
+    max-height: 50vh; /* ✅ Mantém a proporção dentro de 50% da altura */
+    object-fit: contain; /* ✅ Garante que a imagem não seja distorcida */
+    margin-bottom: 2vh;
+}
+
+.prize-name {
+    font-size: 2.5vh;
+    font-weight: bold;
+    margin-bottom: 2vh;
+}
+
+button {
+    padding: 1.5vh 3vh;
+    font-size: 2vh;
+    font-weight: bold;
+    border: none;
+    border-radius: 1vh;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+button:hover {
+    background-color: #444;
+}
