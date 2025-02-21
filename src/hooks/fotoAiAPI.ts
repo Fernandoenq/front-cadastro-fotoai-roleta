@@ -60,7 +60,9 @@ const useFotoAiAPI = () => {
 
       const data = await response.json();
       if (response.ok) {
-        console.log("✅ Nome da imagem e CPF enviados com sucesso:", { imageName, cpf });
+        console.log("✅ Nome da imagem processada recebido:", data.image_name);
+        return data.image_name;  // Retorna o nome da imagem processada
+        
       } else {
         console.error("❌ Erro ao enviar nome da imagem:", data.error);
       }

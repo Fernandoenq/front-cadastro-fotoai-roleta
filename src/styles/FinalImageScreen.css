@@ -1,36 +1,45 @@
 .final-image-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #111;
-    color: white;
-    text-align: center;
-  }
-  
-  .final-image {
-    max-width: 100%;
-    height: auto;
-    border: 5px solid white;
-    border-radius: 15px;
-    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
-  }
-  
-  button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    transition: background 0.3s;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #111;
+  color: white;
+  text-align: center;
+}
+
+.final-image {
+  max-width: 25vw; /* 25% da largura da tela */
+  max-height: 25vh; /* 25% da altura da tela */
+  width: auto;
+  height: auto;
+  border: 5px solid white;
+  border-radius: 15px;
+  box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+  margin-bottom: 20px; /* Espaço entre imagem e QRCode */
+}
+
+.qr-code {
+  width: 25vw; /* Mesmo tamanho da imagem */
+  height: auto; /* Mantém a proporção */
+  margin-bottom: 20px; /* Espaço entre imagem e QRCode */
+
+}
+
+button {
+  margin-top: 400px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

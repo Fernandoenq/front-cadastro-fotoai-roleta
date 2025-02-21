@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import "../styles/ProgressModal.css";
-import { useApi } from '../hooks/useApi'; // Importa a função da API
-import { useNavigate } from "react-router-dom"; // ✅ Importa o hook de navegação
+import { useApi } from '../hooks/useApi'; 
+import { useNavigate } from "react-router-dom"; 
 import useFotoAiAPI from '../hooks/fotoAiAPI'
 
 interface ProgressModalProps {
@@ -17,7 +17,7 @@ const ProgressModal: React.FC<ProgressModalProps> = ({ isOpen, progress, imageUr
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { callApi } = useApi();
   const navigate = useNavigate(); 
-  const { sendImageName } = useFotoAiAPI(); // ✅ Novo hook para enviar o nome da imagem
+  const { sendImageName } = useFotoAiAPI();
 
   if (!isOpen) return null;
 
@@ -25,11 +25,9 @@ const ProgressModal: React.FC<ProgressModalProps> = ({ isOpen, progress, imageUr
     try {
       console.log("📸 Convertendo imagem para Base64:", imageUrl);
 
-      // Baixa a imagem como um Blob
       const response = await fetch(imageUrl);
       const blob = await response.blob();
 
-      // Converte Blob para Base64
       const base64 = await new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(blob);
@@ -39,7 +37,6 @@ const ProgressModal: React.FC<ProgressModalProps> = ({ isOpen, progress, imageUr
 
       console.log("✅ Imagem convertida para Base64!");
 
-      // Converte Base64 de volta para Blob
       const byteCharacters = atob(base64.split(",")[1]);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
@@ -69,7 +66,7 @@ const ProgressModal: React.FC<ProgressModalProps> = ({ isOpen, progress, imageUr
 
       const formData = new FormData();
       formData.append("file", blob, "selected-image.png");
-      formData.append("cpf", cpf); // ✅ Adicionando CPF ao envio
+      formData.append("cpf", cpf);
 
       const response = await callApi("/Image/SaveImage", "POST", formData);
 
@@ -77,10 +74,17 @@ const ProgressModal: React.FC<ProgressModalProps> = ({ isOpen, progress, imageUr
         console.log("✅ Nome da imagem recebido:", response.ImageName);
         localStorage.setItem("Foto", response.ImageName);
 
-        // ✅ Agora enviamos o nome da imagem junto com o CPF para o Flask
-        sendImageName(response.ImageName, cpf);
+        // ✅ Enviamos para o Flask e aguardamos a resposta antes de abrir a nova página
+        const newImageName = await sendImageName(response.ImageName, cpf);
+
+        if (newImageName) {
+          console.log("✅ Novo nome da imagem processada recebido:", newImageName);
+          localStorage.setItem("ProcessedFoto", newImageName);
+        }
 
         window.open("/finalimage");
+        //navigate("/finalimage");
+
       } else {
         console.error("❌ Erro ao receber nome da imagem.");
       }
