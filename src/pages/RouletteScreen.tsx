@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // ✅ Importação para navegação
-import "../styles/RoletaScreen.css";
+import "../styles/RouletteScreen.css"
 import prizes from "../data/prizes"; // ✅ Importa a lista de prêmios
 
 import pointer from "../assets/pointer.png";

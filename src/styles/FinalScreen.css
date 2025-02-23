@@ -1,0 +1,48 @@
+.final-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #d3d3d3;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3vh;
+    font-weight: bold;
+    margin-bottom: 1vh;
+}
+
+p {
+    font-size: 2vh;
+    margin-bottom: 1vh;
+}
+
+.saldo {
+    background-color: black;
+    color: white;
+    padding: 1vh 2vh;
+    border-radius: 1vh;
+    font-size: 2vh;
+    font-weight: bold;
+}
+
+.qrcode {
+    margin: 2vh 0;
+}
+
+button {
+    padding: 1.5vh 3vh;
+    font-size: 2vh;
+    font-weight: bold;
+    border: none;
+    border-radius: 1vh;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+button:hover {
+    background-color: #444;
+}

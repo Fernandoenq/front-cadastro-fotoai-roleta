@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
-import "../styles/CadastroCompleto.css";
+import "../styles/FullRegistration.css";
 import { useApi } from "../hooks/useApi";
 import { validateCpf } from "../utils/cpfUtils";
 import { validateWhatsapp } from "../utils/whatsappUtils";

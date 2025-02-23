@@ -71,7 +71,31 @@ const useFotoAiAPI = () => {
     }
   }, []);
 
-  return { sendS3Url, sendImageName };
+  const sendCpf = useCallback(async (cpf: string) => {
+    try {
+      const response = await fetch(`${API_URL}/send-cpf`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cpf }), // 🔹 Enviando apenas o CPF
+      });
+  
+      const data = await response.json();
+      
+      if (response.ok) {
+        console.log("✅ CPF enviado com sucesso:", data);
+        return data; // ✅ Retornando os dados corretamente
+      } else {
+        console.error("❌ Erro ao enviar CPF:", data.error);
+        return null; // ✅ Retorna null em caso de erro para evitar undefined
+      }
+    } catch (error) {
+      console.error("❌ Erro ao conectar com o servidor para enviar CPF:", error);
+      return null; // ✅ Retorna null em caso de falha na requisição
+    }
+  }, []);
+  
+
+  return { sendS3Url, sendImageName, sendCpf };
 };
 
 export default useFotoAiAPI;

@@ -4,11 +4,12 @@ import SelectImageScreen from '../pages/SelectImagesScreen';
 import LoginScreen from '../pages/LoginScreen';
 import RedirectScreen from '../pages/RedirectScreen';
 import NfcScreen from '../pages/NfcScreen';
-import CadastroRapido from '../pages/CadastroRapido';
-import CadastroCompleto from '../pages/CadastroCompleto';
+import CadastroRapido from '../pages/QuickRegistration';
+import CadastroCompleto from '../pages/FullRegistration';
 import FinalImageScreen from '../pages/FinalImageScreen';
-import RoletaScreen from '../pages/Roleta';
+import RoletaScreen from '../pages/RouletteScreen';
 import PrizeScreen from '../pages/PrizeScreen';
+import FinalScreen from '../pages/FinalScreen';
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const App: React.FC = () => {
         <Route path="/finalimage" element={<FinalImageScreen />} />
         <Route path="/roleta" element={<RoletaScreen />} />
         <Route path="/roleta/:prizeName" element={<PrizeScreen />} /> 
+        <Route path="/finalscreen" element={<FinalScreen />} /> 
         
         
         

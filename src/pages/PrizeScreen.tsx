@@ -23,7 +23,7 @@ const PrizeScreen: React.FC = () => {
     <div className="prize-container">
       <h1>Retire o seu brinde</h1>
       <img src={prize.image} alt={prize.name} className="prize-image" />
-      <button onClick={() => navigate("/")}>Avançar</button>
+      <button onClick={() => navigate("/finalscreen")}>Avançar</button>
     </div>
   );
 };
