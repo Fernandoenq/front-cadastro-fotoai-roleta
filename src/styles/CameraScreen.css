@@ -1,70 +1,93 @@
-/* Define um layout 9:16 */
+/* Estilização geral */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #000;
+  color: white;
+  min-height: 100vh;
+}
+
+/* Título */
+.page-header h1 {
+  font-size: 24px;
+  text-align: center;
+  color: #ff4757;
+  margin-bottom: 10px;
+}
+
+/* Seletor de câmera */
+.controls-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.device-selector {
+  width: 250px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  color: black;
+  background-color: white;
+  border: none;
+  text-align: center;
+}
+
+/* Área da câmera com proporção 16:9 */
 .camera-container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: black;
-    text-align: center;
-    position: relative;
-    color: white;
-  }
-  
-  /* Caixa onde a câmera será exibida */
-  .camera-box {
-    width: 60%; /* Define um tamanho menor */
-    height: 30vh; /* Ajusta a altura */
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 2px solid white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    position: absolute;
-    top: 25%; /* Ajusta a posição */
-  }
-  
-  /* Ajusta o vídeo dentro da caixa */
-  .camera-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  
-  /* Botão de captura */
-  .capture-button {
-    width: 80%;
-    height: 50px;
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    margin-top: 35vh; /* Move o botão para baixo */
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .capture-button:hover {
-    background: linear-gradient(135deg, #0072ff, #00c6ff);
-    transform: scale(1.05);
-  }
-  
-  /* Título fixo no topo */
-.page-header h1{
-    width: 100%;
-    padding: 15px 0;
-    font-size: 60px;
-    font-weight: bold;
-    color: red;
-    position: fixed;
-    top: 10%;
-    left: 0;
-    text-align: center;
-    z-index: 1000;
-  }
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 640px; /* Máximo de largura */
+  aspect-ratio: 16 / 9; /* Mantém a proporção correta */
+  border: 2px solid white;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: black;
+}
+
+/* Ajusta o vídeo para preencher a área sem cortes */
+.camera-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Mostra tudo sem cortar nada */
+}
+
+/* Botão de captura */
+.capture-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.capture-button {
+  background: linear-gradient(90deg, #007bff, #00c3ff);
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.capture-button:hover {
+  background: linear-gradient(90deg, #0056b3, #0096c7);
+}
+
+/* Foto capturada */
+.photo-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.captured-photo {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 10px;
+}

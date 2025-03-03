@@ -15,7 +15,7 @@ const FinalImageScreen: React.FC = () => {
     const processedFoto = localStorage.getItem("ProcessedFoto"); // Obtém o nome salvo
     if (!processedFoto) {
       console.error("⚠️ Nenhuma imagem processada encontrada!");
-      navigate("/roleta");
+      //navigate("/roleta");
       return;
     }
 
@@ -38,7 +38,7 @@ const FinalImageScreen: React.FC = () => {
         <p>⏳ Carregando imagem...</p>
       )}
 
-      <button onClick={() => navigate("/")}>Ir para a Roleta</button>
+      <button onClick={() => navigate("/roleta")}>Ir para a Roleta</button>
     </div>
   );
 };

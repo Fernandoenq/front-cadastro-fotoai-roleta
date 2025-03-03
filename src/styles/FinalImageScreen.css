@@ -16,7 +16,7 @@
   height: auto;
   border: 5px solid white;
   border-radius: 15px;
-  box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 15px white;
   margin-bottom: 20px; /* Espaço entre imagem e QRCode */
 }
 
@@ -24,6 +24,9 @@
   width: 25vw; /* Mesmo tamanho da imagem */
   height: auto; /* Mantém a proporção */
   margin-bottom: 20px; /* Espaço entre imagem e QRCode */
+  background-color: white;
+  box-shadow: 0px 0px 15px white;
+
 
 }
 
