@@ -5,6 +5,7 @@ import "react-simple-keyboard/build/css/index.css";
 import "../styles/QuickRegistration.css";
 import { validateCpf } from "../utils/cpfUtils";
 import { useApi } from "../hooks/useApi";
+import Popup from "../components/Popup";
 
 const CadastroRapido: React.FC = () => {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const CadastroRapido: React.FC = () => {
 
   return (
     <div className="cadastro-container">
-      {showPopup && <div className="popup top-right">{popupMessage}</div>}
+      <Popup show={showPopup} message={popupMessage} />
 
       <h1 className="cadastro-title">CADASTRO RÁPIDO</h1>
       <p className="cadastro-subtitle">Bradesco Lollapalooza 2025</p>

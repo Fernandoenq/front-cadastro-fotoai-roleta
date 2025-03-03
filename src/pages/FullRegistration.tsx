@@ -7,6 +7,8 @@ import { useApi } from "../hooks/useApi";
 import { validateCpf } from "../utils/cpfUtils";
 import { validateWhatsapp } from "../utils/whatsappUtils";
 import { validateEmail } from "../utils/emailUtils";
+import Popup from "../components/Popup";
+
 
 const CadastroCompleto: React.FC = () => {
   const navigate = useNavigate();
@@ -85,7 +87,7 @@ const CadastroCompleto: React.FC = () => {
 
   return (
     <div className="cadastro-container">
-      {showPopup && <div className="popup top-right">{popupMessage}</div>}
+      <Popup show={showPopup} message={popupMessage} />
 
       <h1 className="cadastro-title">CADASTRO USUÁRIO</h1>
       <p className="cadastro-subtitle">Bradesco Lollapalooza 2025</p>

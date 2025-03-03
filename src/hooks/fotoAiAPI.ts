@@ -1,11 +1,19 @@
-import { useCallback } from "react";
+import { useState, useCallback } from "react";
 
 const API_URL = "http://127.0.0.1:5000";
 
 const useFotoAiAPI = () => {
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [popupMessage, setPopupMessage] = useState<string>("");
+
+  const showMessage = (message: string) => {
+    setPopupMessage(message);
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 3000);
+  };
+
   const sendS3Url = useCallback(async (s3Url: string, onProgress: (progress: number) => void, onComplete: (images: string[]) => void, onError: (error: string) => void) => {
     try {
-      // Envia o prompt para gerar a imagem
       const response = await fetch(`${API_URL}/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -14,6 +22,7 @@ const useFotoAiAPI = () => {
 
       const data = await response.json();
       if (!data.task_id) {
+        showMessage("❌ Erro ao gerar a imagem");
         onError("Erro ao gerar a imagem");
         return;
       }
@@ -21,7 +30,6 @@ const useFotoAiAPI = () => {
       console.log("✅ Task ID recebido:", data.task_id);
       const taskId = data.task_id;
 
-      // Monitora o progresso usando Server-Sent Events (SSE)
       const eventSource = new EventSource(`${API_URL}/progress/${taskId}`);
 
       eventSource.onmessage = (event) => {
@@ -32,6 +40,7 @@ const useFotoAiAPI = () => {
         }
 
         if (statusData.image_urls) {
+          showMessage("✅ Imagens geradas com sucesso!");
           onComplete(statusData.image_urls);
           eventSource.close();
         }
@@ -40,34 +49,39 @@ const useFotoAiAPI = () => {
       eventSource.onerror = (error) => {
         console.error("Erro no SSE:", error);
         eventSource.close();
+        showMessage("❌ Erro ao buscar progresso da imagem");
         onError("Erro ao buscar progresso da imagem");
       };
 
     } catch (error) {
       console.error("❌ Erro ao conectar com o servidor:", error);
+      showMessage("❌ Erro ao conectar com o servidor");
       onError("Erro ao conectar com o servidor");
     }
   }, []);
 
-  // 🔹 **Função Atualizada: Agora também envia o CPF**
   const sendImageName = useCallback(async (imageName: string, cpf: string) => {
     try {
       const response = await fetch(`${API_URL}/save-image-name`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image_name: imageName, cpf }), // ✅ Enviando CPF junto com o nome da imagem
+        body: JSON.stringify({ image_name: imageName, cpf }),
       });
 
       const data = await response.json();
       if (response.ok) {
+        showMessage("✅ Nome da imagem enviado com sucesso!");
         console.log("✅ Nome da imagem processada recebido:", data.image_name);
-        return data.image_name;  // Retorna o nome da imagem processada
-        
+        return data.image_name;
       } else {
+        showMessage("❌ Erro ao enviar nome da imagem");
         console.error("❌ Erro ao enviar nome da imagem:", data.error);
+        return null;
       }
     } catch (error) {
+      showMessage("❌ Erro ao conectar com o servidor para enviar o nome da imagem");
       console.error("❌ Erro ao conectar com o servidor para enviar o nome da imagem:", error);
+      return null;
     }
   }, []);
 
@@ -76,26 +90,28 @@ const useFotoAiAPI = () => {
       const response = await fetch(`${API_URL}/send-cpf`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cpf }), // 🔹 Enviando apenas o CPF
+        body: JSON.stringify({ cpf }),
       });
-  
+
       const data = await response.json();
-      
+
       if (response.ok) {
+        showMessage("✅ CPF enviado com sucesso!");
         console.log("✅ CPF enviado com sucesso:", data);
-        return data; // ✅ Retornando os dados corretamente
+        return data;
       } else {
+        showMessage("❌ Erro ao enviar CPF");
         console.error("❌ Erro ao enviar CPF:", data.error);
-        return null; // ✅ Retorna null em caso de erro para evitar undefined
+        return null;
       }
     } catch (error) {
+      showMessage("❌ Erro ao conectar com o servidor para enviar CPF");
       console.error("❌ Erro ao conectar com o servidor para enviar CPF:", error);
-      return null; // ✅ Retorna null em caso de falha na requisição
+      return null;
     }
   }, []);
-  
 
-  return { sendS3Url, sendImageName, sendCpf };
+  return { sendS3Url, sendImageName, sendCpf, showPopup, popupMessage };
 };
 
 export default useFotoAiAPI;

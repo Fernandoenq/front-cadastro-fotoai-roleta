@@ -1,144 +1,131 @@
 .cadastro-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #d9d9d9;
-    font-family: Arial, sans-serif;
-    text-align: center;
-  }
-  
-  .cadastro-title {
-    font-size: 3.5vh;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 1.5vh;
-  }
-  
-  .cadastro-subtitle {
-    font-size: 2vh;
-    margin-bottom: 2vh;
-  }
-  
-  .input-label {
-    font-size: 1.8vh;
-    margin-bottom: 0.5vh;
-    text-align: left;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #d9d9d9;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.cadastro-title {
+  font-size: 3.5vh;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 1.5vh;
+}
+
+.cadastro-subtitle {
+  font-size: 2vh;
+  margin-bottom: 2vh;
+}
+
+.input-label {
+  font-size: 1.8vh;
+  margin-bottom: 0.5vh;
+  text-align: left;
+}
+
 .input-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* 🔹 Alinha os labels e inputs corretamente */
-    max-width: 100%; /* 🔹 Máximo para não ficar muito grande */
-    margin-bottom: 1.5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 100%;
+  margin-bottom: 1.5vh;
 }
 
 .input-field {
-    padding: 1.5vh;
-    border: 0.2vh solid #b3b3b3;
-    border-radius: 0.8vh;
-    background-color: red; /* 🔹 Fundo branco para melhor visibilidade */
-    font-size: 2vh;
-    width: 100%; /* 🔹 Garante que ocupe toda a largura do `.input-container` */
-    height: 6vh; /* 🔹 Aumenta a altura dos inputs */
-    box-sizing: border-box; /* 🔹 Evita que padding aumente o tamanho do input */
-}
-  
-  .error-text {
-    color: red;
-    font-size: 1.6vh;
-    margin-top: 0.5vh;
-  }
-  .checkbox-container {
-    display: flex;
-    align-items: center;
-    width: 90%;
-    max-width: 500px;
-    margin-bottom: 1.5vh;
-    justify-content: flex-start; /* 🔹 Garante alinhamento à esquerda */
-}
-
-.checkbox-label {
-    font-size: 1.5vh;
-    display: flex;
-    align-items: center;
-    gap: 1vh; /* 🔹 Mantém o espaço entre o checkbox e o texto */
-    color: black;
-    font-weight: bold;
-    cursor: pointer;
-    text-align: left; /* 🔹 Garante que o texto dentro da label fique à esquerda */
-}
-
-.checkbox-label input {
-    flex-shrink: 0;
-    width: 2.8vh;
-    height: 2.8vh;
-    accent-color: black;
-}
-
-
-
-  .cadastro-button {
-    width: 90%;
-    max-width: 500px;
-    padding: 1.5vh;
-    background-color: black;
-    color: white;
-    font-size: 2vh;
-    font-weight: bold;
-    border: none;
-    border-radius: 0.8vh;
-    cursor: pointer;
-    margin-top: 2vh;
-  }
-  
-  .cadastro-button:disabled {
-    background-color: gray;
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-  
-  
-  .footer-text {
-    margin-top: 1vh;
-    font-size: 1.6vh;
-    color: black;
-  }
-  
-/* 🔹 Define o contêiner do teclado */
-.keyboard-container {
-    width: 90%; /* 🔹 Garante que não encoste nas bordas */
-    margin: 1.5vh auto; /* 🔹 Centraliza e adiciona espaçamento */
-    position: relative;
-}
-
-/* 🔹 Estiliza o teclado virtual */
-.simple-keyboard {
-    background: white;
-    border-radius: 0.8vh;
-    padding: 0.5vh;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15); /* 🔹 Sombra leve */
-}
-
-/* 🔹 Ajusta os botões do teclado */
-.simple-keyboard .hg-button {
-    font-size: 1.8vh; /* 🔹 Evita botões grandes demais */
-    color: black;
-    background: #f0f0f0;
-    border-radius: 0.3vh;
-    padding: 0.8vh;
-    margin: 0.2vh;
-}
-
-/* 🔹 Ajusta o hover dos botões */
-.simple-keyboard .hg-button:hover {
-    background: #ddd;
+  padding: 1.5vh;
+  border: 0.2vh solid #b3b3b3;
+  border-radius: 0.8vh;
+  font-size: 2vh;
+  width: 100%;
+  height: 6vh;
+  box-sizing: border-box;
 }
 
 .error-text {
-    color: red;
-    font-size: 1.6vh;
-    margin-top: 0.5vh;
+  color: red;
+  font-size: 1.6vh;
+  margin-top: 0.5vh;
+}
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  max-width: 500px;
+  margin-bottom: 1.5vh;
+  justify-content: flex-start;
+}
+
+.checkbox-label {
+  font-size: 1.5vh;
+  display: flex;
+  align-items: center;
+  gap: 1vh;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: left;
+}
+
+.checkbox-label input {
+  flex-shrink: 0;
+  width: 2.8vh;
+  height: 2.8vh;
+  accent-color: black;
+}
+
+.cadastro-button {
+  width: 90%;
+  max-width: 500px;
+  padding: 1.5vh;
+  background-color: black;
+  color: white;
+  font-size: 2vh;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.8vh;
+  cursor: pointer;
+  margin-top: 2vh;
+}
+
+.cadastro-button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+
+.footer-text {
+  margin-top: 1vh;
+  font-size: 1.6vh;
+  color: black;
+}
+
+.keyboard-container {
+  width: 90%;
+  margin: 1.5vh auto;
+  position: relative;
+}
+
+.simple-keyboard {
+  background: white;
+  border-radius: 0.8vh;
+  padding: 0.5vh;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.simple-keyboard .hg-button {
+  font-size: 1.8vh;
+  color: black;
+  background: #f0f0f0;
+  border-radius: 0.3vh;
+  padding: 0.8vh;
+  margin: 0.2vh;
+}
+
+.simple-keyboard .hg-button:hover {
+  background: #ddd;
 }

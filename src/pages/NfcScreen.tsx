@@ -7,28 +7,25 @@ const NfcScreen: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Estado do tipo de cadastro atualizado dinamicamente
   const [tipoCadastro, setTipoCadastro] = useState<string>(
     localStorage.getItem("tipoCadastro") || location.state?.tipoCadastro || "desconhecido"
   );
 
-  // Estado do RFID
   const [rfidValue, setRfidValue] = useState("");
 
   useEffect(() => {
     console.log("Limpando cache do NFC...");
-    localStorage.removeItem("rfidValue"); // Remove o valor salvo do NFC
-    setRfidValue(""); // Reseta o estado
-  }, [location.pathname]); // 🔥 Agora limpa sempre que a URL mudar!
+    localStorage.removeItem("rfidValue");
+    setRfidValue("");
+  }, [location.pathname]);
 
-  // Atualiza o tipo de cadastro sempre que a página for acessada
   useEffect(() => {
     if (location.state?.tipoCadastro) {
       console.log("Atualizando tipoCadastro:", location.state.tipoCadastro);
       setTipoCadastro(location.state.tipoCadastro);
       localStorage.setItem("tipoCadastro", location.state.tipoCadastro);
     }
-  }, [location.state]); // 🔥 Agora monitora mudanças no `location.state`
+  }, [location.state]);
 
   useEffect(() => {
     console.log("Tipo de cadastro recebido:", tipoCadastro);
@@ -36,17 +33,37 @@ const NfcScreen: React.FC = () => {
     const handlePaste = async () => {
       const pastedData = await navigator.clipboard.readText();
       if (pastedData) {
-        console.log("Valor NFC recebido:", pastedData);
+        console.log("Valor NFC recebido via CTRL+V:", pastedData);
         setRfidValue(pastedData);
         localStorage.setItem("rfidValue", pastedData);
       }
     };
 
     document.addEventListener("paste", handlePaste);
+
     return () => {
       document.removeEventListener("paste", handlePaste);
     };
   }, [tipoCadastro]);
+
+  // ✅ Monitora a área de transferência do celular a cada 2 segundos
+  useEffect(() => {
+    const checkClipboard = async () => {
+      try {
+        const clipboardData = await navigator.clipboard.readText();
+        if (clipboardData && clipboardData !== rfidValue) {
+          console.log("Valor recebido via Bluetooth/Área de Transferência:", clipboardData);
+          setRfidValue(clipboardData);
+          localStorage.setItem("rfidValue", clipboardData);
+        }
+      } catch (error) {
+        console.error("Erro ao acessar a área de transferência:", error);
+      }
+    };
+
+    const interval = setInterval(checkClipboard, 2000); // 🔥 Verifica a cada 2 segundos
+    return () => clearInterval(interval);
+  }, [rfidValue]);
 
   const handleConfirm = () => {
     console.log("Confirmado com RFID:", rfidValue);
@@ -59,7 +76,6 @@ const NfcScreen: React.FC = () => {
     navigate(destino, { state: { tipoCadastro, rfid: rfidValue } });
   };
 
-  // Verifica se o rfidValue tem um UUID válido antes de habilitar o botão
   const isUUIDValid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{2}$/.test(rfidValue);
 
   return (
