@@ -28,6 +28,25 @@ const NfcScreen: React.FC = () => {
   }, [location.state]);
 
   useEffect(() => {
+    const clearClipboard = async () => {
+      try {
+        await navigator.clipboard.writeText(""); // Limpa a área de transferência
+        console.log("Área de transferência limpa com sucesso!");
+      } catch (error) {
+        console.error("Erro ao limpar a área de transferência:", error);
+      }
+    };
+  
+    // Verifica se o navegador suporta clipboard
+    if (navigator.clipboard) {
+      clearClipboard();
+    } else {
+      console.warn("Clipboard API não suportada neste navegador.");
+    }
+  }, []);
+  
+
+  useEffect(() => {
     console.log("Tipo de cadastro recebido:", tipoCadastro);
 
     const handlePaste = async () => {
