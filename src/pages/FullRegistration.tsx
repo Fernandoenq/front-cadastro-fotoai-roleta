@@ -8,6 +8,8 @@ import { validateCpf, formatCpf, unformatCpf } from "../utils/cpfUtils";
 import { validateWhatsapp, formatWhatsapp, unformatWhatsapp } from "../utils/whatsappUtils";
 import { validateEmail } from "../utils/emailUtils";
 import Popup from "../components/Popup";
+import { handleCadastro } from "../utils/formUtils";
+import AgeDropdown from "../components/AgeDropdown";
 
 const CadastroCompleto: React.FC = () => {
   const navigate = useNavigate();
@@ -20,6 +22,7 @@ const CadastroCompleto: React.FC = () => {
     email: "",
     lgpd: false,
     correntista: false,
+    idadePerfil: ""
   });
 
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
@@ -37,7 +40,8 @@ const CadastroCompleto: React.FC = () => {
       validateCpf(formData.cpf) &&
       validateWhatsapp(formData.whatsapp) &&
       validateEmail(formData.email) &&
-      formData.lgpd;
+      formData.lgpd &&
+      formData.idadePerfil !== ""
 
     setIsButtonEnabled(isValid);
   }, [formData]);
@@ -68,35 +72,6 @@ const CadastroCompleto: React.FC = () => {
     }));
   };
 
-  const handleCadastro = async () => {
-
-    const cpfSemFormatacao = unformatCpf(formData.cpf); // Remove formatação do CPF
-    const whatsappSemFormatacao = unformatWhatsapp(formData.whatsapp); // Remove formatação do WhatsApp
-  
-    const registerData = {
-      PersonName: formData.nome,
-      Cpf: cpfSemFormatacao,
-      Phone: `55${whatsappSemFormatacao}`,
-      Mail: formData.email,
-      HasAcceptedTerm: formData.lgpd,
-      HasAccount: formData.correntista,
-      ExternalCode: localStorage.getItem("rfidValue") || ""
-    };
-  
-
-    console.log("📤 Enviando dados para API:", registerData);
-    localStorage.setItem("cpf", registerData.Cpf);
-    const result = await callApi("/Person/Person", "POST", registerData);
-
-    console.log("🔄 Resposta da API:", result);
-
-    if (result !== null) {
-      console.log("✅ Cadastro bem-sucedido!");
-      navigate("/camera");
-    } else {
-      console.error("❌ Erro no cadastro.");
-    }
-  };
 
   const handleFieldClick = (field: keyof typeof formData, ref?: React.RefObject<HTMLInputElement | null>) => {
     if (activeField === field) {
@@ -159,6 +134,7 @@ const CadastroCompleto: React.FC = () => {
 
   return (
     <div className="cadastro-container" onClick={handleClickFora}>
+      
       <Popup show={showPopup} message={popupMessage} />
 
       <h1 className="cadastro-title">CADASTRO USUÁRIO</h1>
@@ -201,6 +177,8 @@ const CadastroCompleto: React.FC = () => {
         <input ref={emailRef} type="text" name="email" className="input-field" placeholder="Email" value={formData.email} onChange={handleInputChange} onClick={() => handleFieldClick("email", emailRef)} />
       </div>
 
+      <AgeDropdown value={formData.idadePerfil} onChange={handleInputChange} />
+        
       <div className="checkbox-container">
         <label className="checkbox-label">
           <input type="checkbox" name="lgpd" checked={formData.lgpd} onChange={handleCheckboxChange} />
@@ -215,7 +193,15 @@ const CadastroCompleto: React.FC = () => {
         </label>
       </div>
 
-      <button className="cadastro-button" onClick={handleCadastro} disabled={!isButtonEnabled}>CADASTRAR</button>
+      <button
+        className="cadastro-button"
+        onClick={() => handleCadastro(formData, callApi, navigate)}
+        disabled={!isButtonEnabled}
+      >
+  CADASTRAR
+</button>
+
+
     </div>
   );
 };
