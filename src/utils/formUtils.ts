@@ -20,6 +20,7 @@ export const handleCadastro = async (
     AgeProfileId: parseInt(formData.idadePerfil),
   };
 
+
   console.log("📤 Enviando dados para API:", registerData);
   localStorage.setItem("cpf", registerData.Cpf);
   const result = await callApi("/Person/Person", "POST", registerData);

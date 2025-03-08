@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import useRfidApi from "../hooks/useRfidApi"; // 🔹 Importando o hook
 import "../styles/NfcScreen.css";
 import nfcImage from "../assets/nfclogo.png";
 
 const NfcScreen: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { rfidValue, clearRetryInterval } = useRfidApi(); // 🔹 Usando o hook
 
   const [tipoCadastro, setTipoCadastro] = useState<string>(
     localStorage.getItem("tipoCadastro") || location.state?.tipoCadastro || "desconhecido"
   );
 
-  const [rfidValue, setRfidValue] = useState("");
-
   useEffect(() => {
     console.log("Limpando cache do NFC...");
     localStorage.removeItem("rfidValue");
-    setRfidValue("");
   }, [location.pathname]);
 
   useEffect(() => {
@@ -27,63 +26,6 @@ const NfcScreen: React.FC = () => {
     }
   }, [location.state]);
 
-  useEffect(() => {
-    const clearClipboard = async () => {
-      try {
-        await navigator.clipboard.writeText(""); // Limpa a área de transferência
-        console.log("Área de transferência limpa com sucesso!");
-      } catch (error) {
-        console.error("Erro ao limpar a área de transferência:", error);
-      }
-    };
-  
-    // Verifica se o navegador suporta clipboard
-    if (navigator.clipboard) {
-      clearClipboard();
-    } else {
-      console.warn("Clipboard API não suportada neste navegador.");
-    }
-  }, []);
-  
-
-  useEffect(() => {
-    console.log("Tipo de cadastro recebido:", tipoCadastro);
-
-    const handlePaste = async () => {
-      const pastedData = await navigator.clipboard.readText();
-      if (pastedData) {
-        console.log("Valor NFC recebido via CTRL+V:", pastedData);
-        setRfidValue(pastedData);
-        localStorage.setItem("rfidValue", pastedData);
-      }
-    };
-
-    document.addEventListener("paste", handlePaste);
-
-    return () => {
-      document.removeEventListener("paste", handlePaste);
-    };
-  }, [tipoCadastro]);
-
-  // ✅ Monitora a área de transferência do celular a cada 2 segundos
-  useEffect(() => {
-    const checkClipboard = async () => {
-      try {
-        const clipboardData = await navigator.clipboard.readText();
-        if (clipboardData && clipboardData !== rfidValue) {
-          console.log("Valor recebido via Bluetooth/Área de Transferência:", clipboardData);
-          setRfidValue(clipboardData);
-          localStorage.setItem("rfidValue", clipboardData);
-        }
-      } catch (error) {
-        console.error("Erro ao acessar a área de transferência:", error);
-      }
-    };
-
-    const interval = setInterval(checkClipboard, 2000); // 🔥 Verifica a cada 2 segundos
-    return () => clearInterval(interval);
-  }, [rfidValue]);
-
   const handleConfirm = () => {
     console.log("Confirmado com RFID:", rfidValue);
 
@@ -93,6 +35,9 @@ const NfcScreen: React.FC = () => {
     else if (tipoCadastro === "login") destino = "/login";
 
     navigate(destino, { state: { tipoCadastro, rfid: rfidValue } });
+
+    // 🛑 Parar a reconsulta ao sair da tela
+    clearRetryInterval();
   };
 
   const isUUIDValid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{2}$/.test(rfidValue);
