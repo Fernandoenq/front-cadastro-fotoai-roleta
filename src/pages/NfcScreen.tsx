@@ -7,7 +7,7 @@ import nfcImage from "../assets/nfclogo.png";
 const NfcScreen: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { rfidValue, clearRetryInterval } = useRfidApi(); // 🔹 Usando o hook
+  const { rfidValue, clearRetryInterval, resetRfidApi } = useRfidApi(); // 🔹 Usando o hook
 
   const [tipoCadastro, setTipoCadastro] = useState<string>(
     localStorage.getItem("tipoCadastro") || location.state?.tipoCadastro || "desconhecido"
@@ -26,18 +26,16 @@ const NfcScreen: React.FC = () => {
     }
   }, [location.state]);
 
-  const handleConfirm = () => {
-    console.log("Confirmado com RFID:", rfidValue);
+  const handleAction = (destino?: string) => {
+    console.log("Ação acionada, parando consultas e resetando estado.");
+    clearRetryInterval(); // Para qualquer reconsulta
+    resetRfidApi(); // Reseta os estados do RFID (para ignorar a primeira chamada depois)
 
-    let destino = "/";
-    if (tipoCadastro === "completo") destino = "/cadastrocompleto";
-    else if (tipoCadastro === "rapido") destino = "/cadastrorapido";
-    else if (tipoCadastro === "login") destino = "/login";
-
-    navigate(destino, { state: { tipoCadastro, rfid: rfidValue } });
-
-    // 🛑 Parar a reconsulta ao sair da tela
-    clearRetryInterval();
+    if (destino) {
+      navigate(destino, { state: { tipoCadastro, rfid: rfidValue } });
+    } else {
+      navigate(-1); // Voltar para a página anterior
+    }
   };
 
   const isUUIDValid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{2}$/.test(rfidValue);
@@ -47,11 +45,23 @@ const NfcScreen: React.FC = () => {
       <h1 className="nfc-title">Passe o cartão</h1>
       <img src={nfcImage} alt="NFC" className="nfc-image" />
       <p className="rfid-data">{rfidValue ? `Cartão: ${rfidValue}` : "Aguardando leitura..."}</p>
-      <button className="nfc-button" onClick={handleConfirm} disabled={!isUUIDValid}>
+
+      <button className="nfc-button" onClick={() => handleAction()} style={{ marginBottom: "10px" }}>
+        Voltar
+      </button>
+
+      <button className="nfc-button" onClick={() => handleAction(getDestino())} disabled={!isUUIDValid}>
         Confirmar
       </button>
     </div>
   );
+
+  function getDestino() {
+    if (tipoCadastro === "completo") return "/cadastrocompleto";
+    if (tipoCadastro === "rapido") return "/cadastrorapido";
+    if (tipoCadastro === "login") return "/login";
+    return "/";
+  }
 };
 
 export default NfcScreen;
