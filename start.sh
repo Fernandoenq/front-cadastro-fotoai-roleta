@@ -30,16 +30,16 @@ sudo cp -r dist/* /var/www/bradesco-atm/
 sudo tee /etc/nginx/conf.d/bradesco-atm.conf > /dev/null <<EOF
 server {
     listen 80;
-    server_name bradesco.atm.picbrand.dev.br;
+    server_name bradesco-atm.picbrand.dev.br;
     return 301 https://\$host\$request_uri;
 }
 
 server {
     listen 443 ssl;
-    server_name bradesco.atm.picbrand.dev.br;
+    server_name bradesco-atm.picbrand.dev.br;
 
-    ssl_certificate /etc/letsencrypt/live/bradesco.atm.picbrand.dev.br/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/bradesco.atm.picbrand.dev.br/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/bradesco-atm.picbrand.dev.br/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/bradesco-atm.picbrand.dev.br/privkey.pem;
 
     root /var/www/bradesco-atm;
     index index.html;
@@ -57,11 +57,11 @@ sudo nginx -t
 sudo systemctl restart nginx || true  # Ignora erro se não rodar
 
 # 🔹 Verifica se o Certificado já existe
-if [ -f "/etc/letsencrypt/live/bradesco.atm.picbrand.dev.br/fullchain.pem" ]; then
+if [ -f "/etc/letsencrypt/live/bradesco-atm.picbrand.dev.br/fullchain.pem" ]; then
     echo "✅ Certificado SSL já existe. Pulando a geração."
 else
     echo "⚡ Gerando certificado SSL..."
-    sudo certbot certonly --nginx -d bradesco.atm.picbrand.dev.br --non-interactive --agree-tos -m seuemail@exemplo.com
+    sudo certbot certonly --nginx -d bradesco-atm.picbrand.dev.br --non-interactive --agree-tos -m seuemail@exemplo.com
 fi
 
 # 🔹 Testa e reinicia o Nginx com SSL ativado
