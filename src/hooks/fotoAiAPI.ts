@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-const API_URL = "http://127.0.0.1:5000";
+const API_URL = "http://18.231.158.211:5000";
 
 const useFotoAiAPI = () => {
   const [showPopup, setShowPopup] = useState<boolean>(false);

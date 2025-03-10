@@ -1,66 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
-import useFotoAiAPI from "../hooks/fotoAiAPI";
+import { useFetchBalanceByCpf } from "../hooks/useFetchBalanceByCpf"; // ✅ Usando o hook correto
 import "../styles/FinalScreen.css";
 
 const FinalScreen: React.FC = () => {
   const navigate = useNavigate();
-  const { sendCpf } = useFotoAiAPI();
-  const [balanceCurrentValue, setBalanceCurrentValue] = useState<number | null>(null);
-
+  
   const cpf = localStorage.getItem("cpf") || "";
+  const { balanceCurrentValue, userName, loading, error } = useFetchBalanceByCpf(cpf); // ✅ Hook correto
 
-  useEffect(() => {
-    if (!cpf) {
-      console.error("⚠️ CPF não encontrado no localStorage!");
-      return;
-    }
-
-    console.log("📌 CPF encontrado:", cpf);
-
-    // ✅ Chamando sendCpf e pegando a resposta para atualizar o saldo
-    const fetchBalance = async () => {
-        try {
-          const response = await sendCpf(cpf); // ✅ Agora pegando o retorno da função
-      
-          console.log("📩 Resposta recebida no fetchBalance:", response); // 🔹 Debug para ver o que está chegando
-      
-          // ✅ Verifica se a resposta é um array e se tem pelo menos um item válido
-          if (Array.isArray(response) && response.length > 0 && response[0]?.BalanceCurrentValue !== undefined) {
-            console.log("✅ Atualizando saldo para:", response[0].BalanceCurrentValue);
-            setBalanceCurrentValue(response[0].BalanceCurrentValue); // ✅ Pegando sempre o primeiro item corretamente
-          } else {
-            console.error("❌ Erro ao buscar saldo: Estrutura de resposta inválida.", response);
-          }
-        } catch (error) {
-          console.error("🚨 Erro ao buscar saldo:", error);
-        }
-      };
-      
-      
-
-    fetchBalance();
-  }, [cpf, sendCpf]);
-
-  const randomQRCodeURL = "https://example.com";
+  const randomQRCodeURL = "https://Bradesco.picbrand.dev.br/login";
 
   return (
     <div className="final-container">
       <h1>Obrigado por ter participado</h1>
-      <p>Parabéns Fernando Almeida</p>
+      <p>Parabéns {userName || "usuário"}</p>
 
       <div className="saldo">
-        <span>Seu saldo atual: {balanceCurrentValue !== null ? balanceCurrentValue : "Carregando..."}</span>
+        {loading ? (
+          <span>Carregando...</span>
+        ) : error ? (
+          <span className="text-danger">{error}</span>
+        ) : (
+          <span>Seu saldo atual: {balanceCurrentValue}</span>
+        )}
       </div>
 
       <p>Caso queira ver toda a sua carteira de pontos, leia o QRCode abaixo</p>
 
       <div className="qrcode">
-        <QRCodeSVG value={randomQRCodeURL} size={120} />
+        <QRCodeSVG value={randomQRCodeURL} size={520} />
       </div>
 
-      <button onClick={() => navigate("/")}>Fechar</button>
+      <button onClick={() => navigate("/redirectscreen")}>Fechar</button>
     </div>
   );
 };

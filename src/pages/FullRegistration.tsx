@@ -22,17 +22,31 @@ const CadastroCompleto: React.FC = () => {
     email: "",
     lgpd: false,
     correntista: false,
-    idadePerfil: ""
+    idadePerfil: "",
+    organizerId: localStorage.getItem("OrganizerId") || "" 
   });
+
+  useEffect(() => {
+    const storedOrganizerId = localStorage.getItem("OrganizerId");
+    if (storedOrganizerId) {
+      console.log("OrganizerId encontrado:", storedOrganizerId);
+      setFormData((prev) => ({
+        ...prev,
+        organizerId: storedOrganizerId,
+      }));
+    } else {
+      console.warn("⚠ OrganizerId não encontrado no localStorage!");
+    }
+  }, []);
 
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [activeField, setActiveField] = useState<keyof typeof formData | null>(null);
   const [inputName, setInputName] = useState<keyof typeof formData>("nome");
+  const [keyboardLayout, setKeyboardLayout] = useState<"default" | "symbols">("default"); // 🔹 Alternador de layout
 
   const cpfRef = useRef<HTMLInputElement | null>(null);
   const whatsappRef = useRef<HTMLInputElement | null>(null);
   const emailRef = useRef<HTMLInputElement | null>(null);
-
 
   useEffect(() => {
     const isValid =
@@ -41,7 +55,7 @@ const CadastroCompleto: React.FC = () => {
       validateWhatsapp(formData.whatsapp) &&
       validateEmail(formData.email) &&
       formData.lgpd &&
-      formData.idadePerfil !== ""
+      formData.idadePerfil !== "";
 
     setIsButtonEnabled(isValid);
   }, [formData]);
@@ -72,15 +86,14 @@ const CadastroCompleto: React.FC = () => {
     }));
   };
 
-
   const handleFieldClick = (field: keyof typeof formData, ref?: React.RefObject<HTMLInputElement | null>) => {
     if (activeField === field) {
       console.log(`🟡 ${field} já está ativo, mantendo sem formatar.`);
       return;
     }
-  
+
     console.log(`🔄 Mudando campo ativo para: ${field}`);
-  
+
     if (activeField === "cpf") {
       setFormData((prev) => ({
         ...prev,
@@ -88,7 +101,7 @@ const CadastroCompleto: React.FC = () => {
       }));
       console.log("✅ CPF formatado.");
     }
-  
+
     if (activeField === "whatsapp") {
       setFormData((prev) => ({
         ...prev,
@@ -96,11 +109,11 @@ const CadastroCompleto: React.FC = () => {
       }));
       console.log("✅ WhatsApp formatado.");
     }
-  
+
     setInputName(field);
     setActiveField(field);
-  
-    setTimeout(() => ref?.current?.focus(), 0); // 🛠️ Ajustado para evitar erro de null
+
+    setTimeout(() => ref?.current?.focus(), 0);
   };
 
   const handleCpfClick = (e: React.MouseEvent<HTMLInputElement>) => {
@@ -128,13 +141,11 @@ const CadastroCompleto: React.FC = () => {
 
     if (!isClickOnKeyboard) {
       console.log("🖱 Clique fora do teclado, formatando CPF e WhatsApp.");
-      handleFieldClick("nome", emailRef);
     }
   };
 
   return (
     <div className="cadastro-container" onClick={handleClickFora}>
-      
       <Popup show={showPopup} message={popupMessage} />
 
       <h1 className="cadastro-title">CADASTRO USUÁRIO</h1>
@@ -150,10 +161,21 @@ const CadastroCompleto: React.FC = () => {
               "q w e r t y u i o p",
               "a s d f g h j k l",
               "z x c v b n m .",
-              "{bksp} {space}"
+              "{symbols} {bksp} {space}"
+            ],
+            symbols: [
+              "! # $ % & * + / = ? ^ ` ~",
+              "{ } [ ] ( ) < > | \\ \" '",
+              ": ; , . _ - @",
+              "{default} {bksp} {space}"
             ]
           }}
-          display={{ "{bksp}": "Apagar", "{space}": "Espaço" }}
+          display={{ "{bksp}": "Apagar", "{space}": "Espaço", "{symbols}": "?123", "{default}": "ABC" }}
+          onKeyPress={(button) => {
+            if (button === "{symbols}") setKeyboardLayout("symbols");
+            if (button === "{default}") setKeyboardLayout("default");
+          }}
+          layoutName={keyboardLayout}
         />
       </div>
 

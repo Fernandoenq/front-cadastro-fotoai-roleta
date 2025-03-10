@@ -18,6 +18,7 @@ export const handleCadastro = async (
     HasAccount: formData.correntista,
     ExternalCode: localStorage.getItem("rfidValue") || "",
     AgeProfileId: parseInt(formData.idadePerfil),
+    OrganizerId: localStorage.getItem("OrganizerId") || "",
   };
 
 

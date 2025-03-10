@@ -11,6 +11,7 @@ const CameraScreen: React.FC = () => {
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
   const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
   const [photo, setPhoto] = useState<string | null>(null);
+  const [isCapturing, setIsCapturing] = useState<boolean>(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const navigate = useNavigate();
   const { callApi } = useApi();
@@ -26,11 +27,25 @@ const CameraScreen: React.FC = () => {
   }, [devices]);
 
   const handleCapture = () => {
-    console.log("📸 Tentando capturar foto...");
-    const base64Image = captureImage(document.querySelector("video"), canvasRef.current);
-    if (base64Image) {
-      setPhoto(base64Image);
-      uploadImage(base64Image, callApi, navigate);
+    console.log("📸 Iniciando contagem regressiva para captura...");
+    setIsCapturing(true);
+    setTimeout(() => {
+      console.log("📸 Capturando foto...");
+      const base64Image = captureImage(document.querySelector("video"), canvasRef.current);
+      if (base64Image) {
+        setPhoto(base64Image);
+      }
+      setIsCapturing(false);
+    }, 5000); // Tempo de espera de 5 segundos
+  };
+
+  const handleRetake = () => {
+    setPhoto(null);
+  };
+
+  const handleProceed = () => {
+    if (photo) {
+      uploadImage(photo, callApi, navigate);
     }
   };
 
@@ -49,7 +64,11 @@ const CameraScreen: React.FC = () => {
       </div>
 
       <div className="capture-container">
-        <button className="capture-button" onClick={handleCapture}>📸 Tirar Foto</button>
+        {isCapturing ? (
+          <p>⏳ Preparando para captura...</p>
+        ) : (
+          !photo && <button className="capture-button" onClick={handleCapture}>📸 Tirar Foto</button>
+        )}
       </div>
 
       <canvas ref={canvasRef} style={{ display: 'none' }} />
@@ -58,6 +77,10 @@ const CameraScreen: React.FC = () => {
         <div className="photo-container">
           <h4>📸 Foto Capturada:</h4>
           <img src={photo} alt="Foto Capturada" className="captured-photo" />
+          <div className="photo-actions">
+            <button className="retake-button" onClick={handleRetake}>🔄 Tirar Outra Foto</button>
+            <button className="proceed-button" onClick={handleProceed}>✅ Continuar</button>
+          </div>
         </div>
       )}
     </div>
