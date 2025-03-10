@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect  } from "react";
 import { useNavigate } from "react-router-dom";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
@@ -13,7 +13,6 @@ const CadastroRapido: React.FC = () => {
   const [rfidValue, setRfidValue] = useState(localStorage.getItem("rfidValue") || "");
   const [cpf, setCpf] = useState("");
   const [isCpfValid, setIsCpfValid] = useState(false);
-  const [inputName, setInputName] = useState<"cpf">("cpf");
   const [activeField, setActiveField] = useState<"cpf" | null>(null);
 
   // Referência para o campo CPF
@@ -40,6 +39,16 @@ const CadastroRapido: React.FC = () => {
 
     setTimeout(() => cpfRef.current?.focus(), 0);
   };
+
+  useEffect(() => {
+    const storedRfid = localStorage.getItem("rfidValue");
+    if (storedRfid) {
+      console.log("🎟 RFID recuperado do localStorage:", storedRfid);
+      setRfidValue(storedRfid);
+    } else {
+      console.warn("⚠ Nenhum RFID encontrado no localStorage.");
+    }
+  }, []);
 
   const handleClickFora = (e: React.MouseEvent<HTMLDivElement>) => {
     const isClickOnKeyboard = e.target instanceof HTMLElement && e.target.closest(".keyboard-container");
@@ -102,7 +111,6 @@ const CadastroRapido: React.FC = () => {
       <div className="keyboard-container">
         <Keyboard
           onChange={handleKeyboardChange}
-          inputName={inputName}
           layout={{
             default: [
               "1 2 3 4 5 6 7 8 9 0",

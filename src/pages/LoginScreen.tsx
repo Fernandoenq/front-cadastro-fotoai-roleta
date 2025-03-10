@@ -13,7 +13,6 @@ const LoginScreen: React.FC = () => {
   const [login, setLogin] = useState<string>("");
   const [secretKey, setSecretKey] = useState<string>("");
   const [inputName, setInputName] = useState<"login" | "secretKey">("login");
-  const [apiResponse, setApiResponse] = useState(null);
 
   const handleKeyboardChange = (input: string) => {
     if (inputName === "login") {
@@ -30,7 +29,6 @@ const LoginScreen: React.FC = () => {
     };
   
     const response = await callApi("/Organizer/Login", "PUT", loginData);
-    setApiResponse(response);
   
     if (response && response.Organizers && response.Organizers.length > 0) { 
       localStorage.setItem("OrganizerId", response.Organizers[0].OrganizerId.toString());

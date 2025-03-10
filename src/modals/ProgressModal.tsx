@@ -1,7 +1,6 @@
 import React, { useState } from "react"; 
 import "../styles/ProgressModal.css";
 import { useApi } from '../hooks/useApi'; 
-import { useNavigate } from "react-router-dom"; 
 import useFotoAiAPI from '../hooks/fotoAiAPI'
 
 interface ProgressModalProps {
@@ -15,8 +14,7 @@ interface ProgressModalProps {
 const ProgressModal: React.FC<ProgressModalProps> = ({ isOpen, progress, imageUrls, onClose, errorMessage }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { callApi } = useApi();
-  const navigate = useNavigate(); 
+  const { callApi } = useApi(); 
   const { sendImageName } = useFotoAiAPI();
 
   if (!isOpen) return null;

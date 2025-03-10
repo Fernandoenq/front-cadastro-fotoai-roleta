@@ -68,7 +68,7 @@ const CadastroCompleto: React.FC = () => {
     }));
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     console.log(`✏ Editando ${name}:`, value);
     setFormData((prev) => ({
@@ -76,6 +76,7 @@ const CadastroCompleto: React.FC = () => {
       [name]: value,
     }));
   };
+  
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
@@ -140,7 +141,7 @@ const CadastroCompleto: React.FC = () => {
     const isClickOnKeyboard = e.target instanceof HTMLElement && e.target.closest(".keyboard-container");
 
     if (!isClickOnKeyboard) {
-      console.log("🖱 Clique fora do teclado, formatando CPF e WhatsApp.");
+      console.log("🖱 Clique fora do teclado, formatando CPF e WhatsApp."); 
     }
   };
 

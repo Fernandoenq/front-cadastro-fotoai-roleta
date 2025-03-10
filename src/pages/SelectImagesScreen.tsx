@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/SelectImagesScreen.css";
-import { images, ImageItem } from "../data/imageData"; 
+import { images } from "../data/imageData"; 
 import logo from "../assets/logo.png"; 
 import useFotoAiAPI from "../hooks/fotoAiAPI";
 import ProgressModal from "../modals/ProgressModal";
