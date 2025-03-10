@@ -21,44 +21,13 @@ if [ ! -d "dist" ]; then
     exit 1
 fi
 
-# 🔹 Copia os arquivos do React para a pasta pública do Nginx
-sudo rm -rf /usr/share/nginx/html/*  # Remove arquivos antigos para evitar conflitos
-sudo cp -r dist/* /usr/share/nginx/html/
+# 🔹 Criando diretório exclusivo para esse projeto
+sudo mkdir -p /var/www/bradesco-atm
+sudo rm -rf /var/www/bradesco-atm/*  # Remove arquivos antigos
+sudo cp -r dist/* /var/www/bradesco-atm/
 
-# 🔹 Remove qualquer configuração antiga do Nginx
-sudo rm -f /etc/nginx/conf.d/*.conf
-
-# 🔹 Configuração temporária do Nginx (sem SSL, apenas HTTP)
-sudo tee /etc/nginx/conf.d/front-cadastro-fotoai-roleta.conf > /dev/null <<EOF
-server {
-    listen 80;
-    server_name bradesco.atm.picbrand.dev.br;
-
-    location / {
-        root /usr/share/nginx/html;
-        index index.html;
-        try_files \$uri /index.html;
-    }
-}
-EOF
-
-# 🔹 Testa e inicia o Nginx sem SSL
-sudo nginx -t
-sudo systemctl restart nginx || true  # Ignora erro se não rodar
-
-# 🔹 Aguarda alguns segundos para garantir que o site está online
-sleep 5
-
-# 🔹 Verifica se o Certificado já existe
-if [ -f "/etc/letsencrypt/live/bradesco.atm.picbrand.dev.br/fullchain.pem" ]; then
-    echo "✅ Certificado SSL já existe. Pulando a geração."
-else
-    echo "⚡ Gerando certificado SSL..."
-    sudo certbot certonly --nginx -d bradesco.atm.picbrand.dev.br --non-interactive --agree-tos -m seuemail@exemplo.com
-fi
-
-# 🔹 Atualiza a configuração do Nginx para usar HTTPS agora que temos o SSL
-sudo tee /etc/nginx/conf.d/front-cadastro-fotoai-roleta.conf > /dev/null <<EOF
+# 🔹 Configuração do Nginx para esse novo projeto
+sudo tee /etc/nginx/conf.d/bradesco-atm.conf > /dev/null <<EOF
 server {
     listen 80;
     server_name bradesco.atm.picbrand.dev.br;
@@ -72,7 +41,7 @@ server {
     ssl_certificate /etc/letsencrypt/live/bradesco.atm.picbrand.dev.br/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/bradesco.atm.picbrand.dev.br/privkey.pem;
 
-    root /usr/share/nginx/html;
+    root /var/www/bradesco-atm;
     index index.html;
 
     location / {
@@ -82,6 +51,18 @@ server {
     error_page 404 /404.html;
 }
 EOF
+
+# 🔹 Testa e inicia o Nginx
+sudo nginx -t
+sudo systemctl restart nginx || true  # Ignora erro se não rodar
+
+# 🔹 Verifica se o Certificado já existe
+if [ -f "/etc/letsencrypt/live/bradesco.atm.picbrand.dev.br/fullchain.pem" ]; then
+    echo "✅ Certificado SSL já existe. Pulando a geração."
+else
+    echo "⚡ Gerando certificado SSL..."
+    sudo certbot certonly --nginx -d bradesco.atm.picbrand.dev.br --non-interactive --agree-tos -m seuemail@exemplo.com
+fi
 
 # 🔹 Testa e reinicia o Nginx com SSL ativado
 sudo nginx -t
