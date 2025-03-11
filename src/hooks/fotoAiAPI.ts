@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-const API_URL = "https://18.231.158.211:5000";
+const API_URL = "https://api-fotoai.picbrand.dev.br";
 
 const useFotoAiAPI = () => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
