@@ -1,6 +1,6 @@
 import { useState } from "react"; 
 
-const API_BASE_URL = "http://18.231.158.211:3335"; // Base da API
+const API_BASE_URL = "https://api-back.picbrand.dev.br"; // Base da API
 
 // Use API 2 (Agora com popup)
 export const useApi = () => {

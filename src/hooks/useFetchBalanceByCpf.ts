@@ -32,7 +32,7 @@ export function useFetchBalanceByCpf(cpf: string | null) {
       setError(null);
 
       try {
-        const response = await fetch("http://18.231.158.211:3335/Dashboard/GetBalanceByCpf", {
+        const response = await fetch("https://api-back.picbrand.dev.br/Dashboard/GetBalanceByCpf", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
