@@ -8,7 +8,6 @@ import wheel from "../assets/wheel.png";
 const RoletaScreen: React.FC = () => {
   const [rotation, setRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
-  const [selectedPrize, setSelectedPrize] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -65,8 +64,6 @@ const RoletaScreen: React.FC = () => {
       setIsSpinning(false);
       return;
     }
-
-    setSelectedPrize(prize);
 
     const prizeIndex = prizes.findIndex(prizeItem => prizeItem.name === prize);
     if (prizeIndex === -1) {
