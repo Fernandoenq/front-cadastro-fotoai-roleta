@@ -12,18 +12,11 @@ import clock from "../assets/prizes/clock.png";
 import microphone from "../assets/prizes/microphone.png"; // Para o caso de não ganhar nada
 
 const prizes = [
-  { name: "Mochila Executiva", image: bag },
-  { name: "Fone Bluetooth", image: headset },
-  { name: "Garrafa Térmica", image: plastic_bottle },
-  { name: "Caneca Personalizada", image: mug },
-  { name: "Camiseta Exclusiva", image: shirt },
-  { name: "Mouse Gamer", image: mouse },
-  { name: "Teclado Mecânico", image: teclado },
-  { name: "Carregador Portátil", image: powerbank },
-  { name: "Boné Personalizado", image: hat },
-  { name: "Óculos", image: glasses },
-  { name: "Relógio Inteligente", image: clock },
-  { name: "Microfone ", image: microphone }, // Caso não ganhe nada
+  { name: "Nao foi dessa vez", image: bag },
+  { name: "Ingresso Sábado 29/03", image: headset },
+  { name: "Nao foi dessa vez", image: plastic_bottle },
+  { name: "Ingresso Sábado 30/03", image: mug },
 ];
 
 export default prizes;
+
