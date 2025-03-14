@@ -16,6 +16,7 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/loginpromotor" element={<LoginScreen />} />
+        <Route path="/" element={<LoginScreen />} />
         <Route path="/redirectscreen" element={<RedirectScreen />} />
         <Route path="/nfcscreen" element={<NfcScreen />} />
         <Route path="/cadastrocompleto" element={<CadastroCompleto />} />

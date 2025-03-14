@@ -12,10 +12,10 @@ import clock from "../assets/prizes/clock.png";
 import microphone from "../assets/prizes/microphone.png"; // Para o caso de não ganhar nada
 
 const prizes = [
-  { name: "Nao foi dessa vez", image: bag },
-  { name: "Ingresso Sábado 29/03", image: headset },
-  { name: "Nao foi dessa vez", image: plastic_bottle },
-  { name: "Ingresso Sábado 30/03", image: mug },
+  { name: "Não Foi dessa Vez", image: bag },
+  { name: "Ingresso 29/03", image: headset },
+  { name: "Não Foi dessa Vez", image: plastic_bottle },
+  { name: "Ingresso 30/03", image: mug },
 ];
 
 export default prizes;

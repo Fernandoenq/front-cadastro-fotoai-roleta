@@ -4,11 +4,10 @@ import prizes from "../data/prizes"; // ✅ Importa a lista de prêmios
 import "../styles/PrizeScreen.css";
 
 const PrizeScreen: React.FC = () => {
-  const { prizeName } = useParams(); // ✅ Pega o nome do prêmio da URL
   const navigate = useNavigate();
-
-  // 🔹 Encontra o prêmio na lista
-  const prize = prizes.find(prize => prize.name === prizeName);
+  const { prizeName } = useParams<{ prizeName?: string }>(); // Defina prizeName como opcional
+  const decodedPrizeName = decodeURIComponent(prizeName || ""); // Garante que prizeName nunca seja undefined
+  const prize = prizes.find(prize => prize.name === decodedPrizeName);
 
   if (!prize) {
     return (
@@ -29,3 +28,4 @@ const PrizeScreen: React.FC = () => {
 };
 
 export default PrizeScreen;
+

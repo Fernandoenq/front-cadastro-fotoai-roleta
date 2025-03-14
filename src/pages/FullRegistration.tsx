@@ -57,6 +57,7 @@ const CadastroCompleto: React.FC = () => {
       formData.lgpd &&
       formData.idadePerfil !== "";
 
+    localStorage.setItem("cpf", formData.cpf);
     setIsButtonEnabled(isValid);
   }, [formData]);
 

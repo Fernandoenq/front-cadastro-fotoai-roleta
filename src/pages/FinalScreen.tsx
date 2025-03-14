@@ -10,7 +10,7 @@ const FinalScreen: React.FC = () => {
   const cpf = localStorage.getItem("cpf") || "";
   const { balanceCurrentValue, userName, loading, error } = useFetchBalanceByCpf(cpf); // ✅ Hook correto
 
-  const randomQRCodeURL = "https://bradesco-pre-cadastro.picbrand.dev.br/login";
+  const randomQRCodeURL = "https://bradesco.picbrand.dev.br/login";
 
   return (
     <div className="final-container">

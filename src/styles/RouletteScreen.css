@@ -9,13 +9,13 @@
 }
 
 h1 {
-    font-size: 3vh; /* Tamanho do texto proporcional à tela */
+    font-size: 3vh; 
     margin-bottom: 2vh;
 }
 
 .roleta-wrapper {
     position: relative;
-    width: 30vh; /* Tamanho relativo à altura da tela */
+    width: 30vh; 
     height: 30vh;
 }
 
@@ -25,7 +25,7 @@ h1 {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1; /* Roleta fixa no fundo */
+    z-index: 1; 
 }
 
 .pointer {
@@ -34,8 +34,8 @@ h1 {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2; /* Ponteiro acima da roleta */
-    transition: transform 3s ease-out; /* 🔹 Suaviza o giro */
+    z-index: 2; 
+    transition: transform 3s ease-out; 
 }
 
 .roleta-button {
