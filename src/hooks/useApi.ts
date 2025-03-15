@@ -5,7 +5,7 @@ const API_BASE_URL = "https://api-back.picbrand.dev.br";
 export const useApi = () => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [popupMessage, setPopupMessage] = useState<string>("");
-  console.log(FormData)
+
   const callApi = async (
     endpoint: string, 
     method: "GET" | "POST" | "PUT" | "DELETE", 
@@ -13,7 +13,18 @@ export const useApi = () => {
   ) => {
     try {
       const isFormData = body instanceof FormData;
+
+      console.log("🟢 Endpoint chamado:", `${API_BASE_URL}${endpoint}`);
+      console.log("🟡 Método:", method);
+      console.log("🟠 Corpo da requisição:", body);
+      console.log("🔵 FormData?", isFormData);
       
+      if (isFormData) {
+        for (let [key, value] of (body as FormData).entries()) {
+          console.log(`📦 FormData - ${key}:`, value);
+        }
+      }
+
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method,
         headers: isFormData ? {} : { "Content-Type": "application/json" }, 

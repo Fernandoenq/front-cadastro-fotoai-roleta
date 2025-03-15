@@ -24,26 +24,39 @@ const ProgressModal: React.FC<ProgressModalProps> = ({ isOpen, progress, imageUr
   const handleConfirm = async () => {
     if (!selectedImage) return;
     setIsSubmitting(true);
-
+  
     try {
       let cpf = localStorage.getItem("cpf") || "";
       if (!cpf) {
         console.error("⚠️ CPF não encontrado no localStorage!");
         return;
       }
-
-      const response = await callApi("/Image/SaveImage", "POST", { imageName: selectedImage, cpf });
-
-      if (response?.ImageName) {
-        console.log("✅ Nome da imagem recebido:", response.ImageName);
-        localStorage.setItem("Foto", response.ImageName);
-
-        const newImageName = await sendImageName(response.ImageName, cpf);
+  
+      // Converte a URL da imagem em um arquivo Blob
+      const response = await fetch(selectedImage);
+      const blob = await response.blob();
+      const file = new File([blob], "image.png", { type: "image/png" });
+  
+      // Criar FormData (igual ao Postman)
+      const formData = new FormData();
+      formData.append("file", file); // Adiciona a imagem como arquivo
+      formData.append("cpf", cpf);   // Adiciona o CPF como texto
+  
+      console.log("📤 Enviando arquivo e CPF:", formData);
+  
+      // Chamar a API com FormData
+      const apiResponse = await callApi("/Image/SaveImage", "POST", formData);
+  
+      if (apiResponse?.ImageName) {
+        console.log("✅ Nome da imagem recebido:", apiResponse.ImageName);
+        localStorage.setItem("Foto", apiResponse.ImageName);
+  
+        const newImageName = await sendImageName(apiResponse.ImageName, cpf);
         if (newImageName) {
           console.log("✅ Novo nome da imagem processada recebido:", newImageName);
           localStorage.setItem("ProcessedFoto", newImageName);
         }
-
+  
         navigate("/finalimage");
       } else {
         console.error("❌ Erro ao receber nome da imagem.");
@@ -54,6 +67,7 @@ const ProgressModal: React.FC<ProgressModalProps> = ({ isOpen, progress, imageUr
       setIsSubmitting(false);
     }
   };
+  
 
   return (
     <div className="modal-overlay">
