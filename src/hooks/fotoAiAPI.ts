@@ -12,53 +12,62 @@ const useFotoAiAPI = () => {
     setTimeout(() => setShowPopup(false), 3000);
   };
 
-  const sendS3Url = useCallback(async (s3Url: string, onProgress: (progress: number) => void, onComplete: (images: string[]) => void, onError: (error: string) => void) => {
+  const sendS3Url = useCallback(async (
+    s3Url: string,
+    onProgress: (progress: number | string) => void,
+    onComplete: (images: string[]) => void,
+    onError: (error: string) => void
+  ) => {
     try {
       const response = await fetch(`${API_URL}/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ s3Url }),
       });
-
+  
       const data = await response.json();
       if (!data.task_id) {
         showMessage("❌ Erro ao gerar a imagem");
         onError("Erro ao gerar a imagem");
         return;
       }
-
+  
       console.log("✅ Task ID recebido:", data.task_id);
       const taskId = data.task_id;
-
+  
       const eventSource = new EventSource(`${API_URL}/progress/${taskId}`);
-
+  
       eventSource.onmessage = (event) => {
         const statusData = JSON.parse(event.data);
-
-        if (statusData.progress) {
-          onProgress(Number(statusData.progress));
+        console.log("📶 Progresso recebido:", statusData.progress);
+  
+        if (typeof statusData.progress === "number") {
+          onProgress(statusData.progress);
+        } else if (typeof statusData.progress === "string") {
+          onProgress(statusData.progress); // Exibir status como string se necessário
         }
-
+  
         if (statusData.image_urls) {
           showMessage("✅ Imagens geradas com sucesso!");
           onComplete(statusData.image_urls);
           eventSource.close();
         }
       };
-
+  
       eventSource.onerror = (error) => {
-        console.error("Erro no SSE:", error);
+        console.error("❌ Erro no SSE:", error);
         eventSource.close();
         showMessage("❌ Erro ao buscar progresso da imagem");
         onError("Erro ao buscar progresso da imagem");
       };
-
+  
     } catch (error) {
       console.error("❌ Erro ao conectar com o servidor:", error);
       showMessage("❌ Erro ao conectar com o servidor");
       onError("Erro ao conectar com o servidor");
     }
   }, []);
+  
 
   const sendImageName = useCallback(async (imageName: string, cpf: string) => {
     try {

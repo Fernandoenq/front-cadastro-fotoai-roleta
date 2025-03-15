@@ -1,11 +1,12 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import "../styles/ProgressModal.css";
-import { useApi } from '../hooks/useApi'; 
-import useFotoAiAPI from '../hooks/fotoAiAPI'
+import { useApi } from '../hooks/useApi';
+import useFotoAiAPI from '../hooks/fotoAiAPI';
+import { useNavigate } from "react-router-dom";
 
 interface ProgressModalProps {
   isOpen: boolean;
-  progress: number;
+  progress: number | string;
   imageUrls: string[];
   onClose: () => void;
   errorMessage: string | null;
@@ -14,75 +15,36 @@ interface ProgressModalProps {
 const ProgressModal: React.FC<ProgressModalProps> = ({ isOpen, progress, imageUrls, onClose, errorMessage }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { callApi } = useApi(); 
+  const { callApi } = useApi();
   const { sendImageName } = useFotoAiAPI();
+  const navigate = useNavigate();
 
   if (!isOpen) return null;
-
-  const convertImageToBlob = async (imageUrl: string): Promise<Blob | null> => {
-    try {
-      console.log("📸 Convertendo imagem para Base64:", imageUrl);
-
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-
-      const base64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.onerror = reject;
-      });
-
-      console.log("✅ Imagem convertida para Base64!");
-
-      const byteCharacters = atob(base64.split(",")[1]);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      return new Blob([byteArray], { type: "image/png" });
-    } catch (error) {
-      console.error("❌ Erro ao converter imagem:", error);
-      return null;
-    }
-  };
 
   const handleConfirm = async () => {
     if (!selectedImage) return;
     setIsSubmitting(true);
 
     try {
-      const blob = await convertImageToBlob(selectedImage);
-      if (!blob) throw new Error("Erro ao converter a imagem.");
-
       let cpf = localStorage.getItem("cpf") || "";
       if (!cpf) {
         console.error("⚠️ CPF não encontrado no localStorage!");
         return;
       }
 
-      const formData = new FormData();
-      formData.append("file", blob, "selected-image.png");
-      formData.append("cpf", cpf);
-
-      const response = await callApi("/Image/SaveImage", "POST", formData);
+      const response = await callApi("/Image/SaveImage", "POST", { imageName: selectedImage, cpf });
 
       if (response?.ImageName) {
         console.log("✅ Nome da imagem recebido:", response.ImageName);
         localStorage.setItem("Foto", response.ImageName);
 
-        // ✅ Enviamos para o Flask e aguardamos a resposta antes de abrir a nova página
         const newImageName = await sendImageName(response.ImageName, cpf);
-
         if (newImageName) {
           console.log("✅ Novo nome da imagem processada recebido:", newImageName);
           localStorage.setItem("ProcessedFoto", newImageName);
         }
 
-        window.open("/finalimage");
-        //navigate("/finalimage");
-
+        navigate("/finalimage");
       } else {
         console.error("❌ Erro ao receber nome da imagem.");
       }
@@ -104,12 +66,14 @@ const ProgressModal: React.FC<ProgressModalProps> = ({ isOpen, progress, imageUr
             <button className="close-button" onClick={onClose}>Fechar</button>
           </>
         ) : imageUrls.length === 0 ? (
-          <>
-            <p>Progresso: {progress}%</p>
-            <div className="progress-bar">
-              <div className="progress-fill" style={{ width: `${progress}%` }}></div>
-            </div>
-          </>
+          typeof progress === "number" ? (
+            <>
+              <p>Progresso: {progress}%</p>
+              <div className="progress-bar">
+                <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+              </div>
+            </>
+          ) : null
         ) : (
           <>
             <h3>Selecione uma imagem</h3>

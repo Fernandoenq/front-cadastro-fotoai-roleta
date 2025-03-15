@@ -12,6 +12,7 @@ const CameraScreen: React.FC = () => {
   const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
   const [photo, setPhoto] = useState<string | null>(null);
   const [isCapturing, setIsCapturing] = useState<boolean>(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const navigate = useNavigate();
   const { callApi } = useApi();
@@ -29,14 +30,23 @@ const CameraScreen: React.FC = () => {
   const handleCapture = () => {
     console.log("📸 Iniciando contagem regressiva para captura...");
     setIsCapturing(true);
-    setTimeout(() => {
-      console.log("📸 Capturando foto...");
-      const base64Image = captureImage(document.querySelector("video"), canvasRef.current);
-      if (base64Image) {
-        setPhoto(base64Image);
+    setCountdown(5);
+    
+    let counter = 5;
+    const interval = setInterval(() => {
+      counter--;
+      setCountdown(counter);
+      if (counter === 0) {
+        clearInterval(interval);
+        console.log("📸 Capturando foto...");
+        const base64Image = captureImage(document.querySelector("video"), canvasRef.current);
+        if (base64Image) {
+          setPhoto(base64Image);
+        }
+        setIsCapturing(false);
+        setCountdown(null);
       }
-      setIsCapturing(false);
-    }, 5000); // Tempo de espera de 5 segundos
+    }, 1000);
   };
 
   const handleRetake = () => {
@@ -65,7 +75,7 @@ const CameraScreen: React.FC = () => {
 
       <div className="capture-container">
         {isCapturing ? (
-          <p>⏳ Preparando para captura...</p>
+          <p className="countdown">⏳ Capturando em {countdown}...</p>
         ) : (
           !photo && <button className="capture-button" onClick={handleCapture}>📸 Tirar Foto</button>
         )}

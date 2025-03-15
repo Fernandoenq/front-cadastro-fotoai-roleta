@@ -26,13 +26,7 @@ const App: React.FC = () => {
         <Route path="/finalimage" element={<FinalImageScreen />} />
         <Route path="/roleta" element={<RoletaScreen />} />
         <Route path="/roleta/:prizeName" element={<PrizeScreen />} /> 
-        <Route path="/finalscreen" element={<FinalScreen />} /> 
-        
-        
-        
-        
-        
-        
+        <Route path="/finalscreen" element={<FinalScreen />} />         
       </Routes>
     </Router>
   );

@@ -3,11 +3,13 @@ import { useState, useEffect, useRef } from "react";
 const useRfidApi = () => {
   const [rfidValue, setRfidValue] = useState("");
   const retryIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const isFirstCallDone = useRef(false); // 🔹 Controla a primeira chamada única
+  const isFirstCallDone = useRef(false);
+  const isUnmounted = useRef(false); // 🔹 Flag para evitar chamadas desnecessárias após desmontar
 
   const fetchRfidFromApi = async () => {
     try {
+      if (isUnmounted.current) return; // 🔹 Evita requisições desnecessárias se o hook foi desmontado
+
       const organizerId = localStorage.getItem("OrganizerId");
       if (!organizerId) {
         console.error("OrganizerId não encontrado no localStorage.");
@@ -42,7 +44,6 @@ const useRfidApi = () => {
         console.log("✅ Valor RFID recebido da API:", data.ExternalCode);
         setRfidValue(data.ExternalCode);
         localStorage.setItem("rfidValue", data.ExternalCode);
-
         stopRetry(); // 🚀 Assim que um RFID válido for encontrado, para as consultas
       } else {
         console.warn("Nenhum ExternalCode retornado pela API.");
@@ -55,7 +56,9 @@ const useRfidApi = () => {
   };
 
   const startRetry = () => {
-    if (!retryIntervalRef.current && !rfidValue) { // 🔹 Só inicia se ainda não houver um RFID válido
+    if (isUnmounted.current) return; // 🔹 Evita iniciar intervalos se o hook foi desmontado
+
+    if (!retryIntervalRef.current && !rfidValue) {
       console.log("Iniciando ciclos de consulta a cada 10 segundos...");
       retryIntervalRef.current = setInterval(fetchRfidFromApi, 10000);
     }
@@ -66,10 +69,6 @@ const useRfidApi = () => {
       clearInterval(retryIntervalRef.current);
       retryIntervalRef.current = null;
     }
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
     console.log("🚀 Chamadas da API foram interrompidas!");
   };
 
@@ -77,19 +76,23 @@ const useRfidApi = () => {
     console.log("🔄 Resetando estado do RFID API...");
     stopRetry();
     setRfidValue("");
-    isFirstCallDone.current = false; // 🔹 Garante que a primeira chamada ocorra de novo na reabertura
+    isFirstCallDone.current = false;
   };
 
   useEffect(() => {
+    isUnmounted.current = false; // 🔹 Define como montado
+
     if (!isFirstCallDone.current) {
-      isFirstCallDone.current = true; // 🔹 Marca que a primeira chamada foi feita
-      console.log("📡 Primeira chamada à API (ignorada para iniciar ciclos futuros)...");
-      fetchRfidFromApi(); // Faz a primeira chamada única
+      isFirstCallDone.current = true;
+      console.log("📡 Primeira chamada à API...");
+      fetchRfidFromApi();
       setTimeout(startRetry, 10000); // Inicia os ciclos após 10 segundos
     }
 
     return () => {
-      stopRetry(); // Limpar intervalos ao desmontar
+      console.log("🛑 Hook desmontado! Limpando tudo...");
+      isUnmounted.current = true; // 🔹 Marca que o hook foi desmontado
+      stopRetry();
     };
   }, []);
 

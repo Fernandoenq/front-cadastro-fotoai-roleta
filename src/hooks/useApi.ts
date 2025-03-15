@@ -6,7 +6,7 @@ const API_BASE_URL = "https://api-back.picbrand.dev.br"; // Base da API
 export const useApi = () => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [popupMessage, setPopupMessage] = useState<string>("");
-
+  console.log(FormData)
   const callApi = async (
     endpoint: string, 
     method: "GET" | "POST" | "PUT" | "DELETE", 

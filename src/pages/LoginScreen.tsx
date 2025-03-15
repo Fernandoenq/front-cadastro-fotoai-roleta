@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
@@ -13,6 +13,14 @@ const LoginScreen: React.FC = () => {
   const [login, setLogin] = useState<string>("");
   const [secretKey, setSecretKey] = useState<string>("");
   const [inputName, setInputName] = useState<"login" | "secretKey">("login");
+  const [showKeyboard, setShowKeyboard] = useState<boolean>(true); // Estado para exibir ou ocultar o teclado
+
+  // Verifica se o dispositivo é móvel ao carregar a página
+  useEffect(() => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    setShowKeyboard(!isMobile || window.innerWidth > 768); // Evita que o modo dev afete a lógica
+    //setShowKeyboard(true); // Apenas para testes, sempre mostra o teclado
+  }, []);
 
   const handleKeyboardChange = (input: string) => {
     if (inputName === "login") {
@@ -75,22 +83,25 @@ const LoginScreen: React.FC = () => {
         Entrar
       </button>
 
-      <div className="keyboard-container">
-        <Keyboard
-          onChange={handleKeyboardChange}
-          inputName={inputName}
-          layout={{
-            default: [
-              "1 2 3 4 5 6 7 8 9 0 - _ @",
-              "q w e r t y u i o p",
-              "a s d f g h j k l",
-              "z x c v b n m .",
-              "{bksp} {space}"
-            ]
-          }}
-          display={{ "{bksp}": "Apagar", "{space}": "Espaço" }}
-        />
-      </div>
+      {/* Renderiza o teclado virtual apenas se showKeyboard for true */}
+      {showKeyboard && (
+        <div className="keyboard-container">
+          <Keyboard
+            onChange={handleKeyboardChange}
+            inputName={inputName}
+            layout={{
+              default: [
+                "1 2 3 4 5 6 7 8 9 0 - _ @",
+                "q w e r t y u i o p",
+                "a s d f g h j k l",
+                "z x c v b n m .",
+                "{bksp} {space}"
+              ]
+            }}
+            display={{ "{bksp}": "Apagar", "{space}": "Espaço" }}
+          />
+        </div>
+      )}
 
       <p className="footer-text">HOLDING CLUBE</p>
     </div>

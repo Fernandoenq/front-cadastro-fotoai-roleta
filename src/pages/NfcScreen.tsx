@@ -34,7 +34,7 @@ const NfcScreen: React.FC = () => {
     if (destino) {
       navigate(destino, { state: { tipoCadastro, rfid: rfidValue } });
     } else {
-      navigate(-1); // Voltar para a página anterior
+      navigate("/redirectscreen"); // Voltar para a página anterior
     }
   };
 

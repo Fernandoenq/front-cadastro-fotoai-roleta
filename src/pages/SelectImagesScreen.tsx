@@ -13,7 +13,7 @@ const SelectImageScreen: React.FC = () => {
   const { sendS3Url } = useFotoAiAPI();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState<number | string>(0); // ✅ Agora aceita string e número
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -26,10 +26,8 @@ const SelectImageScreen: React.FC = () => {
       const s3Url = `https://${bucketName}.s3.${region}.amazonaws.com/${localStorageValue}`;
       const updatedPrompt = selected.prompt.replace("<>", s3Url);
 
-      alert(`Imagem ${selected.id} selecionada!\nPrompt: ${updatedPrompt}`);
       console.log(`Imagem ${selected.id} selecionada!\nPrompt: ${updatedPrompt}\nDownload: ${s3Url}`);
 
-      // Abre o modal e inicia o envio
       setIsModalOpen(true);
       setProgress(0);
       setImageUrls([]);
@@ -63,7 +61,13 @@ const SelectImageScreen: React.FC = () => {
         Continuar
       </button>
 
-      <ProgressModal isOpen={isModalOpen} progress={progress} imageUrls={imageUrls} errorMessage={errorMessage} onClose={() => setIsModalOpen(false)} />
+      <ProgressModal 
+        isOpen={isModalOpen} 
+        progress={progress} 
+        imageUrls={imageUrls} 
+        errorMessage={errorMessage} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </div>
   );
 };
