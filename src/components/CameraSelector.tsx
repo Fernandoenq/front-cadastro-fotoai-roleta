@@ -7,7 +7,7 @@ interface CameraSelectorProps {
 }
 
 const CameraSelector: React.FC<CameraSelectorProps> = ({ devices, selectedDevice, setSelectedDevice }) => {
-  if (devices.length <= 1) return null; // Só mostra o seletor se houver mais de uma câmera
+  if (devices.length <= 1) return null; 
 
   return (
     <div>

@@ -42,7 +42,7 @@ const CadastroCompleto: React.FC = () => {
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [activeField, setActiveField] = useState<keyof typeof formData | null>(null);
   const [inputName, setInputName] = useState<keyof typeof formData>("nome");
-  const [keyboardLayout, setKeyboardLayout] = useState<"default" | "symbols">("default"); // 🔹 Alternador de layout
+  const [keyboardLayout, setKeyboardLayout] = useState<"default" | "symbols">("default"); 
 
   const cpfRef = useRef<HTMLInputElement | null>(null);
   const whatsappRef = useRef<HTMLInputElement | null>(null);
@@ -57,7 +57,7 @@ const CadastroCompleto: React.FC = () => {
       formData.lgpd &&
       formData.idadePerfil !== "";
 
-    localStorage.setItem("cpf", formData.cpf);
+    
     setIsButtonEnabled(isValid);
   }, [formData]);
 
@@ -217,6 +217,8 @@ const CadastroCompleto: React.FC = () => {
         </label>
       </div>
 
+      <button className="cadastro-button" onClick={() => navigate("/redirectscreen")}>Voltar</button>
+
       <button
         className="cadastro-button"
         onClick={() => handleCadastro(formData, callApi, navigate)}
@@ -224,6 +226,7 @@ const CadastroCompleto: React.FC = () => {
       >
   CADASTRAR
 </button>
+
 
 
     </div>

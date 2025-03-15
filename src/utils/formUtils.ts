@@ -21,6 +21,7 @@ export const handleCadastro = async (
     OrganizerId: localStorage.getItem("OrganizerId") || "",
   };
 
+  
 
   console.log("📤 Enviando dados para API:", registerData);
   localStorage.setItem("cpf", registerData.Cpf);

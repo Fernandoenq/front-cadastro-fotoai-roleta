@@ -1,8 +1,7 @@
 import { useState } from "react"; 
 
-const API_BASE_URL = "https://api-back.picbrand.dev.br"; // Base da API
+const API_BASE_URL = "https://api-back.picbrand.dev.br"; 
 
-// Use API 2 (Agora com popup)
 export const useApi = () => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [popupMessage, setPopupMessage] = useState<string>("");

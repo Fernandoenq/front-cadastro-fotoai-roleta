@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import useRfidApi from "../hooks/useRfidApi"; // 🔹 Importando o hook
+import useRfidApi from "../hooks/useRfidApi"; 
 import "../styles/NfcScreen.css";
 import nfcImage from "../assets/nfclogo.png";
 
 const NfcScreen: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { rfidValue, clearRetryInterval, resetRfidApi } = useRfidApi(); // 🔹 Usando o hook
+  const { rfidValue, clearRetryInterval, resetRfidApi } = useRfidApi();
 
   const [tipoCadastro, setTipoCadastro] = useState<string>(
     localStorage.getItem("tipoCadastro") || location.state?.tipoCadastro || "desconhecido"
@@ -28,13 +28,13 @@ const NfcScreen: React.FC = () => {
 
   const handleAction = (destino?: string) => {
     console.log("Ação acionada, parando consultas e resetando estado.");
-    clearRetryInterval(); // Para qualquer reconsulta
-    resetRfidApi(); // Reseta os estados do RFID (para ignorar a primeira chamada depois)
+    clearRetryInterval(); 
+    resetRfidApi(); 
 
     if (destino) {
       navigate(destino, { state: { tipoCadastro, rfid: rfidValue } });
     } else {
-      navigate("/redirectscreen"); // Voltar para a página anterior
+      navigate("/redirectscreen"); 
     }
   };
 

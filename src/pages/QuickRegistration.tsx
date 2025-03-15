@@ -121,6 +121,8 @@ const CadastroRapido: React.FC = () => {
         />
       </div>
 
+      <button className="cadastro-button" onClick={() => navigate("/redirectscreen")}>Voltar</button>
+
       <button className="cadastro-button" onClick={handleCadastro} disabled={!isCpfValid}>
         CADASTRAR
       </button>

@@ -93,6 +93,8 @@ const CameraScreen: React.FC = () => {
           </div>
         </div>
       )}
+
+    <button className="capture-button" onClick={() => navigate("/redirectscreen")}>Voltar</button>
     </div>
   );
 };

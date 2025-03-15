@@ -13,13 +13,11 @@ const LoginScreen: React.FC = () => {
   const [login, setLogin] = useState<string>("");
   const [secretKey, setSecretKey] = useState<string>("");
   const [inputName, setInputName] = useState<"login" | "secretKey">("login");
-  const [showKeyboard, setShowKeyboard] = useState<boolean>(true); // Estado para exibir ou ocultar o teclado
+  const [showKeyboard, setShowKeyboard] = useState<boolean>(true); 
 
-  // Verifica se o dispositivo é móvel ao carregar a página
   useEffect(() => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    setShowKeyboard(!isMobile || window.innerWidth > 768); // Evita que o modo dev afete a lógica
-    //setShowKeyboard(true); // Apenas para testes, sempre mostra o teclado
+    setShowKeyboard(!isMobile || window.innerWidth > 768); 
   }, []);
 
   const handleKeyboardChange = (input: string) => {
@@ -83,7 +81,6 @@ const LoginScreen: React.FC = () => {
         Entrar
       </button>
 
-      {/* Renderiza o teclado virtual apenas se showKeyboard for true */}
       {showKeyboard && (
         <div className="keyboard-container">
           <Keyboard

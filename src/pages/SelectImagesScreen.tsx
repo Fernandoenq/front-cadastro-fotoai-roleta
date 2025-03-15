@@ -4,6 +4,7 @@ import { images } from "../data/imageData";
 import logo from "../assets/logo.png"; 
 import useFotoAiAPI from "../hooks/fotoAiAPI";
 import ProgressModal from "../modals/ProgressModal";
+import { useNavigate } from "react-router-dom";
 
 const bucketName = "bucket-bradesco-lollapalloza";
 const region = "sa-east-1";
@@ -16,6 +17,7 @@ const SelectImageScreen: React.FC = () => {
   const [progress, setProgress] = useState<number | string>(0); // ✅ Agora aceita string e número
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleContinueClick = async () => {
     if (selectedImage === null) return;
@@ -60,6 +62,8 @@ const SelectImageScreen: React.FC = () => {
       <button className="continue-button" disabled={selectedImage === null} onClick={handleContinueClick}>
         Continuar
       </button>
+
+      <button className="continue-button" onClick={() => navigate("/camera")}>Voltar</button>
 
       <ProgressModal 
         isOpen={isModalOpen} 

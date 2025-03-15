@@ -4,53 +4,13 @@ import "../styles/RouletteScreen.css";
 import prizes from "../data/prizes";
 import pointer from "../assets/pointer.png";
 import wheel from "../assets/wheel.png";
+import useFetchPrize from "../hooks/useFetchPrize";
 
 const RoletaScreen: React.FC = () => {
   const [rotation, setRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const fetchPrize = async () => {
-    const organizerId = localStorage.getItem("OrganizerId");
-    let cpf = localStorage.getItem("cpf");
-    console.log(organizerId);
-    console.log(cpf);
-
-    if (!organizerId || !cpf) {
-      console.error("❌ OrganizerId ou CPF não encontrado no localStorage!");
-      return null;
-    }
-
-    cpf = cpf.trim();
-    if (cpf.length !== 11 || isNaN(Number(cpf))) {
-      console.error("❌ CPF inválido, ele deve ter 11 dígitos numéricos!");
-      return null;
-    }
-
-    try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append("Cpf", cpf);
-
-      const response = await fetch(`https://api-back.picbrand.dev.br/Award/RescueAward/${organizerId}`, {
-        method: "PUT",
-        body: formData,
-      });
-
-      setLoading(false);
-      
-      if (!response.ok) {
-        throw new Error("Erro ao buscar prêmio.");
-      }
-
-      const data = await response.json();
-      return data.GiftName || null;
-    } catch (error) {
-      console.error("❌ Erro ao buscar prêmio:", error);
-      return null;
-    }
-  };
+  const { fetchPrize, loading } = useFetchPrize();
 
   const spinWheel = async () => {
     if (isSpinning) return;
@@ -65,7 +25,7 @@ const RoletaScreen: React.FC = () => {
       return;
     }
 
-    const prizeIndex = prizes.findIndex(prizeItem => prizeItem.name === prize);
+    const prizeIndex = prizes.findIndex((prizeItem) => prizeItem.name === prize);
     if (prizeIndex === -1) {
       console.error("❌ Prêmio não encontrado na lista!");
       setIsSpinning(false);
@@ -101,6 +61,10 @@ const RoletaScreen: React.FC = () => {
         />
         <img src={pointer} alt="Ponteiro" className="pointer" />
       </div>
+
+      <button className="roleta-button" onClick={() => navigate("/redirectscreen")}>
+        Sair
+      </button>
 
       <button onClick={spinWheel} disabled={isSpinning || loading} className="roleta-button">
         {isSpinning ? "Girando..." : loading ? "Buscando prêmio..." : "Girar a roleta"}

@@ -1,14 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { QRCodeSVG } from "qrcode.react";
-import { useFetchBalanceByCpf } from "../hooks/useFetchBalanceByCpf"; // ✅ Usando o hook correto
+import { useFetchBalanceByCpf } from "../hooks/useFetchBalanceByCpf";
 import "../styles/FinalScreen.css";
 
 const FinalScreen: React.FC = () => {
   const navigate = useNavigate();
   
   const cpf = localStorage.getItem("cpf") || "";
-  const { balanceCurrentValue, userName, loading, error } = useFetchBalanceByCpf(cpf); // ✅ Hook correto
+  const { balanceCurrentValue, userName, loading, error } = useFetchBalanceByCpf(cpf);
 
   const randomQRCodeURL = "https://bradesco.picbrand.dev.br/login";
 

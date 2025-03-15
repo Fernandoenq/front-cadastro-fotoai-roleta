@@ -12,6 +12,9 @@ interface ApiResponse {
   Name: string;
 }
 
+const API_URL = "https://api-back.picbrand.dev.br";
+
+
 export function useFetchBalanceByCpf(cpf: string | null) {
   const [balanceCurrentValue, setBalanceCurrentValue] = useState<number | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
@@ -32,7 +35,7 @@ export function useFetchBalanceByCpf(cpf: string | null) {
       setError(null);
 
       try {
-        const response = await fetch("https://api-back.picbrand.dev.br/Dashboard/GetBalanceByCpf", {
+        const response = await fetch(`${API_URL}/Dashboard/GetBalanceByCpf`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

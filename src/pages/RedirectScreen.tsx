@@ -24,7 +24,3 @@ const RedirectScreen: React.FC = () => {
 };
 
 export default RedirectScreen;
-
-//<button className="redirect-button" onClick={() => handleRedirect("login")}>
-//Login
-//</button>

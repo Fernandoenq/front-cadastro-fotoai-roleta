@@ -1,14 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 
+const API_URL = "https://api-back.picbrand.dev.br";
+
+
 const useRfidApi = () => {
   const [rfidValue, setRfidValue] = useState("");
   const retryIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isFirstCallDone = useRef(false);
-  const isUnmounted = useRef(false); // 🔹 Flag para evitar chamadas desnecessárias após desmontar
+  const isUnmounted = useRef(false); 
 
   const fetchRfidFromApi = async () => {
     try {
-      if (isUnmounted.current) return; // 🔹 Evita requisições desnecessárias se o hook foi desmontado
+      if (isUnmounted.current) return; 
 
       const organizerId = localStorage.getItem("OrganizerId");
       if (!organizerId) {
@@ -17,7 +20,7 @@ const useRfidApi = () => {
       }
 
       const response = await fetch(
-        `https://api-back.picbrand.dev.br/Organizer/GetRegisterExternalCode/${organizerId}`,
+        `${API_URL}/Organizer/GetRegisterExternalCode/${organizerId}`,
         {
           method: "PUT",
           headers: {
@@ -44,7 +47,7 @@ const useRfidApi = () => {
         console.log("✅ Valor RFID recebido da API:", data.ExternalCode);
         setRfidValue(data.ExternalCode);
         localStorage.setItem("rfidValue", data.ExternalCode);
-        stopRetry(); // 🚀 Assim que um RFID válido for encontrado, para as consultas
+        stopRetry(); 
       } else {
         console.warn("Nenhum ExternalCode retornado pela API.");
         startRetry();
@@ -56,7 +59,7 @@ const useRfidApi = () => {
   };
 
   const startRetry = () => {
-    if (isUnmounted.current) return; // 🔹 Evita iniciar intervalos se o hook foi desmontado
+    if (isUnmounted.current) return; 
 
     if (!retryIntervalRef.current && !rfidValue) {
       console.log("Iniciando ciclos de consulta a cada 10 segundos...");

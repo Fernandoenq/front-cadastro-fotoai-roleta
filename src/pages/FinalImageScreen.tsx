@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { QRCodeSVG } from "qrcode.react"; // ✅ Importando a versão mais leve
+import { QRCodeSVG } from "qrcode.react"; 
 
 import "../styles/FinalImageScreen.css";
 
-const BUCKET_NAME = "bucket-bradesco-lollapalloza"; // Substitua pelo seu bucket
-const REGION = "sa-east-1"; // Região do S3
+const BUCKET_NAME = "bucket-bradesco-lollapalloza"; 
+const REGION = "sa-east-1"; 
 
 const FinalImageScreen: React.FC = () => {
   const [finalImageUrl, setFinalImageUrl] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const processedFoto = localStorage.getItem("ProcessedFoto"); // Obtém o nome salvo
+    const processedFoto = localStorage.getItem("ProcessedFoto"); 
     if (!processedFoto) {
       console.error("⚠️ Nenhuma imagem processada encontrada!");
       //navigate("/roleta");
@@ -32,7 +32,7 @@ const FinalImageScreen: React.FC = () => {
       {finalImageUrl ? (
         <>
           <img src={finalImageUrl} alt="Imagem final" className="final-image" />
-          <QRCodeSVG value={finalImageUrl} className="qr-code" /> {/* ✅ QR Code mais leve */}
+          <QRCodeSVG value={finalImageUrl} className="qr-code" /> 
         </>
       ) : (
         <p>⏳ Carregando imagem...</p>
