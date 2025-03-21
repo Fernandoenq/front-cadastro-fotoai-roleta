@@ -60,9 +60,15 @@ const CameraScreen: React.FC = () => {
   };
 
   return (
-    <div className="page-container">
+    <div className="page-container" style={{
+      backgroundImage: `url('/img/camera/fundo_camera.png')`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}>
       <header className="page-header">
-        <h1>📷 Captura de Foto</h1>
+      <h1 className="mb-4" style={{ color: "#cd092f" ,
+          fontFamily: 'BradescoSansBold', // Aplica a fonte personalizada
+        }}>Vamos começar tirando uma foto bem irada. Prepare a pose !</h1>
       </header>
 
       <div className="controls-container">
