@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import useRfidApi from "../hooks/useRfidApi"; 
+import useRfidApi from "../hooks/useRfidApi";
 import "../styles/NfcScreen.css";
-import nfcImage from "../assets/nfclogo.png";
 
 const NfcScreen: React.FC = () => {
   const location = useLocation();
@@ -26,33 +25,49 @@ const NfcScreen: React.FC = () => {
     }
   }, [location.state]);
 
+  useEffect(() => {
+    console.log("Valor do cartão NFC detectado:", rfidValue);
+  }, [rfidValue]);
+
   const handleAction = (destino?: string) => {
     console.log("Ação acionada, parando consultas e resetando estado.");
-    clearRetryInterval(); 
-    resetRfidApi(); 
+    clearRetryInterval();
+    resetRfidApi();
 
     if (destino) {
       navigate(destino, { state: { tipoCadastro, rfid: rfidValue } });
     } else {
-      navigate("/redirectscreen"); 
+      navigate("/redirectscreen");
     }
   };
 
-  const isUUIDValid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{2}$/.test(rfidValue);
+  const isUUIDValid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(rfidValue || "");
 
   return (
     <div className="nfc-container">
-      <h1 className="nfc-title">Passe o cartão</h1>
-      <img src={nfcImage} alt="NFC" className="nfc-image" />
-      <p className="rfid-data">{rfidValue ? `Cartão: ${rfidValue}` : "Aguardando leitura..."}</p>
+      <div className="nfc-header">
+        <h1 className="nfc-title">Aproxime seu cartão da maquininha</h1>
+      </div>
 
-      <button className="nfc-button" onClick={() => handleAction()} style={{ marginBottom: "10px" }}>
-        Voltar
-      </button>
+      <div className="nfc-body">
+        <h1 className="nfc-subtitle">
+          Digite seu CPF e<br /> <br /> confirme seu cadastro.
+        </h1>
+        <div className="cpf-input-container">
+          <label htmlFor="cpf" className="cpf-label"></label>
+          <input type="text" id="cpf" className="cpf-input" placeholder="CPF: " />
+        </div>
 
-      <button className="nfc-button" onClick={() => handleAction(getDestino())} disabled={!isUUIDValid}>
-        Confirmar
-      </button>
+        <button
+          className="nfc-confirm-button"
+          onClick={() => handleAction(getDestino())}
+          disabled={!isUUIDValid}
+        >
+          CONFIRMAR
+        </button>
+      </div>
+
+      
     </div>
   );
 
@@ -60,7 +75,6 @@ const NfcScreen: React.FC = () => {
     if (tipoCadastro === "completo") return "/cadastrocompleto";
     if (tipoCadastro === "rapido") return "/cadastrorapido";
     if (tipoCadastro === "login") return "/login";
-    return "/";
   }
 };
 

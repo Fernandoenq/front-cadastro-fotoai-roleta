@@ -1,42 +1,76 @@
 /* styles/RedirectScreen.css */
 
 .redirect-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url("../assets/Telas/TELA_CADASTRO.png") no-repeat center center;
+    background-size: cover;
+    background-color: #CD092F; /* Cor de fundo vermelha */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    background-color: #d3d3d3; /* Fundo cinza claro */
+    justify-content: flex-start;
     text-align: center;
+    padding-top: 22vh; /* Ajusta a posição para subir a div */
 }
 
 .redirect-title {
-    font-size: 3vh;
+    font-size: 5vh;
     font-weight: bold;
-    margin-bottom: 4vh;
-    color: black;
+    margin-bottom: 5vh;
+    color: white;
+    font-family: 'BradescoSans', sans-serif; /* Aplicando a fonte personalizada */
+}
+
+.redirect-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.0vh; /* Ajustando a distância entre os botões */
 }
 
 .redirect-button {
-    width: 50%;
-    max-width: 50%;
-    padding: 2vh;
-    min-height: 5vh;
-    margin-top: 2vh;
-    background: black;
-    color: white;
-    font-size: 2.5vh;
+    width: 1000%;
+    max-width: 600px;
+    padding: vh 0; /* Ajuste fino para altura mais baixa */
+    min-height: 1.5vh;
+    background:#FF9AC2; /* Cor rosa do primeiro botão */
+    color:#D95073;
+    font-size: 1vh;
     font-weight: bold;
+    font-family: 'BradescoSansBold', sans-serif;
     border: none;
-    border-radius: 1.5vh;
+    border-radius: 50px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Adicionando um leve sombreamento */
+}
+
+.redirect-button:nth-child(2) {
+    background: #2D4F9C; /* Cor azul do segundo botão */
+    color: #9A9FCB;
 }
 
 .redirect-button:hover {
-    background: #333;
+    opacity: 0.9;
+}
+
+
+.logo-container {
+    margin-top: 22vh;
+    display: flex;
+    justify-content: flex-start; /* Alinha a imagem para a esquerda */
+    width: 100%;
+    padding-left: 45vw; /* Adiciona um espaçamento da borda esquerda */
+}
+
+/* Ajuste do tamanho do logo "bralolla" */
+.logos {
+    width: 20vh; /* Mantém o tamanho */
+    height: auto;
+    margin: 0 0.6vh; /* Espaçamento entre logos */
 }

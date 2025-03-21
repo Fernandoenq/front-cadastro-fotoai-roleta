@@ -3,21 +3,21 @@ import { useNavigate } from "react-router-dom";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import "../styles/LoginScreen.css";
-import logo from "../assets/logo.png"; 
+import logo from "../assets/logo.png";
 import { useApi } from "../hooks/useApi";
 import Popup from "../components/Popup";
 
 const LoginScreen: React.FC = () => {
   const navigate = useNavigate();
-  const { callApi, showPopup, popupMessage } = useApi(); 
+  const { callApi, showPopup, popupMessage } = useApi();
   const [login, setLogin] = useState<string>("");
   const [secretKey, setSecretKey] = useState<string>("");
   const [inputName, setInputName] = useState<"login" | "secretKey">("login");
-  const [showKeyboard, setShowKeyboard] = useState<boolean>(true); 
+  const [showKeyboard, setShowKeyboard] = useState<boolean>(true);
 
   useEffect(() => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    setShowKeyboard(!isMobile || window.innerWidth > 768); 
+    setShowKeyboard(!isMobile || window.innerWidth > 768);
   }, []);
 
   const handleKeyboardChange = (input: string) => {
@@ -33,46 +33,45 @@ const LoginScreen: React.FC = () => {
       Login: login,
       SecretKey: secretKey,
     };
-  
+
     const response = await callApi("/Organizer/Login", "PUT", loginData);
-  
-    if (response && response.Organizers && response.Organizers.length > 0) { 
+
+    if (response && response.Organizers && response.Organizers.length > 0) {
       localStorage.setItem("OrganizerId", response.Organizers[0].OrganizerId.toString());
       console.log("OrganizerId salvo:", localStorage.getItem("OrganizerId"));
-  
+
       setTimeout(() => {
-        navigate("/redirectscreen"); 
+        navigate("/redirectscreen");
       }, 1000);
     }
   };
-  
+
   return (
     <div className="login-container">
       <Popup show={showPopup} message={popupMessage} />
-
       <img src={logo} alt="Logo" className="login-logo" />
       <h1 className="login-title">Login do promotor</h1>
 
       <div className="input-container">
         <label htmlFor="username">Usuário:</label>
-        <input 
-          type="text" 
-          id="username" 
-          placeholder="Digite seu usuário" 
-          value={login} 
-          onChange={(e) => setLogin(e.target.value)} 
+        <input
+          type="text"
+          id="username"
+          placeholder="Digite seu usuário"
+          value={login}
+          onChange={(e) => setLogin(e.target.value)}
           onFocus={() => setInputName("login")}
         />
       </div>
 
       <div className="input-container">
         <label htmlFor="password">Senha:</label>
-        <input 
-          type="password" 
-          id="password" 
-          placeholder="Digite sua senha" 
-          value={secretKey} 
-          onChange={(e) => setSecretKey(e.target.value)} 
+        <input
+          type="password"
+          id="password"
+          placeholder="Digite sua senha"
+          value={secretKey}
+          onChange={(e) => setSecretKey(e.target.value)}
           onFocus={() => setInputName("secretKey")}
         />
       </div>
