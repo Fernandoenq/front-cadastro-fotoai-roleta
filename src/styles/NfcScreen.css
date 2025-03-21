@@ -1,38 +1,15 @@
-/* styles/NfcScreen.css */
-
-@font-face {
-    font-family: 'BradescoSans';
-    src: url('../assets/font/BradescoSans-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+.nfc-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background: url("../assets/Telas/TELA_NFC.png") no-repeat center center;
+    background-size: cover;
+    background-color: #F4B3DD;
+    text-align: center;
 }
-
-@font-face {
-    font-family: 'BradescoSansBold';
-    src: url('../assets/font/BradescoSans-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'BradescoSansButtom';
-    src: url('../assets/font/BradescoSans-Medium.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-
-    .nfc-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        width: 100vw;
-        background: url("../assets/Telas/TELA_NFC.png") no-repeat center center;
-        background-size: cover;
-        background-color: #F4B3DD;
-        text-align: center;
-    }
 
 .nfc-title {
     position: absolute;
