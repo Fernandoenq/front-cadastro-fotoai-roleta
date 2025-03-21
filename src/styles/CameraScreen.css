@@ -42,12 +42,16 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 640px; /* Máximo de largura */
+  max-width: 450px; /* Máximo de largura */
+  height: 900px; /* Máximo de largura */
   aspect-ratio: 16 / 9; /* Mantém a proporção correta */
   border: 2px solid white;
   border-radius: 10px;
   overflow: hidden;
   background-color: black;
+  position: relative;
+ 
+  
 }
 
 /* Ajusta o vídeo para preencher a área sem cortes */
@@ -65,15 +69,17 @@
 }
 
 .capture-button {
-  background: linear-gradient(90deg, #007bff, #00c3ff);
-  color: white;
-  font-size: 18px;
-  padding: 10px 20px;
+  background: url('/img/camera/button.png') no-repeat center center;
+  background-size: contain; /* Garante que a imagem preencha o botão sem distorcer */
   border: none;
-  border-radius: 8px;
+  border-radius: 50%; /* Ajusta para bordas arredondadas */
+  width: 100px; /* Mantenha a proporção de acordo com a sua necessidade */
+  height: 100px;
   cursor: pointer;
-  transition: 0.3s;
+  outline: none; /* Remove a borda de foco que alguns navegadores adicionam */
+  margin-top: 50px;
 }
+
 
 .capture-button:hover {
   background: linear-gradient(90deg, #0056b3, #0096c7);

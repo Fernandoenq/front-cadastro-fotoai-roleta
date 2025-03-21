@@ -61,17 +61,33 @@ const CameraScreen: React.FC = () => {
 
   return (
     <div className="page-container" style={{
-      backgroundImage: `url('/img/camera/fundo_camera.png')`,
+      backgroundImage: `url('/img/camera/camera_1.png')`,
       backgroundSize: "cover",
       backgroundPosition: "center",
     }}>
-      <header className="page-header">
-      <h1 className="mb-4" style={{ color: "#cd092f" ,
-          fontFamily: 'BradescoSansBold', // Aplica a fonte personalizada
-        }}>Vamos começar tirando uma foto bem irada. Prepare a pose !</h1>
-      </header>
+   <header className="page-header">
+  <h1 className="mb-4" style={{
+    color: "white",
+    fontFamily: 'BradescoSans', // Aplica a fonte personalizada
+    fontSize: '48px', // Ajuste conforme necessário para o totem
+    fontWeight: 'bold', // Torna o texto mais grosso
+    textAlign: 'center' // Centraliza o texto
+  }}>
+    Vamos começar tirando uma foto bem irada.
+  </h1>
+  <h1 className="mb-4" style={{
+    color: "white",
+    fontFamily: 'BradescoSans',
+    fontSize: '48px', // Mantém o mesmo tamanho para consistência
+    fontWeight: 'bold',
+    textAlign: 'center'
+  }}>
+    Prepare a pose!
+  </h1>
+</header>
 
-      <div className="controls-container">
+
+      <div className="controls-container" >
         <CameraSelector devices={devices} selectedDevice={selectedDevice} setSelectedDevice={setSelectedDevice} />
       </div>
 
@@ -79,11 +95,18 @@ const CameraScreen: React.FC = () => {
         <CameraPreview selectedDevice={selectedDevice} />
       </div>
 
-      <div className="capture-container">
+      <div className="">
         {isCapturing ? (
           <p className="countdown">⏳ Capturando em {countdown}...</p>
         ) : (
-          !photo && <button className="capture-button" onClick={handleCapture}>📸 Tirar Foto</button>
+          !photo && <button
+           className="capture-button"
+          onClick={handleCapture}
+       
+        >
+         
+        </button>
+        
         )}
       </div>
 
@@ -100,7 +123,7 @@ const CameraScreen: React.FC = () => {
         </div>
       )}
 
-    <button className="capture-button" onClick={() => navigate("/redirectscreen")}>Voltar</button>
+    {/* <button className="capture-button" onClick={() => navigate("/redirectscreen")}>Voltar</button> */}
     </div>
   );
 };
