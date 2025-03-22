@@ -31,13 +31,13 @@
 }
 
 .redirect-button {
-    width: 1000%;
+    width: 10000%;
     max-width: 600px;
     padding: vh 0; /* Ajuste fino para altura mais baixa */
-    min-height: 1.5vh;
+    min-height: 1.4vh;
     background:#FF9AC2; /* Cor rosa do primeiro botão */
     color:#D95073;
-    font-size: 1vh;
+    font-size: 1.2vh;
     font-weight: bold;
     font-family: 'BradescoSansBold', sans-serif;
     border: none;

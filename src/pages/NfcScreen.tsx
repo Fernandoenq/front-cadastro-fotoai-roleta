@@ -44,30 +44,17 @@ const NfcScreen: React.FC = () => {
   const isUUIDValid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(rfidValue || "");
 
   return (
-    <div className="nfc-container">
-      <div className="nfc-header">
-        <h1 className="nfc-title">Aproxime seu cartão da maquininha</h1>
-      </div>
+    <div className="nfc-screen-container">
+      <h1 className="nfc-title">Aproxime seu cartão da maquininha</h1>
+      <h1 className="nfc-subtitle">e conclua o cadastro.</h1>
 
-      <div className="nfc-body">
-        <h1 className="nfc-subtitle">
-          Digite seu CPF e<br /> <br /> confirme seu cadastro.
-        </h1>
-        <div className="cpf-input-container">
-          <label htmlFor="cpf" className="cpf-label"></label>
-          <input type="text" id="cpf" className="cpf-input" placeholder="CPF: " />
-        </div>
-
-        <button
-          className="nfc-confirm-button"
-          onClick={() => handleAction(getDestino())}
-          disabled={!isUUIDValid}
-        >
-          CONFIRMAR
-        </button>
-      </div>
-
-      
+      <button
+        className="nfc-confirm-button"
+        onClick={() => handleAction(getDestino())}
+        disabled={!isUUIDValid}
+      >
+        CONFIRMAR
+      </button>
     </div>
   );
 

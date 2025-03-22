@@ -1,63 +1,38 @@
-import React, { useState, useRef, useEffect  } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import "../styles/QuickRegistration.css";
 import { validateCpf, formatCpf, unformatCpf } from "../utils/cpfUtils";
 import { useApi } from "../hooks/useApi";
+import useRfidApi from "../hooks/useRfidApi";
 import Popup from "../components/Popup";
 
 const CadastroRapido: React.FC = () => {
   const navigate = useNavigate();
   const { callApi, showPopup, popupMessage } = useApi();
-  const [rfidValue, setRfidValue] = useState(localStorage.getItem("rfidValue") || "");
+  const { rfidValue } = useRfidApi();
   const [cpf, setCpf] = useState("");
   const [isCpfValid, setIsCpfValid] = useState(false);
-  const [activeField, setActiveField] = useState<"cpf" | null>(null);
-
-  // Referência para o campo CPF
+  const [showKeyboard, setShowKeyboard] = useState(false); // controla o teclado
   const cpfRef = useRef<HTMLInputElement | null>(null);
 
   const handleKeyboardChange = (input: string) => {
-    console.log(`⌨ Teclado Virtual digitou em CPF:`, input);
     setCpf(input);
     setIsCpfValid(validateCpf(input));
   };
 
   const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = unformatCpf(e.target.value);
-    console.log(`✏ Editando CPF:`, rawValue);
     setCpf(rawValue);
     setIsCpfValid(validateCpf(rawValue));
   };
 
   const handleCpfClick = (e: React.MouseEvent<HTMLInputElement>) => {
     e.stopPropagation();
-    console.log("📌 CPF Selecionado! Removendo formatação...");
     setCpf(unformatCpf(cpf));
-    setActiveField("cpf");
-
+    setShowKeyboard(true); // mostra o teclado ao clicar
     setTimeout(() => cpfRef.current?.focus(), 0);
-  };
-
-  useEffect(() => {
-    const storedRfid = localStorage.getItem("rfidValue");
-    if (storedRfid) {
-      console.log("🎟 RFID recuperado do localStorage:", storedRfid);
-      setRfidValue(storedRfid);
-    } else {
-      console.warn("⚠ Nenhum RFID encontrado no localStorage.");
-    }
-  }, []);
-
-  const handleClickFora = (e: React.MouseEvent<HTMLDivElement>) => {
-    const isClickOnKeyboard = e.target instanceof HTMLElement && e.target.closest(".keyboard-container");
-
-    if (!isClickOnKeyboard && activeField === "cpf") {
-      console.log("🖱 Clique fora do campo CPF, formatando...");
-      setCpf(formatCpf(cpf));
-      setActiveField(null);
-    }
   };
 
   const handleCadastro = async () => {
@@ -70,64 +45,89 @@ const CadastroRapido: React.FC = () => {
       OrganizerId: organizerId ? parseInt(organizerId) : null,
     };
 
-    console.log("📤 Enviando dados para API:", payload);
     localStorage.setItem("cpf", cpfSemFormatacao);
     const result = await callApi("//Person/SetExternalCode", "PUT", payload);
 
-    console.log("🔄 Resposta da API:", result);
-
     if (result !== null) {
-      console.log("✅ Cadastro bem-sucedido! Resposta da API:", result);
       navigate("/camera");
-    } else {
-      console.error("❌ Erro no cadastro. Verifique a resposta da API.");
     }
   };
 
   return (
-    <div className="cadastro-container" onClick={handleClickFora}>
+    <div className="cadastro-nfc-container">
       <Popup show={showPopup} message={popupMessage} />
 
-      <h1 className="cadastro-title">CADASTRO RÁPIDO</h1>
-      <p className="cadastro-subtitle">Bradesco Lollapalooza 2025</p>
+      <h1 className="cadastro-nfc-title">Aproxime seu cartão da maquininha</h1>
 
-      <h2 className="cadastro-vinculo">CONFIRMAR VÍNCULO COM O CARTÃO</h2>
+      <h2 className="cadastro-nfc-subtitle">
+  Digite seu CPF e<br />confirme seu cadastro.
+</h2>
 
-      <p className="uuid-text">Cartão: {rfidValue || "Aguardando leitura..."}</p>
+      <label className="cadastro-nfc-label"></label>
+      <input
+        ref={cpfRef}
+        type="text"
+        className="cadastro-nfc-input"
+        placeholder="Cpf:"
+        value={formatCpf(cpf)}
+        onChange={handleCpfChange}
+        onClick={handleCpfClick}
+      />
 
-      <div className="input-container">
-        <label className="input-label">CPF:</label>
-        <input
-          ref={cpfRef}
-          type="text"
-          className="input-field"
-          placeholder="Digite seu CPF"
-          value={cpf}
-          onChange={handleCpfChange}
-          onClick={handleCpfClick}
-        />
-      </div>
-
-      <div className="keyboard-container">
+      {showKeyboard && (
         <Keyboard
           onChange={handleKeyboardChange}
           layout={{
-            default: [
-              "1 2 3 4 5 6 7 8 9 0",
-              "{bksp}"
-            ]
+            default: ["1 2 3 4 5 6 7 8 9 0", "{bksp}"],
           }}
           display={{ "{bksp}": "Apagar" }}
+          className="cadastro-nfc-keyboard"
+          keyboardRef={(r) => {
+            if (r?.keyboardDOM) {
+              const keyboardDiv = r.keyboardDOM as HTMLDivElement;
+              const style = keyboardDiv.style;
+              style.position = "absolute";
+              style.top = "66vh";
+              style.left = "50%";
+              style.transform = "translateX(-50%)";
+              style.width = "200%";
+              style.maxWidth = "400px";
+              style.backgroundColor = "transparent";
+              style.boxShadow = "none";
+              style.border = "none";
+            }
+          }}
         />
-      </div>
+      )}
+<button
+  onClick={handleCadastro}
+  disabled={!isCpfValid}
+  style={{
+    backgroundColor: "#CD092F", // Cor vermelha escura
+    color: "white", // Texto branco
+    borderColor: "white", // Borda branca
+    borderWidth: "4px", // Borda grossa
+    borderStyle: "solid",
+    borderRadius: "60px", // Bordas ainda mais arredondadas para parecer oval
+    padding: "30px 90px", // AUMENTOU O TAMANHO DO BOTÃO
+    fontSize: "27px", // AUMENTOU O TAMANHO DO TEXTO
+    fontWeight: "bold",
+    height: "100px", // AUMENTOU A ALTURA DO BOTÃO
+    fontFamily: "BradescoSansButton",
+    textTransform: "uppercase",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    position: "absolute",
+    top: "60vh",
+    left: "50%",
+    transform: "translateX(-50%)",
+  }}
+>
+  CONFIRMAR
+</button>
 
-      <button className="cadastro-button" onClick={() => navigate("/redirectscreen")}>Voltar</button>
-
-      <button className="cadastro-button" onClick={handleCadastro} disabled={!isCpfValid}>
-        CADASTRAR
-      </button>
-
-      <p className="footer-text">HOLDING CLUBE</p>
     </div>
   );
 };

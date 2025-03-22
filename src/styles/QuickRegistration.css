@@ -1,89 +1,71 @@
-.cadastro-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #d9d9d9;
-    font-family: Arial, sans-serif;
-    text-align: center;
-  }
-  
-  .cadastro-title {
-    font-size: 4vh;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 1vh;
-  }
-  
-  .cadastro-subtitle {
-    font-size: 2vh;
-    margin-bottom: 3vh;
-  }
-  
-  .cadastro-vinculo {
-    font-size: 2.5vh;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 2vh;
-  }
-  
-  .uuid-text {
-    font-size: 2.2vh;
-    font-weight: bold;
-    color: black;
-    margin-bottom: 3vh;
-  }
-  
-  .input-container {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    max-width: 40%;
-    margin-bottom: 3vh;
-  }
-  
-  .input-label {
-    font-size: 2vh;
-    margin-bottom: 1vh;
-    text-align: left;
-  }
-  
-  .input-field {
-    padding: 1.5vh;
-    border: 0.3vh solid #b3b3b3;
-    border-radius: 1vh;
-    background-color: #e6e6e6;
-    font-size: 2vh;
-    width: 100%;
-  }
-  
-  .error-text {
-    color: red;
-    font-size: 1.8vh;
-    margin-top: 0.5vh;
-  }
-  
-  .cadastro-button {
-    width: 40%;
-    padding: 2vh;
-    background-color: black;
-    color: white;
-    font-size: 2.5vh;
-    font-weight: bold;
-    border: none;
-    border-radius: 1vh;
-    cursor: pointer;
-  }
-  
-  .cadastro-button:disabled {
-    background-color: gray;
-    cursor: not-allowed;
-  }
-  
-  .footer-text {
-    margin-top: 3vh;
-    font-size: 1.5vh;
-    color: black;
-  }
-  
+/* Container principal */
+.cadastro-nfc-container {
+  position: relative; /* Importante para que os filhos absolutos funcionem */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background: url("../assets/Telas/TELA_NFC.png") no-repeat center center;
+  background-size: cover;
+  background-color: #F4B3DD;
+  text-align: center;
+}
+
+/* Título principal */
+.cadastro-nfc-title {
+  position: absolute;
+  top: 23vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.5vh;
+  font-weight: bold;
+  color: #CD082F;
+  font-family: 'BradescoSansBold', sans-serif;
+}
+
+/* Subtítulo */
+.cadastro-nfc-subtitle {
+  position: absolute;
+  top: 42vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.2vh;
+  font-weight: bold;
+  color: #CD082F;
+  font-family: 'BradescoSansBold', sans-serif;
+  text-align: center;
+}
+
+/* Campo de entrada do CPF */
+.cadastro-nfc-input {
+  position: absolute;
+  top: 51vh; /* Posição ajustável do input */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  padding: 10px;
+  font-size: 2vh;
+  border: 1px solid rgb(212, 199, 199);
+  border-radius: 50px;
+  font-family: 'BradescoSans', sans-serif;
+  background-color: #CD082F;
+  color: white;
+}
+
+/* Teclado virtual */
+/* Força o estilo no teclado real */
+.cadastro-nfc-keyboard.simple-keyboard {
+  position: absolute !important;
+  top: 63vh !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 60% !important;
+  max-width: 320px !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+

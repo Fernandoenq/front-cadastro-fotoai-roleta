@@ -5,9 +5,12 @@ import bradescoLogo from "../assets/logos/bralolla.png";
 
 const RedirectScreen: React.FC = () => {
   const navigate = useNavigate();
-
   const handleRedirect = (type: string) => {
-    navigate("/nfcscreen", { state: { tipoCadastro: type } });
+    if (type === "cadastrorapido") {
+      navigate("/cadastrorapido"); // <- corrigido aqui
+    } else {
+      navigate("/nfcscreen", { state: { tipoCadastro: type } });
+    }
   };
 
   return (
@@ -17,7 +20,7 @@ const RedirectScreen: React.FC = () => {
       </h1>
 
       <div className="redirect-buttons">
-        <button className="redirect-button fast-signup" onClick={() => handleRedirect("rapido")}>
+        <button className="redirect-button fast-signup" onClick={() => handleRedirect("cadastrorapido")}>
           já sou cadastrado
         </button>
 
@@ -25,13 +28,11 @@ const RedirectScreen: React.FC = () => {
           não tenho cadastro
         </button>
 
-
         <div className="logo-container">
-        <img src={bradescoLogo} alt="Bradesco" className="logos" />
+          <img src={bradescoLogo} alt="Bradesco" className="logos" />
+        </div>
       </div>
     </div>
-      </div>
-  
   );
 };
 
