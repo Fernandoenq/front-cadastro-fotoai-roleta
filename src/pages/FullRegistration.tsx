@@ -107,8 +107,6 @@ const CadastroCompleto: React.FC = () => {
     <div className="cadastro-full-container">
       <Popup show={showPopup} message={popupMessage} />
 
-    
-
       <div className="cadastro-full-keyboard">
         <Keyboard
           onChange={handleKeyboardChange}
@@ -123,7 +121,7 @@ const CadastroCompleto: React.FC = () => {
             ],
             symbols: [
               "! # $ % & * + / = ? ^ ` ~",
-              "{ } [ ] ( ) < > | \\\\ \\\" '",
+              "{ } [ ] ( ) < > | \\ \" '",
               ": ; , . _ - @",
               "{default} {bksp} {space}"
             ]
@@ -174,15 +172,31 @@ const CadastroCompleto: React.FC = () => {
         </div>
       </div>
 
-      <div className="cadastro-full-checkbox">
-        <label>
-          <input type="checkbox" name="lgpd" checked={formData.lgpd} onChange={(e) => handleCheckboxChange("lgpd", e.target.checked)} />
-          Termo de responsabilidade e segurança de acordo com LGPD
-        </label>
-        <label>
-          <input type="checkbox" name="correntista" checked={formData.correntista} onChange={(e) => handleCheckboxChange("correntista", e.target.checked)} />
-          Correntista Bradesco?
-        </label>
+      <div className="checkbox-correntista">
+        <span style={{ color: "white", fontWeight: "bold", fontSize: "1.5vh" }}>Você já é cliente Bradesco?</span>
+        <div className="checkbox-correntista-opcoes">
+          <label>
+            <input
+              type="checkbox"
+              name="correntista"
+              checked={formData.correntista === true}
+              onChange={() => handleCheckboxChange("correntista", true)}
+            /> Sim
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              name="correntista"
+              checked={formData.correntista === false}
+              onChange={() => handleCheckboxChange("correntista", false)}
+            /> Não
+          </label>
+        </div>
+      </div>
+
+      <div className="checkbox-lgpd">
+        <input type="checkbox" name="lgpd" checked={formData.lgpd} onChange={(e) => handleCheckboxChange("lgpd", e.target.checked)} />
+        Termo de responsabilidade e segurança de acordo com LGPD
       </div>
 
       <button className="cadastro-full-button" onClick={() => handleCadastro(formData, callApi, navigate)} disabled={!isButtonEnabled}>
