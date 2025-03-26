@@ -1,24 +1,23 @@
-import React, { useRef, useEffect } from 'react';
+// CameraPreview.js
+import React, { useRef, useEffect, forwardRef } from 'react';
 import { startCamera } from '../utils/cameraUtils';
 
 interface CameraPreviewProps {
   selectedDevice: string | null;
 }
 
-const CameraPreview: React.FC<CameraPreviewProps> = ({ selectedDevice }) => {
-  const videoRef = useRef<HTMLVideoElement>(null!);
-
+const CameraPreview = forwardRef<HTMLVideoElement, CameraPreviewProps>(({ selectedDevice }, ref) => {
   useEffect(() => {
-    if (selectedDevice) {
-      startCamera(selectedDevice, videoRef);
+    if (selectedDevice && ref && 'current' in ref && ref.current) {
+      startCamera(selectedDevice, ref);
     }
-  }, [selectedDevice]);
+  }, [selectedDevice, ref]);
 
   return (
-    <div className="camera-container">
-      <video ref={videoRef} autoPlay playsInline className="camera-video" />
+    <div className="p-3">
+      <video ref={ref} autoPlay playsInline className="camera-video" />
     </div>
   );
-};
+});
 
 export default CameraPreview;

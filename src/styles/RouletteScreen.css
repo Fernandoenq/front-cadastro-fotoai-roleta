@@ -2,44 +2,51 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     height: 100vh;
     background-color: #d3d3d3;
     text-align: center;
-}
-
-h1 {
-    font-size: 3vh; 
+  }
+  
+  h1 {
+    font-size: 3vh;
     margin-bottom: 2vh;
-}
-
-.roleta-wrapper {
+  }
+  
+  .roleta-wrapper {
     position: relative;
-    width: 30vh; 
-    height: 30vh;
-}
-
-.roleta {
+    display: flex; /* Alinha o conteúdo horizontalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    width: 55vh;
+    height:55vh;
+margin: 0 ;
+    /* border: #0056b3 1px solid; */
+  }
+  
+  .roleta {
+   
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    max-width: 100%; /* Garante que a imagem não ultrapasse o limite do contêiner */
+    max-height: 100%; /* Garante que a imagem não ultrapasse o limite do contêiner */
+  }
+  
+  .pointer {
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1; 
-}
-
-.pointer {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2; 
-    transition: transform 3s ease-out; 
-}
-
-.roleta-button {
-    margin-top: 3vh;
+    z-index: 2;
+    transition: transform 3s ease-out;
+    /* border: #0056b3 1px solid; */
+  }
+  
+  .roleta-button {
+   
     padding: 1.5vh 3vh;
     font-size: 2vh;
     font-weight: bold;
@@ -48,8 +55,9 @@ h1 {
     cursor: pointer;
     background-color: #007bff;
     color: white;
-}
-
-.roleta-button:hover {
+  }
+  
+  .roleta-button:hover {
     background-color: #0056b3;
-}
+  }
+  

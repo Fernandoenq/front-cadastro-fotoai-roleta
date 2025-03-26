@@ -20,11 +20,18 @@ const RedirectScreen: React.FC = () => {
       </h1>
 
       <div className="redirect-buttons">
-        <button className="redirect-button fast-signup" onClick={() => handleRedirect("cadastrorapido")}>
+        <button className="redirect-button fast-signup" onClick={() => handleRedirect("cadastrorapido")} 
+           style={{
+          
+            fontSize: "2vh", // Ajusta o tamanho da fonte para 54px
+          }}>
           já sou cadastrado
         </button>
 
-        <button className="redirect-button full-signup" onClick={() => handleRedirect("completo")}>
+        <button className="redirect-button full-signup" onClick={() => handleRedirect("completo")}  style={{
+          
+          fontSize: "2vh", // Ajusta o tamanho da fonte para 54px
+        }}>
           não tenho cadastro
         </button>
 

@@ -62,13 +62,19 @@ const CadastroRapido: React.FC = () => {
       <h2 className="cadastro-nfc-subtitle">
   Digite seu CPF e<br />confirme seu cadastro.
 </h2>
-
+<style>
+          {`
+    .input-placeholder-white::placeholder {
+      color: white; /* Define a cor do placeholder para branco */
+    }
+  `}
+        </style>
       <label className="cadastro-nfc-label"></label>
       <input
         ref={cpfRef}
         type="text"
-        className="cadastro-nfc-input"
-        placeholder="Cpf:"
+        className="cadastro-nfc-input input-placeholder-white"
+        placeholder="CPF:"
         value={formatCpf(cpf)}
         onChange={handleCpfChange}
         onClick={handleCpfClick}
@@ -110,10 +116,10 @@ const CadastroRapido: React.FC = () => {
     borderStyle: "solid",
     borderRadius: "60px", // Bordas ainda mais arredondadas para parecer oval
     padding: "30px 90px", // AUMENTOU O TAMANHO DO BOTÃO
-    fontSize: "27px", // AUMENTOU O TAMANHO DO TEXTO
+    fontSize: "2vh", // AUMENTOU O TAMANHO DO TEXTO
     fontWeight: "bold",
     height: "100px", // AUMENTOU A ALTURA DO BOTÃO
-    fontFamily: "BradescoSansButton",
+    fontFamily: "BradescoSansButtom",
     textTransform: "uppercase",
     display: "flex",
     alignItems: "center",

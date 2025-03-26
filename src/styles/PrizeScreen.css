@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     height: 100vh;
     background-color: #d3d3d3;
     text-align: center;
@@ -15,9 +15,10 @@ h1 {
 
 .prize-image {
     width: 50vw; /* ✅ Ocupa 50% da largura da tela */
-    max-height: 50vh; /* ✅ Mantém a proporção dentro de 50% da altura */
-    object-fit: contain; /* ✅ Garante que a imagem não seja distorcida */
-    margin-bottom: 2vh;
+    height: 25vh;
+   
+    
+  
 }
 
 .prize-name {

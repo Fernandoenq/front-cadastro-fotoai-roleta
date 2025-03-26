@@ -140,12 +140,18 @@ const CadastroCompleto: React.FC = () => {
           }}
         />
       </div>
-
+      <style>
+          {`
+    .input-placeholder-white::placeholder {
+      color: "#cd092f" !important; 
+    }
+  `}
+        </style>
       <div className="cadastro-full-inputs">
-        <input type="text" name="nome" className="cadastro-full-input" placeholder="Nome" value={formData.nome} onChange={handleInputChange} onClick={() => handleFieldClick("nome")} />
-        <input type="text" name="cpf" className="cadastro-full-input" placeholder="CPF" value={formData.cpf} onChange={handleInputChange} onClick={() => handleFieldClick("cpf", cpfRef)} ref={cpfRef} />
-        <input type="text" name="whatsapp" className="cadastro-full-input" placeholder="Whatsapp" value={formData.whatsapp} onChange={handleInputChange} onClick={() => handleFieldClick("whatsapp", whatsappRef)} ref={whatsappRef} />
-        <input type="text" name="email" className="cadastro-full-input" placeholder="Email" value={formData.email} onChange={handleInputChange} onClick={() => handleFieldClick("email", emailRef)} ref={emailRef} />
+        <input type="text" name="nome" className="cadastro-full-input input-placeholder-white" placeholder="Nome" value={formData.nome} onChange={handleInputChange} onClick={() => handleFieldClick("nome")} />
+        <input type="text" name="cpf" className="cadastro-full-input input-placeholder-white" placeholder="CPF" value={formData.cpf} onChange={handleInputChange} onClick={() => handleFieldClick("cpf", cpfRef)} ref={cpfRef} />
+        <input type="text" name="whatsapp" className="cadastro-full-input input-placeholder-white" placeholder="Whatsapp" value={formData.whatsapp} onChange={handleInputChange} onClick={() => handleFieldClick("whatsapp", whatsappRef)} ref={whatsappRef} />
+        <input type="text" name="email" className="cadastro-full-input input-placeholder-white" placeholder="E-mail" value={formData.email} onChange={handleInputChange} onClick={() => handleFieldClick("email", emailRef)} ref={emailRef} />
       </div>
 
       <div className="campo-grupo">

@@ -40,6 +40,7 @@ const useFetchPrize = () => {
 
       const data = await response.json();
       return data.GiftName || null;
+     
     } catch (error) {
       console.error("❌ Erro ao buscar prêmio:", error);
       setLoading(false);

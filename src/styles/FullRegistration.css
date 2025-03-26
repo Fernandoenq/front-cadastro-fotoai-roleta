@@ -74,7 +74,7 @@
   height: 3.8vh;
   box-sizing: border-box;
   background-color: #F4B3DD;
-  color: #3E469B;
+ color: "#cd092f" !important;
   margin-bottom: 1vh;
   font-weight: bold;
   text-align: left;

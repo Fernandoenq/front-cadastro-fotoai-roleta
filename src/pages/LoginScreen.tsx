@@ -38,7 +38,10 @@ const LoginScreen: React.FC = () => {
 
     if (response && response.Organizers && response.Organizers.length > 0) {
       localStorage.setItem("OrganizerId", response.Organizers[0].OrganizerId.toString());
+      localStorage.setItem("OrganizerName", response.Organizers[0].OrganizerName); // Adiciona o OrganizerName
+
       console.log("OrganizerId salvo:", localStorage.getItem("OrganizerId"));
+      console.log("OrganizerName salvo:", localStorage.getItem("OrganizerName"));
 
       setTimeout(() => {
         navigate("/redirectscreen");
@@ -49,11 +52,23 @@ const LoginScreen: React.FC = () => {
   return (
     <div className="login-container">
       <Popup show={showPopup} message={popupMessage} />
-      <img src={logo} alt="Logo" className="login-logo" />
-      <h1 className="login-title">Login do promotor</h1>
+      <img src={logo} alt="Logo" className="login-logo"  />
+      <h1 className="login-title"  style={{
+         
+            fontFamily: "BradescoSansBold", // Aplica a fonte personalizada
+            
+            fontSize: "3vh", // Ajusta o tamanho da fonte para 54px
+           
+          }}>Login do promotor</h1>
 
       <div className="input-container">
-        <label htmlFor="username">Usuário:</label>
+        <label htmlFor="username" style={{
+         
+         fontFamily: "BradescoSansBold", // Aplica a fonte personalizada
+         
+         fontSize: "2vh", // Ajusta o tamanho da fonte para 54px
+        
+       }}>Usuário:</label>
         <input
           type="text"
           id="username"
@@ -61,6 +76,13 @@ const LoginScreen: React.FC = () => {
           value={login}
           onChange={(e) => setLogin(e.target.value)}
           onFocus={() => setInputName("login")}
+          style={{
+         
+            fontFamily: "BradescoSansBold", // Aplica a fonte personalizada
+            
+            fontSize: "2vh", // Ajusta o tamanho da fonte para 54px
+           
+          }}
         />
       </div>
 
@@ -73,33 +95,47 @@ const LoginScreen: React.FC = () => {
           value={secretKey}
           onChange={(e) => setSecretKey(e.target.value)}
           onFocus={() => setInputName("secretKey")}
+          style={{
+         
+            fontFamily: "BradescoSansBold", // Aplica a fonte personalizada
+            
+            fontSize: "2vh", // Ajusta o tamanho da fonte para 54px
+           
+          }}
         />
       </div>
 
-      <button className="login-button" onClick={handleLogin} disabled={!login || !secretKey}>
+      <button className="login-button" onClick={handleLogin} disabled={!login || !secretKey} 
+        style={{
+         
+          fontFamily: "BradescoSansBold", // Aplica a fonte personalizada
+          marginBottom: "2vh", // Ajusta a margem inferior para 2vh
+          fontSize: "2vh", // Ajusta o tamanho da fonte para 54px
+         
+        }}>
         Entrar
       </button>
 
       {showKeyboard && (
-        <div className="keyboard-container">
-          <Keyboard
-            onChange={handleKeyboardChange}
-            inputName={inputName}
-            layout={{
-              default: [
-                "1 2 3 4 5 6 7 8 9 0 - _ @",
-                "q w e r t y u i o p",
-                "a s d f g h j k l",
-                "z x c v b n m .",
-                "{bksp} {space}"
-              ]
-            }}
-            display={{ "{bksp}": "Apagar", "{space}": "Espaço" }}
-          />
-        </div>
+       <Keyboard
+       onChange={handleKeyboardChange}
+       inputName={inputName}
+       layout={{
+         default: [
+           "1 2 3 4 5 6 7 8 9 0 - _ @",
+           "q w e r t y u i o p",
+           "a s d f g h j k l",
+           "z x c v b n m .",
+           "{bksp} {space}"
+         ]
+       }}
+       display={{ "{bksp}": "Apagar", "{space}": "Espaço" }}
+      
+     />
+     
       )}
 
-      <p className="footer-text">HOLDING CLUBE</p>
+     
     </div>
   );
 };

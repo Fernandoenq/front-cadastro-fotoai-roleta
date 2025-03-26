@@ -9,15 +9,16 @@
   background-color: #000;
   color: white;
   min-height: 100vh;
+  
 }
 
-/* Título */
 .page-header h1 {
-  font-size: 24px;
+  color: white;
+  font-family: "BradescoSans";
+  
   text-align: center;
-  color: #ff4757;
-  margin-bottom: 10px;
 }
+
 
 /* Seletor de câmera */
 .controls-container {
@@ -35,30 +36,54 @@
   background-color: white;
   border: none;
   text-align: center;
+ 
 }
 
-/* Área da câmera com proporção 16:9 */
 .camera-container {
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 450px; /* Máximo de largura */
-  height: 900px; /* Máximo de largura */
-  aspect-ratio: 16 / 9; /* Mantém a proporção correta */
-  border: 2px solid white;
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: black;
+  max-width:29vh; /* Máximo de largura */
+  height: 45vh; /* Aumenta a altura para um formato de retrato */
+  background-color: transparent;
   position: relative;
- 
-  
+  border-radius: 10px;
 }
 
-/* Ajusta o vídeo para preencher a área sem cortes */
+.camera-container::before,
+.camera-container::after {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-color: red;
+  border-width: 5px;
+}
+
+.camera-container::before {
+  top: -15px;
+  left: -15px;
+  width: 180px; /* Controle a largura das bordas dos cantos aqui */
+  height: 180px;
+  border-right-color: transparent; /* Torna a borda direita transparente */
+  border-bottom-color: transparent; /* Torna a borda inferior transparente */
+  border-radius: 10px 0 0 0; /* Arredondamento apenas no canto necessário */
+}
+
+.camera-container::after {
+  bottom: -1vh;
+  right: -1vh;
+  width: 180px; /* Controle a largura das bordas dos cantos aqui */
+  height: 180px;
+  border-left-color: transparent; /* Torna a borda esquerda transparente */
+  border-top-color: transparent; /* Torna a borda superior transparente */
+  border-radius: 0 0 10px 0; /* Arredondamento apenas no canto necessário */
+}
+
+
 .camera-video {
   width: 100%;
-  height: 100%;
-  object-fit: contain; /* Mostra tudo sem cortar nada */
+  height: 100%; /* Garante que o vídeo cubra todo o contêiner */
+  object-fit: cover; /* Preenche todo o espaço, permitindo distorção */
 }
 
 /* Botão de captura */
@@ -69,17 +94,16 @@
 }
 
 .capture-button {
-  background: url('/img/camera/button.png') no-repeat center center;
+  background: url("/img/camera/button.png") no-repeat center center;
   background-size: contain; /* Garante que a imagem preencha o botão sem distorcer */
   border: none;
   border-radius: 50%; /* Ajusta para bordas arredondadas */
   width: 100px; /* Mantenha a proporção de acordo com a sua necessidade */
-  height: 100px;
+  height: 5vh;
   cursor: pointer;
   outline: none; /* Remove a borda de foco que alguns navegadores adicionam */
   margin-top: 50px;
 }
-
 
 .capture-button:hover {
   background: linear-gradient(90deg, #0056b3, #0096c7);
@@ -97,3 +121,4 @@
   border-radius: 8px;
   margin-top: 10px;
 }
+

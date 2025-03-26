@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+ 
   height: 100vh;
   background-color: #111;
   color: white;
@@ -24,8 +24,8 @@
   width: 25vw; /* Mesmo tamanho da imagem */
   height: auto; /* Mantém a proporção */
   margin-bottom: 20px; /* Espaço entre imagem e QRCode */
-  background-color: white;
-  box-shadow: 0px 0px 15px white;
+ 
+  
 
 
 }
@@ -45,4 +45,40 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+.qr-code-container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: transparent;
+  position: relative;
+  border-radius: 10px;
+}
+.qr-code-container::before,
+.qr-code-container::after {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-color: red;
+  border-width: 5px;
+}
+
+.qr-code-container::before {
+  top: 20px;
+  left: 10px;
+  width: 50px; /* Controle a largura das bordas dos cantos aqui */
+  height: 50px;
+  border-right-color: transparent; /* Torna a borda direita transparente */
+  border-bottom-color: transparent; /* Torna a borda inferior transparente */
+  border-radius: 10px 0 0 0; /* Arredondamento apenas no canto necessário */
+}
+
+.qr-code-container::after {
+  bottom: 2vh;
+  right: 1vh;
+  width: 50px; /* Controle a largura das bordas dos cantos aqui */
+  height: 50px;
+  border-left-color: transparent; /* Torna a borda esquerda transparente */
+  border-top-color: transparent; /* Torna a borda superior transparente */
+  border-radius: 0 0 10px 0; /* Arredondamento apenas no canto necessário */
 }

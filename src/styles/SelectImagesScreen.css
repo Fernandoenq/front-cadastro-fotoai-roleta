@@ -58,6 +58,7 @@
     gap: 10px;
     justify-content: center;
     width: 100%;
+    font-family: "BradescoSansButtom" !important;
   }
   
   /* Contêiner de cada imagem */
@@ -90,7 +91,7 @@
   /* Texto abaixo da imagem */
   .image-label {
     margin-top: 5px;
-    font-size: 1rem;
+   
   }
   
   /* Botão Continuar */
@@ -115,4 +116,3 @@
   .continue-button:hover:not(:disabled) {
     background-color: #0056b3;
   }
-  
