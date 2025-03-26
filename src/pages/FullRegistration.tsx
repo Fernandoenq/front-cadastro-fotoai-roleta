@@ -107,39 +107,7 @@ const CadastroCompleto: React.FC = () => {
     <div className="cadastro-full-container">
       <Popup show={showPopup} message={popupMessage} />
 
-      <div className="cadastro-full-keyboard">
-        <Keyboard
-          onChange={handleKeyboardChange}
-          inputName={inputName}
-          layout={{
-            default: [
-              "1 2 3 4 5 6 7 8 9 0 - _ @",
-              "q w e r t y u i o p",
-              "a s d f g h j k l",
-              "z x c v b n m .",
-              "{symbols} {bksp} {space}"
-            ],
-            symbols: [
-              "! # $ % & * + / = ? ^ ` ~",
-              "{ } [ ] ( ) < > | \\ \" '",
-              ": ; , . _ - @",
-              "{default} {bksp} {space}"
-            ]
-          }}
-          display={{
-            "{bksp}": "⌫",
-            "{space}": "space",
-            "{symbols}": "123",
-            "{default}": "ABC"
-          }}
-          className="custom-bradesco-keyboard"
-          layoutName={keyboardLayout}
-          onKeyPress={(button) => {
-            if (button === "{symbols}") setKeyboardLayout("symbols");
-            if (button === "{default}") setKeyboardLayout("default");
-          }}
-        />
-      </div>
+     
       <style>
           {`
     .input-placeholder-white::placeholder {
@@ -204,7 +172,39 @@ const CadastroCompleto: React.FC = () => {
         <input type="checkbox" name="lgpd" checked={formData.lgpd} onChange={(e) => handleCheckboxChange("lgpd", e.target.checked)} />
         Termo de responsabilidade e segurança de acordo com LGPD
       </div>
-
+      <div className="cadastro-full-keyboard">
+        <Keyboard
+          onChange={handleKeyboardChange}
+          inputName={inputName}
+          layout={{
+            default: [
+              "1 2 3 4 5 6 7 8 9 0 - _ @",
+              "q w e r t y u i o p",
+              "a s d f g h j k l",
+              "z x c v b n m .",
+              "{symbols} {bksp} {space}"
+            ],
+            symbols: [
+              "! # $ % & * + / = ? ^ ` ~",
+              "{ } [ ] ( ) < > | \\ \" '",
+              ": ; , . _ - @",
+              "{default} {bksp} {space}"
+            ]
+          }}
+          display={{
+            "{bksp}": "⌫",
+            "{space}": "space",
+            "{symbols}": "123",
+            "{default}": "ABC"
+          }}
+          className="custom-bradesco-keyboard"
+          layoutName={keyboardLayout}
+          onKeyPress={(button) => {
+            if (button === "{symbols}") setKeyboardLayout("symbols");
+            if (button === "{default}") setKeyboardLayout("default");
+          }}
+        />
+      </div>
       <button className="cadastro-full-button" onClick={() => handleCadastro(formData, callApi, navigate)} disabled={!isButtonEnabled}>
         CADASTRAR
       </button>

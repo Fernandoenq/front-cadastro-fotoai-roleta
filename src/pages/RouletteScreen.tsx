@@ -26,59 +26,53 @@ const RoletaScreen: React.FC = () => {
       const spinWheel = async () => {
         console.log("🎰 Girando a roleta...");
         if (isSpinning) return; // Garante que a função não seja chamada quando já estiver girando
-    
+      
         setIsSpinning(true); // Começa o giro da roleta
         setRotation(0); // Reseta a rotação da roleta
-    
+      
         const prize = await fetchPrize();
-        console.log(prize)
-       
+        console.log(prize);
         if (!prize) {
-            console.error("❌ Nenhum prêmio retornado!");
-            setIsSpinning(false); // Finaliza o giro caso não haja prêmio
-            return;
+          console.error("❌ Nenhum prêmio retornado!");
+          setIsSpinning(false); // Finaliza o giro caso não haja prêmio
+          return;
         }
-    
+      
         // Seleciona a lista de prêmios com base no organizador
         const prizeList =
-            organizerName && organizerName.toLowerCase().includes("roleta")
-                ? prizesRoleta
-                : prizesLoudge;
+          organizerName && organizerName.toLowerCase().includes("roleta")
+            ? prizesRoleta
+            : prizesLoudge;
         console.log(prizeList);
-    
+      
         // Encontrar o índice do prêmio com base no GiftId
-        console.log(prize.GiftId)
         const prizeIndex = prizeList.findIndex(
-          (prizeItem) => prizeItem.id === Number(prize) // Converte prize.GiftId para número
+          (prizeItem) => prizeItem.id === prize.GiftId
         );
-        
-    
+      
         if (prizeIndex === -1) {
-            console.error("❌ Prêmio não encontrado na lista!");
-            setIsSpinning(false);
-            return;
+          console.error("❌ Prêmio não encontrado na lista!");
+          setIsSpinning(false);
+          return;
         }
-    
-        console.log(`Índice do prêmio: ${prizeIndex}`);
-       
-    
+        console.log(prizeList.length)
+      
         // Calcular o ângulo para o prêmio sorteado
         const anglePerPrize = 360 / prizeList.length; // Divide a roleta igualmente entre os prêmios
         const prizeAngle = prizeIndex * anglePerPrize + anglePerPrize / 2; // Meio do prêmio
-    
+      
         // Número de voltas extras
         const extraRotations = 5; // O número de voltas que a roleta deve fazer antes de parar
         const targetRotation = 360 * extraRotations + prizeAngle; // Gira 5 voltas completas + o ângulo do prêmio
-    
+      
         setRotation(targetRotation); // Atualiza a rotação da roleta
-    
+      
         setTimeout(() => {
-            setIsSpinning(false); // Finaliza o giro após 5 segundos
-            console.log(`🎁 O ponteiro parou em: ${prize.GiftName}`);
-            navigate(`/roleta/${encodeURIComponent(prize.GiftName)}`); // Redireciona após o giro
+          setIsSpinning(false); // Finaliza o giro após 5 segundos
+          console.log(`🎁 O ponteiro parou em: ${prize.GiftName}`);
+          navigate(`/roleta/${encodeURIComponent(prize.GiftName)}`); // Redireciona após o giro
         }, 5000); // A roleta gira por 5 segundos
-    };
-    
+      };
       
 
   return (
