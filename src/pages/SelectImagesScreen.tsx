@@ -3,6 +3,10 @@ import "../styles/SelectImagesScreen.css";
 import { images } from "../data/imageData";
 import useFotoAiAPI from "../hooks/fotoAiAPI";
 import ProgressModal from "../modals/ProgressModal";
+import popImage from "../assets/POP.png";
+import rockImage from "../assets/rock.png";
+import mpbImage from "../assets/MPB.png";
+import edmImage from "../assets/EDM.png";
 
 const bucketName = "bucket-bradesco-lollapalloza";
 const region = "sa-east-1";
@@ -16,10 +20,10 @@ const SelectImageScreen: React.FC = () => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const image = [
-    { id: 1, text: "POP", imageUrl: 'src/assets/POP.png' },
-    { id: 2, text: "ROCK", imageUrl: 'src/assets/rock.png' },
-    { id: 3, text: "MPB", imageUrl: 'src/assets/MPB.png' },
-    { id: 4, text: "EDM", imageUrl: 'src/assets/EDM.png' },
+    { id: 1, text: "POP", imageUrl: popImage },
+    { id: 2, text: "ROCK", imageUrl: rockImage },
+    { id: 3, text: "MPB", imageUrl: mpbImage },
+    { id: 4, text: "EDM", imageUrl: edmImage },
 ];
 
 
