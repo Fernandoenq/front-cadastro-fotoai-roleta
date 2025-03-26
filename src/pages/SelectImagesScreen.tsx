@@ -3,7 +3,6 @@ import "../styles/SelectImagesScreen.css";
 import { images } from "../data/imageData";
 import useFotoAiAPI from "../hooks/fotoAiAPI";
 import ProgressModal from "../modals/ProgressModal";
-import { useNavigate } from "react-router-dom";
 
 const bucketName = "bucket-bradesco-lollapalloza";
 const region = "sa-east-1";
@@ -16,7 +15,6 @@ const SelectImageScreen: React.FC = () => {
   const [progress, setProgress] = useState<number | string>(0); // ✅ Agora aceita string e número
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const navigate = useNavigate();
   const image = [
     { id: 1, text: "POP", imageUrl: 'src/assets/POP.png' },
     { id: 2, text: "ROCK", imageUrl: 'src/assets/rock.png' },

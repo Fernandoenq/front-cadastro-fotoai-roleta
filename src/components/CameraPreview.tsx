@@ -1,5 +1,5 @@
 // CameraPreview.js
-import React, { useRef, useEffect, forwardRef } from 'react';
+import { useEffect, forwardRef } from 'react';
 import { startCamera } from '../utils/cameraUtils';
 
 interface CameraPreviewProps {

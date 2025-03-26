@@ -31,14 +31,7 @@ const CameraScreen: React.FC = () => {
       setSelectedDevice(devices[0].deviceId);
     }
   }, [devices]);
-  // Define as dimensões da área de captura baseadas em sua descrição
-  const cameraContainer = document.querySelector(".camera-container");
-  const cropWidth = cameraContainer
-    ? parseInt(getComputedStyle(cameraContainer).maxWidth)
-    : 0;
-  const cropHeight = cameraContainer
-    ? parseInt(getComputedStyle(cameraContainer).height)
-    : 0;
+  
     const handleCapture = () => {
       setIsCapturing(true);
       setCountdown(5);

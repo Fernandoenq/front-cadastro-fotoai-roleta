@@ -1,4 +1,11 @@
-export const captureImage = (videoElement, canvasElement, cropWidth) => {
+interface VideoElement extends HTMLVideoElement {}
+interface CanvasElement extends HTMLCanvasElement {}
+
+export const captureImage = (
+  videoElement: VideoElement | null, 
+  canvasElement: CanvasElement | null, 
+  cropWidth: number
+): string | null => {
   if (!videoElement || !canvasElement) {
     console.error("Canvas ou vídeo não estão disponíveis.");
     return null;
