@@ -162,8 +162,8 @@ const CadastroCompleto: React.FC = () => {
         <label key={option.id} className="campo-checkbox">
           <input
             type="checkbox"
-            checked={formData.sexo === option.id}
-            onChange={() => handleCheckboxChange('sexo', option.id)}
+            checked={formData.sexo === option.id.toString()}
+            onChange={() => handleCheckboxChange('sexo', option.id.toString())}
           />
           <span>{option.label}</span>
         </label>
