@@ -100,9 +100,9 @@ const PrizeScreen: React.FC = () => {
           fontSize: "4vh", // Ajusta o tamanho da fonte para 54px
          
         }}>
-          <p >Mas não desanime,</p>
+          {/* <p >Mas não desanime,</p>
           <p>retire seu</p>
-          <p>brinde especial! 😉</p>
+          <p>brinde especial! 😉</p> */}
   
           <button className="prize-button" onClick={() => navigate("/finalscreen")}
              style={{
