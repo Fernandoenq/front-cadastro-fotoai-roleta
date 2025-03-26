@@ -9,6 +9,7 @@ const useRfidApi = () => {
   const isFirstCallDone = useRef(false);
   const isUnmounted = useRef(false); 
 
+  
   const fetchRfidFromApi = async () => {
     try {
       if (isUnmounted.current) return; 

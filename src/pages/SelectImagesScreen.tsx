@@ -18,11 +18,12 @@ const SelectImageScreen: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
   const image = [
-    { id: 1, text: "POP", imageUrl: '/img/camera/escolher_tema.png'},
-    { id: 2, text: "ROCK",imageUrl: '/img/camera/escolher_tema.png' },
-    { id: 3, text: "MPB",imageUrl: '/img/camera/escolher_tema.png' },
-    { id: 4, text: "EDM" ,imageUrl: '/img/camera/escolher_tema.png'},
-  ];
+    { id: 1, text: "POP", imageUrl: 'src/assets/POP.png' },
+    { id: 2, text: "ROCK", imageUrl: 'src/assets/rock.png' },
+    { id: 3, text: "MPB", imageUrl: 'src/assets/MPB.png' },
+    { id: 4, text: "EDM", imageUrl: 'src/assets/EDM.png' },
+];
+
 
   const handleContinueClick = async () => {
     if (selectedImage === null) return;
@@ -77,35 +78,37 @@ const SelectImageScreen: React.FC = () => {
 
       <div className="">
       <div className="image-grid">
-  {image.map((image) => (
-    <button
-      key={image.id}
-      className={`bg-[#f3b8d6] image-container ${selectedImage === image.id ? "selected" : ""}`}
-      onClick={() => setSelectedImage(image.id)}
+      {image.map((image) => (
+  <button
+    key={image.id}
+    className={`bg-[#f3b8d6] image-container ${selectedImage === image.id ? "selected" : ""}`}
+    onClick={() => setSelectedImage(image.id)}
+    style={{
+      backgroundColor: "transparent", // Cor de fundo
+      width: "13vh",
+      height: "13vh",
+      fontFamily: "BradescoSansButtom", // Fonte personalizada
+      margin: "0vh", // Margem
+      display: "flex", // Habilita flexbox
+      alignItems: "center", // Centraliza verticalmente
+      justifyContent: "center", // Centraliza horizontalmente
+      border: selectedImage === image.id ? "4px solid #2e00d8" : "none", // Borda azul se selecionado
+      cursor: "pointer", // Muda o cursor para ponteiro
+      padding:"0vh"
+    }}
+  >
+    <img
+      src={image.imageUrl} // Assume que `image.imageUrl` contém a URL da imagem
+      alt={image.text} // Descrição da imagem para acessibilidade
       style={{
-        backgroundColor: "#f3b8d6", // Cor de fundo
-        width: "13vh",
-        height: "13vh",
-        fontFamily: "BradescoSansButtom", // Fonte personalizada
-        margin: "0vh", // Margem
-        display: "flex", // Habilita flexbox
-        alignItems: "center", // Centraliza verticalmente
-        justifyContent: "center", // Centraliza horizontalmente
-        border: selectedImage === image.id ? "3px solid #2e00d8" : "none", // Borda azul se selecionado
-        cursor: "pointer", // Muda o cursor para ponteiro
+        width: "100%", // Ajusta a imagem para preencher o botão
+        height: "100%", // Ajusta a altura da imagem
+        objectFit: "cover", // Ajusta para a imagem ficar completamente visível sem distorção
       }}
-    >
-      <img
-        src={image.imageUrl} // Assume que `image.imageUrl` contém a URL da imagem
-        alt={image.text} // Descrição da imagem para acessibilidade
-        style={{
-          width: "100%", // Ajusta a imagem para preencher o botão
-          height: "100%", // Ajusta a altura da imagem
-          objectFit: "cover", // Ajusta para cobrir o espaço sem distorcer
-        }}
-      />
-    </button>
-  ))}
+    />
+  </button>
+))}
+
 </div>
 
 </div>

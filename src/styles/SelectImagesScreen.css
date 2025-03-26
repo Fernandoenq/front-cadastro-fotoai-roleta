@@ -55,9 +55,9 @@
   .image-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* ✅ Mantém 3 imagens lado a lado */
-    gap: 10px;
+    /* gap: 10px; */
     justify-content: center;
-    width: 100%;
+    /* width: 100%; */
     font-family: "BradescoSansButtom" !important;
   }
   

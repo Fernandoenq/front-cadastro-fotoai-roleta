@@ -27,7 +27,7 @@ const FinalImageScreen: React.FC = () => {
      // Espera 5 segundos antes de permitir a navegação
      const timer = setTimeout(() => {
       setIsReady(true); // Após 5 segundos, define o estado como pronto para navegação
-    }, 5000);
+    }, 3000);
 
     // Limpeza do temporizador
     return () => clearTimeout(timer);
