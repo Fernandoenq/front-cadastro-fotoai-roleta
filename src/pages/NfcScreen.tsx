@@ -41,7 +41,8 @@ const NfcScreen: React.FC = () => {
     }
   };
 
-  const isUUIDValid = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(rfidValue || "");
+   // Verifica se o rfidValue não está vazio
+   const isButtonEnabled = rfidValue && rfidValue.trim() !== "";
 
   return (
     <div className="nfc-screen-container">
@@ -51,7 +52,11 @@ const NfcScreen: React.FC = () => {
       <button
         className="nfc-confirm-button"
         onClick={() => handleAction(getDestino())}
-        disabled={!isUUIDValid}
+        disabled={!isButtonEnabled} // O botão só estará habilitado se o rfidValue não estiver vazio
+        style={{
+          boxShadow: (!isButtonEnabled) ? "0 4px 8px rgba(1, 1, 1, 0.2)" : "none", // Sombra no botão desabilitado
+    opacity: (!isButtonEnabled) ? 0.5 : 1, // Tornar o botão semitransparente quando desabilitado
+        }}
       >
         CONFIRMAR
       </button>

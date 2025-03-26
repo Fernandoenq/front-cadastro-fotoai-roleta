@@ -9,22 +9,28 @@ export const handleCadastro = async (
   const cpfSemFormatacao = unformatCpf(formData.cpf);
   const whatsappSemFormatacao = unformatWhatsapp(formData.whatsapp);
 
-  const registerData = {
+  // Preparar os dados de cadastro
+  const registerData: any = {
     PersonName: formData.nome,
     Cpf: cpfSemFormatacao,
     Phone: `55${whatsappSemFormatacao}`,
     Mail: formData.email,
     HasAcceptedTerm: formData.lgpd,
     HasAccount: formData.correntista,
-    ExternalCode: localStorage.getItem("rfidValue") || "",
-    AgeProfileId: parseInt(formData.idadePerfil),
-    OrganizerId: localStorage.getItem("OrganizerId") || "",
+    Age: parseInt(formData.idadePerfil),
+    OrganizerId: parseInt(localStorage.getItem("OrganizerId") || ""),
+    Gender: formData.sexo,  // Adicionando o sexo ao payload
   };
 
-  
+  // Verifica se o valor do ExternalCode existe no localStorage
+  const externalCode = localStorage.getItem("rfidValue");
+  if (externalCode) {
+    registerData.ExternalCode = externalCode; // Adiciona o ExternalCode se estiver presente
+  }
 
   console.log("📤 Enviando dados para API:", registerData);
   localStorage.setItem("cpf", registerData.Cpf);
+  
   const result = await callApi("/Person/Person", "POST", registerData);
 
   console.log("🔄 Resposta da API:", result);
@@ -36,3 +42,4 @@ export const handleCadastro = async (
     console.error("❌ Erro no cadastro.");
   }
 };
+

@@ -21,7 +21,13 @@ interface FormData {
   sexo: string;
   organizerId: string;
 }
-
+// Opções de sexo com seus respectivos IDs
+const sexoOptions = [
+  { label: 'Feminino', id: 1 },
+  { label: 'Masculino', id: 2 },
+  { label: 'Não binário', id: 3 },
+  { label: 'Não identificar', id: 4 }
+];
 const CadastroCompleto: React.FC = () => {
   const navigate = useNavigate();
   const { callApi, showPopup, popupMessage } = useApi();
@@ -76,11 +82,26 @@ const CadastroCompleto: React.FC = () => {
   };
 
   const handleCheckboxChange = (field: keyof FormData, value: boolean | string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: typeof value === "boolean" ? value : prev[field] === value ? "" : value
-    }));
+    // Se o valor for booleano, simplesmente seta o valor.
+    // Caso contrário, verifica se é uma mudança em `sexo` ou `idadePerfil` para garantir que apenas uma opção esteja selecionada.
+    if (typeof value === "boolean") {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: value
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        // Se o valor atual é o mesmo que o recebido, limpa o campo, caso contrário, seta o novo valor.
+        // Isso permite que o usuário desmarque uma opção se desejar.
+        [field]: prev[field] === value ? "" : value,
+        // Limpa outras seleções exclusivas dependendo do campo atualizado
+        ...(field === 'sexo' && { sexo: value }),
+        ...(field === 'idadePerfil' && { idadePerfil: value })
+      }));
+    }
   };
+  
 
   const handleFieldClick = (field: keyof FormData, ref?: React.RefObject<HTMLInputElement | null>) => {
     if (activeField === field) return;
@@ -135,16 +156,20 @@ const CadastroCompleto: React.FC = () => {
       </div>
 
       <div className="campo-grupo">
-        <label className="campo-titulo">Sexo</label>
-        <div className="campo-opcoes" style={{ justifyContent: "space-between" }}>
-          {["Feminino", "Masculino", "Não binário", "Não identificar"].map((sexo) => (
-            <label key={sexo} className="campo-checkbox">
-              <input type="checkbox" checked={formData.sexo === sexo} onChange={() => handleCheckboxChange("sexo", sexo)} />
-              <span>{sexo}</span>
-            </label>
-          ))}
-        </div>
-      </div>
+    <label className="campo-titulo">Sexo</label>
+    <div className="campo-opcoes" style={{ justifyContent: "space-between" }}>
+      {sexoOptions.map((option) => (
+        <label key={option.id} className="campo-checkbox">
+          <input
+            type="checkbox"
+            checked={formData.sexo === option.id}
+            onChange={() => handleCheckboxChange('sexo', option.id)}
+          />
+          <span>{option.label}</span>
+        </label>
+      ))}
+    </div>
+  </div>
 
       <div className="checkbox-correntista">
         <span style={{ color: "white", fontWeight: "bold", fontSize: "1.5vh" }}>Você já é cliente Bradesco?</span>
@@ -205,7 +230,11 @@ const CadastroCompleto: React.FC = () => {
           }}
         />
       </div>
-      <button className="cadastro-full-button" onClick={() => handleCadastro(formData, callApi, navigate)} disabled={!isButtonEnabled}>
+      <button className="cadastro-full-button" onClick={() => handleCadastro(formData, callApi, navigate)} disabled={!isButtonEnabled}
+          style={{
+            boxShadow: (!isButtonEnabled) ? "0 4px 8px rgba(1, 1, 1, 0.2)" : "none", // Sombra no botão desabilitado
+      opacity: (!isButtonEnabled) ? 0.5 : 1, // Tornar o botão semitransparente quando desabilitado
+          }}>
         CADASTRAR
       </button>
     </div>
