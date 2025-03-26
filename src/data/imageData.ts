@@ -18,6 +18,7 @@ export const images: ImageItem[] = [
 ];
 
 
+
 //           Versões da cliente              \\
 
 

@@ -47,9 +47,9 @@ const RoletaScreen: React.FC = () => {
       
         // Encontrar o índice do prêmio com base no GiftId
         const prizeIndex = prizeList.findIndex(
-          (prizeItem) => prizeItem.id === prize.GiftId
+          (prizeItem) => prizeItem.name.toLowerCase() === prize.GiftName.toLowerCase()
         );
-      
+        
         if (prizeIndex === -1) {
           console.error("❌ Prêmio não encontrado na lista!");
           setIsSpinning(false);
@@ -57,15 +57,16 @@ const RoletaScreen: React.FC = () => {
         }
         console.log(prizeList.length)
       
-        // Calcular o ângulo para o prêmio sorteado
-        const anglePerPrize = 360 / prizeList.length; // Divide a roleta igualmente entre os prêmios
-        const prizeAngle = prizeIndex * anglePerPrize + anglePerPrize / 2; // Meio do prêmio
-      
-        // Número de voltas extras
-        const extraRotations = 5; // O número de voltas que a roleta deve fazer antes de parar
-        const targetRotation = 360 * extraRotations + prizeAngle; // Gira 5 voltas completas + o ângulo do prêmio
-      
-        setRotation(targetRotation); // Atualiza a rotação da roleta
+        const anglePerPrize = 360 / prizeList.length;
+        const prizeAngle = prizeIndex * anglePerPrize;
+        const offsetToCenter = anglePerPrize / 2;
+        
+        const extraRotations = 5;
+        const targetRotation = 360 * extraRotations - (prizeAngle + offsetToCenter);
+        
+        setRotation(targetRotation);
+        
+
       
         setTimeout(() => {
           setIsSpinning(false); // Finaliza o giro após 5 segundos
@@ -107,8 +108,8 @@ const RoletaScreen: React.FC = () => {
           style={{
             transform: `rotate(${rotation}deg)`,
             transition: isSpinning ? "transform 3s ease-out" : "none",
-            width: "80vh",
-            height: "45vh",
+            width: "39vh",
+            height: "39vh",
             // border:"solid 9px yellow"
           }}
         />
