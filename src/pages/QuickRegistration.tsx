@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
@@ -16,7 +16,17 @@ const CadastroRapido: React.FC = () => {
   const [isCpfValid, setIsCpfValid] = useState(false);
   const [showKeyboard, setShowKeyboard] = useState(false); // controla o teclado
   const cpfRef = useRef<HTMLInputElement | null>(null);
-
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false); // Novo estado para o botão
+  // Verifica se o RFID é válido e ativa o botão
+  useEffect(() => {
+    // O botão só será habilitado se o rfidValue estiver presente e for um código válido
+    if (rfidValue ) {
+      // Validação do formato do ExternalCode (exemplo)
+      setIsButtonEnabled(true);
+    } else {
+      setIsButtonEnabled(false);
+    }
+  }, [rfidValue]);
   const handleKeyboardChange = (input: string) => {
     setCpf(input);
     setIsCpfValid(validateCpf(input));
@@ -60,15 +70,16 @@ const CadastroRapido: React.FC = () => {
       <h1 className="cadastro-nfc-title">Aproxime seu cartão da maquininha</h1>
 
       <h2 className="cadastro-nfc-subtitle">
-  Digite seu CPF e<br />confirme seu cadastro.
-</h2>
-<style>
-          {`
+        Digite seu CPF e<br />
+        confirme seu cadastro.
+      </h2>
+      <style>
+        {`
     .input-placeholder-white::placeholder {
       color: white; /* Define a cor do placeholder para branco */
     }
   `}
-        </style>
+      </style>
       <label className="cadastro-nfc-label"></label>
       <input
         ref={cpfRef}
@@ -105,9 +116,9 @@ const CadastroRapido: React.FC = () => {
           }}
         />
       )}
-<button
+     <button
   onClick={handleCadastro}
-  disabled={!isCpfValid}
+  disabled={!isCpfValid || !isButtonEnabled} // Habilita apenas se o CPF for válido e RFID for válido
   style={{
     backgroundColor: "#CD092F", // Cor vermelha escura
     color: "white", // Texto branco
@@ -129,6 +140,8 @@ const CadastroRapido: React.FC = () => {
     top: "60vh",
     left: "50%",
     transform: "translateX(-50%)",
+    boxShadow: (!isCpfValid || !isButtonEnabled) ? "0 4px 8px rgba(1, 1, 1, 0.2)" : "none", // Sombra no botão desabilitado
+    opacity: (!isCpfValid || !isButtonEnabled) ? 0.5 : 1, // Tornar o botão semitransparente quando desabilitado
   }}
 >
   CONFIRMAR
