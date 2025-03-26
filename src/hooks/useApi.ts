@@ -27,7 +27,7 @@ export const useApi = () => {
 
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method,
-        headers: isFormData ? {} : { "Content-Type": "application/json" }, 
+        ...(isFormData ? {} : { headers: { "Content-Type": "application/json" } }),
         body: body ? (isFormData ? body : JSON.stringify(body)) : undefined,
       });
 
@@ -59,7 +59,7 @@ export const useApi = () => {
     } catch (error) {
       setPopupMessage("🚨 Erro de conexão com a API");
       setShowPopup(true);
-      setTimeout(() => setShowPopup(false), 3000);
+      setTimeout(() => setShowPopup(false), 30000);
       console.error("🚨 Erro de conexão:", error);
       return null;
     }

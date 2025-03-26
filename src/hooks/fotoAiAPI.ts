@@ -26,6 +26,7 @@ const useFotoAiAPI = () => {
       });
   
       const data = await response.json();
+  
       if (!data.task_id) {
         showMessage("❌ Erro ao gerar a imagem");
         onError("Erro ao gerar a imagem");
@@ -35,38 +36,48 @@ const useFotoAiAPI = () => {
       console.log("✅ Task ID recebido:", data.task_id);
       const taskId = data.task_id;
   
-      const eventSource = new EventSource(`${API_URL}/progress/${taskId}`);
-  
-      eventSource.onmessage = (event) => {
-        const statusData = JSON.parse(event.data);
-        console.log("📶 Progresso recebido:", statusData.progress);
-  
-        if (typeof statusData.progress === "number") {
-          onProgress(statusData.progress);
-        } else if (typeof statusData.progress === "string") {
-          onProgress(statusData.progress); 
+      let completed = false;
+      while (!completed) {
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Espera 2s
+
+        const statusResponse = await fetch(`${API_URL}/progress/${taskId}`);
+
+        if (statusResponse.status !== 200) {
+          showMessage("❌ Erro ao buscar progresso da imagem");
+          onError("Erro ao buscar progresso da imagem");
+          break;
         }
-  
-        if (statusData.image_urls) {
+
+        let statusData;
+        try {
+          statusData = await statusResponse.json();
+        } catch (jsonError) {
+          console.error("❌ Erro ao processar JSON:", jsonError);
+          continue; // Não para o while, apenas ignora essa rodada
+        }
+
+        if (!statusData || typeof statusData.progress !== "number") {
+          console.warn("⚠️ Resposta inválida ou sem progresso. Ignorando rodada...");
+          continue; // ignora esta rodada do while
+        }
+
+        console.log("📶 Progresso recebido (polling):", statusData);
+        onProgress(statusData.progress);
+
+        if (statusData.progress === 100 && statusResponse.status === 200 && Array.isArray(statusData.image_urls)) {
           showMessage("✅ Imagens geradas com sucesso!");
           onComplete(statusData.image_urls);
-          eventSource.close();
+          completed = true;
         }
-      };
-  
-      eventSource.onerror = (error) => {
-        console.error("❌ Erro no SSE:", error);
-        eventSource.close();
-        showMessage("❌ Erro ao buscar progresso da imagem");
-        onError("Erro ao buscar progresso da imagem");
-      };
-  
+      }
+
     } catch (error) {
-      console.error("❌ Erro ao conectar com o servidor:", error);
+      console.error("❌ Erro durante o polling:", error);
       showMessage("❌ Erro ao conectar com o servidor");
       onError("Erro ao conectar com o servidor");
     }
   }, []);
+  
   
 
   const sendImageName = useCallback(async (imageName: string, cpf: string) => {
