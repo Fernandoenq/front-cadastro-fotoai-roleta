@@ -9,7 +9,14 @@ export const handleCadastro = async (
   const cpfSemFormatacao = unformatCpf(formData.cpf);
   const whatsappSemFormatacao = unformatWhatsapp(formData.whatsapp);
 
-  // Preparar os dados de cadastro
+  const idadePerfilMap: Record<string, number> = {
+    "até 16": 1,
+    "17 a 25": 2,
+    "26 a 35": 3,
+    "36 a 45": 4,
+    "46+": 5
+  };
+  
   const registerData: any = {
     PersonName: formData.nome,
     Cpf: cpfSemFormatacao,
@@ -17,10 +24,11 @@ export const handleCadastro = async (
     Mail: formData.email,
     HasAcceptedTerm: formData.lgpd,
     HasAccount: formData.correntista,
-    Age: parseInt(formData.idadePerfil),
+    Age: idadePerfilMap[formData.idadePerfil], 
     OrganizerId: parseInt(localStorage.getItem("OrganizerId") || ""),
-    Gender: formData.sexo,  // Adicionando o sexo ao payload
+    Gender: formData.sexo,
   };
+  
 
   // Verifica se o valor do ExternalCode existe no localStorage
   const externalCode = localStorage.getItem("rfidValue");
