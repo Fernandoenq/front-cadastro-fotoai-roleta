@@ -124,7 +124,7 @@ const CadastroCompleto: React.FC = () => {
     setActiveField(field);
     setTimeout(() => ref?.current?.focus(), 0);
   };
-  const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleBackClick = () => {
     
     navigate("/redirectscreen"); // Navega para a página de câmera
   };
