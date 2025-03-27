@@ -24,8 +24,8 @@
   width: 25vw; /* Mesmo tamanho da imagem */
   height: auto; /* Mantém a proporção */
   margin-bottom: 20px; /* Espaço entre imagem e QRCode */
- 
-  
+  background-color: transparent;
+  color:white
 
 
 }

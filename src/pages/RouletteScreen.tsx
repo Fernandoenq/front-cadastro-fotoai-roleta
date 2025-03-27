@@ -14,7 +14,11 @@ const RoletaScreen: React.FC = () => {
   const navigate = useNavigate();
   const { fetchPrize, loading } = useFetchPrize();
   const organizerName = localStorage.getItem("OrganizerName"); // Pega o OrganizerName do localStorage
-
+  // Função para lidar com o clique do botão de voltar
+const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  
+  navigate("/finalimage"); // Navega para a página de câmera
+};
   // Determina qual imagem usar com base na presença da palavra no nome do organizador
   const imageToShow =
     organizerName && organizerName.toLowerCase().includes("roleta")
@@ -151,6 +155,33 @@ const RoletaScreen: React.FC = () => {
           </>
         )}
       </button>
+      {/* <button
+              className="confirm-button"
+              onClick={handleBackClick} // Use a nova função para tratar o evento de clique
+             
+              style={{
+                backgroundColor: "#cd092f",
+                color: "white",
+                borderColor: "white",
+                borderWidth: "4px",
+                borderStyle: "solid",
+                borderRadius: "9999px",
+                padding: "18px 20px",
+                fontSize: "2vh",
+                fontWeight: "bold",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                height: "100px",
+                fontFamily: "BradescoSansButtom",
+                width: "20vh",
+                
+                
+              }}
+            >
+              Voltar
+            </button> */}
     </div>
   );
 };

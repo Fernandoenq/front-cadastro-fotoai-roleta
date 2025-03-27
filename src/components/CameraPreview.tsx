@@ -1,4 +1,5 @@
 import { useEffect, forwardRef } from 'react';
+import { startCamera } from '../utils/cameraUtils';
 
 interface CameraPreviewProps {
   selectedDevice: string | null;
@@ -24,7 +25,12 @@ const checkPermissionsAndStartCamera = async (deviceId: string, videoRef: React.
   if (!videoRef.current) return;
 
   try {
+    const permissionStatus = await navigator.permissions.query({name: 'camera'});
 
+    if (permissionStatus.state === 'prompt' || permissionStatus.state === 'denied') {
+      alert("Por favor, permita o acesso à câmera nas configurações do seu navegador para continuar.");
+      return;
+    }
 
     const stream = await navigator.mediaDevices.getUserMedia({
       video: { 

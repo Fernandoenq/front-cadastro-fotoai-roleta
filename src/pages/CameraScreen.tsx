@@ -123,7 +123,32 @@ const CameraScreen: React.FC = () => {
           )
         )}
       </div>
-
+      <button
+              className="confirm-button"
+              onClick={() => navigate("/cadastrorapido")}  // Navega para a página anterior
+             
+              style={{
+                backgroundColor: "#cd092f",
+                color: "white",
+                borderColor: "white",
+                borderWidth: "4px",
+                borderStyle: "solid",
+                borderRadius: "9999px",
+                padding: "18px 20px",
+                fontSize: "2vh",
+                fontWeight: "bold",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                height: "100px",
+                fontFamily: "BradescoSansButtom",
+                width: "20vh",
+                
+              }}
+            >
+              Voltar
+            </button>
       <canvas ref={canvasRef} style={{ display: "none" }} />
 
       {/* {photo && (

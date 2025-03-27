@@ -43,7 +43,9 @@ const NfcScreen: React.FC = () => {
 
    // Verifica se o rfidValue não está vazio
    const isButtonEnabled = rfidValue && rfidValue.trim() !== "";
-
+   const handleBackClick = () => {
+    navigate("/redirectscreen"); // Navega para a página de câmera
+  };
   return (
     <div className="nfc-screen-container">
       <h1 className="nfc-title">Aproxime seu cartão da maquininha</h1>
@@ -59,6 +61,15 @@ const NfcScreen: React.FC = () => {
         }}
       >
         CONFIRMAR
+      </button>
+      <button
+        className="nfc-confirm-button"
+        onClick={handleBackClick}
+        style={{
+          marginTop:'6vh'
+        }}
+      >
+        Voltar
       </button>
     </div>
   );

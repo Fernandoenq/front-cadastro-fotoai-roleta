@@ -7,6 +7,7 @@ import popImage from "../assets/POP.png";
 import rockImage from "../assets/rock.png";
 import mpbImage from "../assets/MPB.png";
 import edmImage from "../assets/EDM.png";
+import { useNavigate } from "react-router-dom";
 
 const bucketName = "bucket-bradesco-lollapalloza";
 const region = "sa-east-1";
@@ -14,7 +15,7 @@ const region = "sa-east-1";
 const SelectImageScreen: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const { sendS3Url } = useFotoAiAPI();
-
+const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [progress, setProgress] = useState<number | string>(0); // ✅ Agora aceita string e número
   const [imageUrls, setImageUrls] = useState<string[]>([]);
@@ -24,8 +25,7 @@ const SelectImageScreen: React.FC = () => {
     { id: 2, text: "ROCK", imageUrl: rockImage },
     { id: 3, text: "MPB", imageUrl: mpbImage },
     { id: 4, text: "EDM", imageUrl: edmImage },
-];
-
+  ];
 
   const handleContinueClick = async () => {
     if (selectedImage === null) return;
@@ -79,63 +79,95 @@ const SelectImageScreen: React.FC = () => {
       </h1>
 
       <div className="">
-      <div className="image-grid">
-      {image.map((image) => (
-  <button
-    key={image.id}
-    className={`bg-[#f3b8d6] image-container ${selectedImage === image.id ? "selected" : ""}`}
-    onClick={() => setSelectedImage(image.id)}
-    style={{
-      backgroundColor: "transparent", // Cor de fundo
-      width: "13vh",
-      height: "13vh",
-      fontFamily: "BradescoSansButtom", // Fonte personalizada
-      margin: "0vh", // Margem
-      display: "flex", // Habilita flexbox
-      alignItems: "center", // Centraliza verticalmente
-      justifyContent: "center", // Centraliza horizontalmente
-      border: selectedImage === image.id ? "4px solid #2e00d8" : "none", // Borda azul se selecionado
-      cursor: "pointer", // Muda o cursor para ponteiro
-      padding:"0vh"
-    }}
-  >
-    <img
-      src={image.imageUrl} // Assume que `image.imageUrl` contém a URL da imagem
-      alt={image.text} // Descrição da imagem para acessibilidade
-      style={{
-        width: "100%", // Ajusta a imagem para preencher o botão
-        height: "100%", // Ajusta a altura da imagem
-        objectFit: "cover", // Ajusta para a imagem ficar completamente visível sem distorção
-      }}
-    />
-  </button>
-))}
-
-</div>
-
-</div>
-
-
+        <div className="image-grid">
+          {image.map((image) => (
+            <button
+              key={image.id}
+              className={`bg-[#f3b8d6] image-container `}
+              onClick={() => setSelectedImage(image.id)}
+              style={{
+                backgroundColor: "transparent", // Cor de fundo
+                width: "13vh",
+                height: "16vh",
+                fontFamily: "BradescoSansButtom", // Fonte personalizada
+                margin: "0vh", // Margem
+                display: "flex", // Habilita flexbox
+                alignItems: "center", // Centraliza verticalmente
+                justifyContent: "center", // Centraliza horizontalmente
+                // Borda azul se selecionado
+                cursor: "pointer", // Muda o cursor para ponteiro
+                padding: "0vh",
+              }}
+            >
+              <img
+                src={image.imageUrl} // Assume que `image.imageUrl` contém a URL da imagem
+                alt={image.text} // Descrição da imagem para acessibilidade
+                style={{
+                  width: "100%", // Ajusta a imagem para preencher o botão
+                  height: "100%", // Ajusta a altura da imagem
+                  objectFit: "cover",
+                  border:
+                    selectedImage === image.id ? "4px solid #2e00d8" : "none",
+                }}
+              />
+              <div
+                style={{
+                  color: "white", // Definir a cor do texto
+                  textAlign: "center", // Centraliza o texto
+                  marginTop: "1vh", // Espaço entre a imagem e o texto
+                  fontSize: "2vh", // Tamanho da fonte
+                  fontFamily: "BradescoSansButtom", // Fonte personalizada
+                }}
+              >
+                {image.text}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%',gap:'1vh' }}>
       <button
-    className="continue-button"
-    disabled={selectedImage === null}
-    onClick={handleContinueClick}
-    style={{
-      backgroundColor: "#cd092f", // Cor de fundo vermelha
-      color: "white", // Texto branco
-      borderColor: "white", // Borda branca
-      borderWidth: "1px", // Largura da borda de 1px
-      borderStyle: "solid", // Estilo da borda sólido
-      borderRadius: "9999px", // Bordas completamente arredondadas
-      padding: "4px 42px ", // Aumento do padding vertical para 20px e horizontal para 30px
-      fontSize: "3vh", // Tamanho da fonte
-      fontWeight: "bold", // Fonte negrito
-      height: "5vh", // Aumento da altura do botão para 100px para acomodar o tamanho da fonte
-      fontFamily: "BradescoSansButtom", // Fonte personalizada
-    }}
-  >
-    Gerar foto
-</button>
+        className="continue-button"
+        disabled={selectedImage === null}
+        onClick={handleContinueClick}
+        style={{
+          backgroundColor: "#cd092f", // Cor de fundo vermelha
+          color: "white", // Texto branco
+          borderColor: "white", // Borda branca
+          borderWidth: "1px", // Largura da borda de 1px
+          borderStyle: "solid", // Estilo da borda sólido
+          borderRadius: "9999px", // Bordas completamente arredondadas
+          padding: "4px 42px ", // Aumento do padding vertical para 20px e horizontal para 30px
+          fontSize: "3vh", // Tamanho da fonte
+          fontWeight: "bold", // Fonte negrito
+          height: "5vh", // Aumento da altura do botão para 100px para acomodar o tamanho da fonte
+          fontFamily: "BradescoSansButtom", // Fonte personalizada
+        }}
+      >
+        Gerar foto
+      </button>
+      <button
+              className="confirm-button"
+              onClick={() => navigate("/camera")}  // Navega para a página anterior
+             
+              style={{
+                backgroundColor: "#cd092f", // Cor de fundo vermelha
+                color: "white", // Texto branco
+                borderColor: "white", // Borda branca
+                borderWidth: "1px", // Largura da borda de 1px
+                borderStyle: "solid", // Estilo da borda sólido
+                borderRadius: "9999px", // Bordas completamente arredondadas
+                padding: "4px 42px ", // Aumento do padding vertical para 20px e horizontal para 30px
+                fontSize: "3vh", // Tamanho da fonte
+                fontWeight: "bold", // Fonte negrito
+                height: "5vh", // Aumento da altura do botão para 100px para acomodar o tamanho da fonte
+                fontFamily: "BradescoSansButtom", // Fonte personalizada
+                
+              }}
+            >
+              Voltar
+            </button>
+            </div>
 
       {/* 
       <button className="continue-button" onClick={() => navigate("/camera")}

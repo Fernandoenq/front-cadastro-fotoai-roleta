@@ -84,12 +84,35 @@ const PrizeScreen: React.FC = () => {
         <h1 className="prize-title"  style={{
           color: "#cd092f",
           fontFamily: "BradescoSansBold", // Aplica a fonte personalizada
-          maxWidth: "90%", // Define a largura máxima do texto
+          maxWidth: "80%", // Define a largura máxima do texto
          
-          fontSize: "4vh", // Ajusta o tamanho da fonte para 54px
+          fontSize: "3vh", // Ajusta o tamanho da fonte para 54px
           // border:"solid 9px yellow",
           marginTop: "35vh", // Ajuste fino para centralizar a imagem
-        }} >Não foi dessa vez!</h1>
+        }} >Não desanime, <br/> você ganhou 10 pontos <br/> para retirar um</h1>
+
+        <span
+          style={{
+            fontFamily: "BradescoSansButtom",
+            fontSize: "4vh",
+            fontWeight: "bold",
+            color: "#cd092f"
+          }}
+        >
+          ACQUA DRINK
+
+        
+          <img
+          src="/img/roleta/logocarinha.png" // Substitua pelo caminho do seu emoji
+          style={{
+            width: "4vh", // Ajuste o tamanho da imagem
+            height: "auto", // Mantém a proporção da imagem
+            marginLeft: "20px", // Espaço entre a imagem e a palavra "Parabéns"
+          }}
+        />
+        </span>
+
+        
   
         {/* Conteúdo principal */}
         <div className="prize-content"  style={{

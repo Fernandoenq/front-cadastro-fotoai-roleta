@@ -31,6 +31,9 @@ const CadastroRapido: React.FC = () => {
     setCpf(input);
     setIsCpfValid(validateCpf(input));
   };
+  const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    navigate("/redirectscreen"); 
+  };
 
   const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = unformatCpf(e.target.value);
@@ -116,6 +119,7 @@ const CadastroRapido: React.FC = () => {
           }}
         />
       )}
+      
      <button
   onClick={handleCadastro}
   disabled={!isCpfValid || !isButtonEnabled} // Habilita apenas se o CPF for válido e RFID for válido
@@ -139,13 +143,41 @@ const CadastroRapido: React.FC = () => {
     position: "absolute",
     top: "60vh",
     left: "50%",
-    transform: "translateX(-50%)",
+    transform: "translateX(-95%)",
     boxShadow: (!isCpfValid || !isButtonEnabled) ? "0 4px 8px rgba(1, 1, 1, 0.2)" : "none", // Sombra no botão desabilitado
     opacity: (!isCpfValid || !isButtonEnabled) ? 0.5 : 1, // Tornar o botão semitransparente quando desabilitado
   }}
 >
   CONFIRMAR
 </button>
+<button
+                className="confirm-button"
+                onClick={handleBackClick}
+                style={{
+                  backgroundColor: "#CD092F", // Cor vermelha escura
+    color: "white", // Texto branco
+    borderColor: "white", // Borda branca
+    borderWidth: "4px", // Borda grossa
+    borderStyle: "solid",
+    borderRadius: "60px", // Bordas ainda mais arredondadas para parecer oval
+    padding: "30px 90px", // AUMENTOU O TAMANHO DO BOTÃO
+    fontSize: "2vh", // AUMENTOU O TAMANHO DO TEXTO
+    fontWeight: "bold",
+    height: "100px", // AUMENTOU A ALTURA DO BOTÃO
+    fontFamily: "BradescoSansButtom",
+    textTransform: "uppercase",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    position: "absolute",
+    top: "59vh",
+    left: "50%",
+    transform: "translateX(10%)",
+                }}
+              >
+                Voltar
+              </button>
 
     </div>
   );
