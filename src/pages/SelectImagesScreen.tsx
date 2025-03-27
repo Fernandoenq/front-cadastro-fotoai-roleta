@@ -7,7 +7,7 @@ import popImage from "../assets/POP.png";
 import rockImage from "../assets/rock.png";
 import mpbImage from "../assets/MPB.png";
 import edmImage from "../assets/EDM.png";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const bucketName = "bucket-bradesco-lollapalloza";
 const region = "sa-east-1";
@@ -15,7 +15,7 @@ const region = "sa-east-1";
 const SelectImageScreen: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const { sendS3Url } = useFotoAiAPI();
-const navigate = useNavigate();
+// const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [progress, setProgress] = useState<number | string>(0); // ✅ Agora aceita string e número
   const [imageUrls, setImageUrls] = useState<string[]>([]);

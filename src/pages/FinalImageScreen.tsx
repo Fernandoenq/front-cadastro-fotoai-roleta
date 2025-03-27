@@ -38,10 +38,10 @@ const FinalImageScreen: React.FC = () => {
     }
   };
   // Função para lidar com o clique do botão de voltar
-const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-  e.stopPropagation(); // Impede que o evento clique se propague para o container
-  navigate("/camera"); // Navega para a página de câmera
-};
+// const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+//   e.stopPropagation(); // Impede que o evento clique se propague para o container
+//   navigate("/camera"); // Navega para a página de câmera
+// };
 
   return (
     <div

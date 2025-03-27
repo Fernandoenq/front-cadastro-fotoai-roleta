@@ -127,7 +127,7 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
                   style={{ width: `${progress}%` }}
                 ></div>
               </div>
-              <button
+              {/* <button
               className="confirm-button"
               onClick={onClose}  // Navega para a página anterior
              
@@ -147,7 +147,7 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
               }}
             >
               Voltar
-            </button>
+            </button> */}
             </div>
             </>
           ) : null
@@ -207,7 +207,7 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
             >
               {isSubmitting ? "Enviando..." : "Confirmar"}
             </button>
-            <button
+            {/* <button
               className="confirm-button"
               onClick={onClose}  // Navega para a página anterior
              
@@ -233,7 +233,7 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
               }}
             >
               Voltar
-            </button>
+            </button> */}
             </div>
           </>
         )}
