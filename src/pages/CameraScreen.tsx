@@ -123,7 +123,7 @@ const CameraScreen: React.FC = () => {
           )
         )}
       </div>
-      <button
+      {/* <button
               className="confirm-button"
               onClick={() => navigate("/redirectscreen")}  // Navega para a página anterior
              
@@ -148,7 +148,7 @@ const CameraScreen: React.FC = () => {
               }}
             >
               Voltar
-            </button>
+            </button> */}
       <canvas ref={canvasRef} style={{ display: "none" }} />
 
       {/* {photo && (

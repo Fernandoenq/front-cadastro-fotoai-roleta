@@ -146,7 +146,7 @@ const navigate = useNavigate();
       >
         Gerar foto
       </button>
-      <button
+      {/* <button
               className="confirm-button"
               onClick={() => navigate("/camera")}  // Navega para a página anterior
              
@@ -166,7 +166,7 @@ const navigate = useNavigate();
               }}
             >
               Voltar
-            </button>
+            </button> */}
             </div>
 
       {/* 

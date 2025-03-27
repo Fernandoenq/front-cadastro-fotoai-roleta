@@ -122,7 +122,7 @@ const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         <span style={{ fontStyle: "italic" }}>#BradescoNoLollaBr</span> e marque
         o @bradesco
       </h1>
-      <button
+      {/* <button
               className="confirm-button"
               onClick={handleBackClick} // Use a nova função para tratar o evento de clique
              
@@ -148,7 +148,7 @@ const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
               }}
             >
               Voltar
-            </button>
+            </button> */}
     </div>
   );
 };
