@@ -31,7 +31,7 @@ const CadastroRapido: React.FC = () => {
     setCpf(input);
     setIsCpfValid(validateCpf(input));
   };
-  const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleBackClick = () => {
     navigate("/redirectscreen"); 
   };
 
