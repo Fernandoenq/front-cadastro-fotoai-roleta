@@ -31,6 +31,7 @@ const sexoOptions = [
 const CadastroCompleto: React.FC = () => {
   const navigate = useNavigate();
   const { callApi, showPopup, popupMessage } = useApi();
+  
 
   const [formData, setFormData] = useState<FormData>({
     nome: "",
@@ -122,6 +123,10 @@ const CadastroCompleto: React.FC = () => {
     setInputName(field);
     setActiveField(field);
     setTimeout(() => ref?.current?.focus(), 0);
+  };
+  const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    
+    navigate("/redirectscreen"); // Navega para a página de câmera
   };
 
   return (
@@ -230,12 +235,20 @@ const CadastroCompleto: React.FC = () => {
           }}
         />
       </div>
-      <button className="cadastro-full-button" onClick={() => handleCadastro(formData, callApi, navigate)} disabled={!isButtonEnabled}
+      <button className="cadastro-full-button cadastrar" onClick={() => handleCadastro(formData, callApi, navigate)} disabled={!isButtonEnabled}
           style={{
             boxShadow: (!isButtonEnabled) ? "0 4px 8px rgba(1, 1, 1, 0.2)" : "none", // Sombra no botão desabilitado
       opacity: (!isButtonEnabled) ? 0.5 : 1, // Tornar o botão semitransparente quando desabilitado
+      marginTop:'59vh'
           }}>
         CADASTRAR
+      </button>
+      <button className="cadastro-full-button voltar" onClick={handleBackClick}
+        style={{
+          marginTop:'65vh'
+        }}
+         >
+        VOLTAR
       </button>
     </div>
   );

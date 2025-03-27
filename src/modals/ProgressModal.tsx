@@ -113,6 +113,12 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
         ) : imageUrls.length === 0 ? (
           typeof progress === "number" ? (
             <>
+             <div style={{ 
+    display: 'flex', 
+    flexDirection: 'column', 
+    alignItems: 'center', 
+    width: '100%'  // Garante que o contêiner tome a largura total
+  }}>
              <h2 style={{ color: "#cd092f", fontFamily: 'BradescoSansBold',  fontSize: "40px",}}>Gerando Imagens...</h2>
               <p style={{ color: "#cd092f", fontFamily: 'BradescoSans'}}>Progresso: {progress}%</p>
               <div className="progress-bar">
@@ -121,6 +127,28 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
                   style={{ width: `${progress}%` }}
                 ></div>
               </div>
+              <button
+              className="confirm-button"
+              onClick={onClose}  // Navega para a página anterior
+             
+              style={{
+                backgroundColor: "#cd092f", // Cor de fundo vermelha
+                color: "white", // Texto branco
+                borderColor: "white", // Borda branca
+                borderWidth: "1px", // Largura da borda de 1px
+                borderStyle: "solid", // Estilo da borda sólido
+                borderRadius: "9999px", // Bordas completamente arredondadas
+                padding: "4px 42px ", // Aumento do padding vertical para 20px e horizontal para 30px
+                fontSize: "3vh", // Tamanho da fonte
+                fontWeight: "bold", // Fonte negrito
+                height: "5vh", // Aumento da altura do botão para 100px para acomodar o tamanho da fonte
+                fontFamily: "BradescoSansButtom", // Fonte personalizada
+                
+              }}
+            >
+              Voltar
+            </button>
+            </div>
             </>
           ) : null
         ) : (
@@ -128,7 +156,7 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
             <h3
               style={{
                 fontFamily: "BradescoSansBold", // Aplica a fonte personalizada
-                maxWidth: "98%", // Limita a largura do texto a 80% da tela
+                maxWidth: "100%", // Limita a largura do texto a 80% da tela
                 fontSize: "3vh", // Ajusta o tamanho da fonte para 54px
                 color: "#cd092f",
               }}
@@ -152,7 +180,7 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
                 </div>
               ))}
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' , gap:'1vh'}}>
             <button
               className="confirm-button"
               onClick={handleConfirm}
@@ -178,6 +206,33 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
               }}
             >
               {isSubmitting ? "Enviando..." : "Confirmar"}
+            </button>
+            <button
+              className="confirm-button"
+              onClick={onClose}  // Navega para a página anterior
+             
+              style={{
+                backgroundColor: "#cd092f", // Cor de fundo vermelha
+                color: "white", // Texto branco
+                borderColor: "white", // Borda branca
+                borderWidth: "4px", // Largura da borda de 1px
+                borderStyle: "solid", // Estilo da borda sólido
+                borderRadius: "9999px", // Bordas completamente arredondadas
+                padding: "18px 20px", // Aumenta o padding vertical para 12px e horizontal para 20px
+                fontSize: "2vh", // Ajuste para tamanho da fonte mais típico
+                fontWeight: "bold", // Define a fonte como negrito
+                display: "flex", // Usa Flexbox para alinhar o conteúdo
+                justifyContent: "center", // Centraliza o conteúdo horizontalmente no Flexbox
+                alignItems: "center", // Centraliza o conteúdo verticalmente no Flexbox
+              
+                textAlign: "center", // Garante que o texto esteja centralizado horizontalmente
+                height: "100px", // Aumento da altura do botão para 100px para acomodar o tamanho da fonte
+                fontFamily: "BradescoSansButtom", // Fonte personalizada
+                width: "20vh", // Ajusta a largura automaticamente baseado no conteúdo e padding
+                
+              }}
+            >
+              Voltar
             </button>
             </div>
           </>

@@ -168,7 +168,7 @@
 /* BOTÃO */
 .cadastro-full-button {
   position: absolute;
-  top: 79vh; /* Ajuste conforme necessário */
+ 
   left: 50%;
   transform: translateX(-50%);
   width: 40%;
@@ -187,4 +187,13 @@
   background-color: #a70725;
   cursor: not-allowed;
   
+}
+/* Media query for tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .cadastrar {
+    margin-top: 66vh !important; /* Adjust the margin top as needed */
+  }
+  .voltar{
+    margin-top: 73vh !important; /* Adjust the margin top as needed */
+  }
 }
