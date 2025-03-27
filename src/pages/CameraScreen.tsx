@@ -6,6 +6,8 @@ import CameraPreview from "../components/CameraPreview";
 import { getVideoDevices } from "../utils/cameraUtils";
 import { captureImage, uploadImage } from "../utils/imageUtils";
 import "../styles/CameraScreen.css";
+//import Camera from "../components/camera";
+import Camera from "../components/CameraPreview";
 
 const CameraScreen: React.FC = () => {
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
@@ -109,6 +111,7 @@ const CameraScreen: React.FC = () => {
           setSelectedDevice={setSelectedDevice}
         />
       </div>
+      {/* <Camera /> */}
 
       <div className="camera-container" style={{ position: "relative" }}>
       <CameraPreview ref={videoRef} selectedDevice={selectedDevice} />
