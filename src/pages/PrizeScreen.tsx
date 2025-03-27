@@ -127,7 +127,7 @@ const PrizeScreen: React.FC = () => {
           <p>retire seu</p>
           <p>brinde especial! 😉</p> */}
   
-          <button className="prize-button" onClick={() => navigate("/finalscreen")}
+          <button className="prize-button" onClick={() => navigate("/redirectscreen")}
              style={{
               backgroundColor: "#cd092f", // Cor de fundo vermelha
               color: "white", // Texto branco
@@ -225,7 +225,7 @@ const PrizeScreen: React.FC = () => {
       </h1>
 
       <button
-        onClick={() => navigate("/finalscreen")}
+        onClick={() => navigate("/redirectscreen")}
         style={{
           backgroundColor: "#cd092f", // Cor de fundo vermelha
           color: "white", // Texto branco
