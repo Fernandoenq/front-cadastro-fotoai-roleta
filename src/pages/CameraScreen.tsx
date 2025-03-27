@@ -125,7 +125,7 @@ const CameraScreen: React.FC = () => {
       </div>
       <button
               className="confirm-button"
-              onClick={() => navigate("/cadastrorapido")}  // Navega para a página anterior
+              onClick={() => navigate("/redirectscreen")}  // Navega para a página anterior
              
               style={{
                 backgroundColor: "#cd092f",

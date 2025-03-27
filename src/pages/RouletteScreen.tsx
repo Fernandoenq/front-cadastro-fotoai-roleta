@@ -15,10 +15,15 @@ const RoletaScreen: React.FC = () => {
   const { fetchPrize, loading } = useFetchPrize();
   const organizerName = localStorage.getItem("OrganizerName"); // Pega o OrganizerName do localStorage
   // Função para lidar com o clique do botão de voltar
-const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+
+//   const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
   
-  navigate("/finalimage"); // Navega para a página de câmera
-};
+//   navigate("/finalimage"); // Navega para a página de câmera
+// };
+
+
+
   // Determina qual imagem usar com base na presença da palavra no nome do organizador
   const imageToShow =
     organizerName && organizerName.toLowerCase().includes("roleta")
